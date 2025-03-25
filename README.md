@@ -25,5 +25,5 @@ PROJECT DESCRIPTION :
 
 Our project, QUIZORA, is a fun and interactive quiz app that makes learning more engaging. Instead of just basic multiple-choice questions, it includes true/false, fill-in-the-blank, and multimedia-based questions to keep things interesting. The scoring system isn’t fixed—it adjusts based on question difficulty and how well you perform, giving instant feedback to help you improve. The front end is built with HTML, CSS, and JavaScript, ensuring a smooth and responsive experience on any device. For the backend, we’re using Node.js to handle data processing efficiently, along with a firebase to keep user data secure. QUIZORA also features a multiplayer mode, so you can challenge friends and make learning more exciting. With real-time feedback and a user-friendly design, QUIZORA isn’t just another quiz app—it’s a smarter, more engaging way to learn.
 
-NAME - PRANAV ROLL NO - 2410991479
+NAME = PRANAV ROLL NO = 2410991479
 
