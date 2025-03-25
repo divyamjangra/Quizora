@@ -1,29 +1,18 @@
-# Quizora
-TITLE:     Enhanced Interactive Quiz Application (QUIZORA)
+1> Quizora:
+A fun and interactive quiz application designed to enhance learning through dynamic question types, adaptive scoring, and multiplayer features.  
 
+2> Installation Steps:
+1. Step 1: Clone the repository and navigate to the project folder.  
+2. Step 2: Install dependencies using:  npm install
+3. Step 3: Start the development server with:  npm start
 
-TEAM MEMBERS:
+3> Usage:
+QUIZORA offers an engaging learning experience with multiple question formats, including multiple-choice, true/false, fill-in-the-blank, and multimedia-based questions. The scoring system adapts based on difficulty and user performance. With a multiplayer mode, users can compete and learn collaboratively.  
 
-Front-End:
+4> Contribution:
+Contributions are welcome! If you’d like to improve QUIZORA, follow these steps:  
+1. Fork the repository and create a new branch.  
+2. Make your changes and ensure the code follows project standards.  
+3. Submit a pull request for review.
 
-Anuraag Jangra		(2410990104)	    (HTML & CSS);     
-Divyansh Kumar 		(2410990138)	    (JAVASCRIPT);     
-Yash Kumar			  (2410990160)	    (CSS & BOOTSTRAP);     
-Pranav Sharma		  (2410991479)	    (HTML & BOOTSTRAP);     
-
-
-Back-End:
-
-Divyam Jangra		  (2410990137)	    (NODE.JS & FIREBASE)
-(TEAM LEAD)
-
-PROBLEM :
-
-Most quiz apps use simple question types like multiple-choice and fixed scoring, which limits engagement and fails to support varied learning styles. Many platforms also lack multiplayer options, missing a chance to enhance motivation and community learning. 
-
-PROJECT DESCRIPTION :
-
-Our project, QUIZORA, is a fun and interactive quiz app that makes learning more engaging. Instead of just basic multiple-choice questions, it includes true/false, fill-in-the-blank, and multimedia-based questions to keep things interesting. The scoring system isn’t fixed—it adjusts based on question difficulty and how well you perform, giving instant feedback to help you improve. The front end is built with HTML, CSS, and JavaScript, ensuring a smooth and responsive experience on any device. For the backend, we’re using Node.js to handle data processing efficiently, along with a firebase to keep user data secure. QUIZORA also features a multiplayer mode, so you can challenge friends and make learning more exciting. With real-time feedback and a user-friendly design, QUIZORA isn’t just another quiz app—it’s a smarter, more engaging way to learn.
-
-NAME = PRANAV ROLL NO = 2410991479
-
+5>
