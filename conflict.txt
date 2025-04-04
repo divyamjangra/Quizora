@@ -1,3 +1,0 @@
-this is branch 1 amd it is the first branch of the tree
-this is branch 2
-(conflict resolved)
