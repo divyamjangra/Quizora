@@ -1,375 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-dark">
-    
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizora</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="landing-page.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link rel="icon" href="favicon.png" type="image/png">
+    <title>Custom Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/signup.css">
+    <style>
+        body {
+            background: url('X:\feee\images\signup3.jpg') no-repeat center center/cover;
+        }
+    </style>
 </head>
-
-<body class="bg-dark">
-    <!--- Header Section --->
-    <header class="header">        
-        <nav class="navbar">
-            <div>
-            <img src="LOGO transparent.png" alt="Logo Quizora" height="50px" class="animate__animated animate__fadeIn">
-            <a href="#">
-              <img src="LOGO NAME transparent.png" alt="Quizora" height="50px" class="animate__animated animate__fadeIn animate__delay-1s">
-            </a>
-            </div>
-
-            <div class="menu">
-                <a href="#" class="animate__animated animate__fadeInDown animate__delay-1s">FOR SCHOOLS</a>
-                <a href="#" class="animate__animated animate__fadeInDown animate__delay-1s">PLANS</a>
-                <a href="#" class="animate__animated animate__fadeInDown animate__delay-1s">SOLUTIONS</a>
-                <a href="#" class="animate__animated animate__fadeInDown animate__delay-1s">RESOURCES</a>
-            </div>
-
-            <div class="actions">
-                <button id="themeToggle" class="animate__animated animate__fadeIn animate__delay-2s">🌞</button>
-                <button class="enter-code-btn animate__animated animate__fadeIn animate__delay-2s">ENTER CODE</button>
-                <a href="Trivia.html"><button class="login-btn animate__animated animate__fadeIn animate__delay-2s">TRIVIA</button></a>
-                <a href="Login.html" target="_blank"><button class="signup-btn animate__animated animate__fadeIn animate__delay-2s">LOG IN</button></a>
-            </div>
-        </nav>
-    </header>
-
-    <!--- Web Page -->
-    <main>
-        <section class="hero">
-            <h1 style="color:white; font-size:72px; line-height: 1.0;text-shadow: 5px 5px 8px rgba(0, 0, 0, 0.647);" class="animate__animated animate__fadeInUp"> 
-                <br> "You get to learn<br> and have fun <br> at the same time !!"</h1> <br>
-            <p style="color:rgba(255, 255, 255, 0.451); font-size: 20px;" class="animate__animated animate__fadeInUp animate__delay-1s"> - Every Quizora User</p>
-            <br><br>
-
-            <p style="color:white;font-size: 20px;" class="animate__animated animate__fadeInUp animate__delay-2s">Challenge your assumptions and elevate your mind</p>
-            <p style="color:white;font-size: 20px;" class="animate__animated animate__fadeInUp animate__delay-2s">with our expertly crafted interactive quizzes.</p>
-            <br><br>
-
-            <div class="cta-buttons mt-4">
-                <button class="btn btn-info btn-lg animate__animated animate__pulse animate__infinite">
-                    <a href="signup.html" class="text-white">Sign up for FREE</a>
-                </button>
-                <button class="btn btn-outline-light btn-lg animate__animated animate__fadeIn animate__delay-3s">
-                    <a href="signup.html" class="text-white">Learn more</a>
-                </button>
-            </div>
-        </section>
-
-        <!-- New Features Section with Animations -->
-        <section class="features-section py-5">
-            <div class="container">
-                <h2 class="text-center text-white mb-5" data-aos="fade-up">Why Choose Quizora?</h2>
-                <div class="row">
-                    <div class="col-md-4 mb-4" data-aos="fade-right" data-aos-delay="100">
-                        <div class="feature-card text-center p-4 h-100">
-                            <div class="icon-wrapper mb-4">
-                                <i class="fas fa-brain fa-3x"></i>
-                            </div>
-                            <h3 class="text-white">Engaging Learning</h3>
-                            <p class="text-light">Transform traditional learning into an exciting adventure with interactive quizzes that keep students focused and motivated.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="feature-card text-center p-4 h-100">
-                            <div class="icon-wrapper mb-4">
-                                <i class="fas fa-chart-line fa-3x"></i>
-                            </div>
-                            <h3 class="text-white">Progress Tracking</h3>
-                            <p class="text-light">Monitor student performance with detailed analytics and insights to identify areas for improvement.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4" data-aos="fade-left" data-aos-delay="300">
-                        <div class="feature-card text-center p-4 h-100">
-                            <div class="icon-wrapper mb-4">
-                                <i class="fas fa-tools fa-3x"></i>
-                            </div>
-                            <h3 class="text-white">Customizable</h3>
-                            <p class="text-light">Create personalized quizzes that align with your curriculum and teaching style with our intuitive quiz builder.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="support-section text-center py-5">
-            <p class="trusted-info" data-aos="fade-up">
-                Trusted by <span class="fw-bold"> 90% Educational Institutions </span>
-                in over <span class="fw-bold">180+ countries.</span>
-            </p>
-            <br>
-            <p data-aos="fade-up" data-aos-delay="100">Try our brand new</p>
-            <h2 class="display-5 animate__animated animate__pulse animate__slow animate__infinite">Your Quiz Your Choice</h2>
-            <p data-aos="fade-up" data-aos-delay="300">feature</p>
-        </section>
-
-        <section class="testimonials container py-5">
-            <div class="row">
-                <div class="col-lg-4" data-aos="flip-left" data-aos-delay="100">
-                    <div class="testimonial-card border p-3">
-                        <img src="pic1.png" alt="User1" class="img-fluid rounded-circle mb-2">
-                        <h3>James Hamilton</h3>
-                        <p>Senior Secondary Teacher</p>
-                        <blockquote class="blockquote">
-                            "My students love Quizora. It's a great way to engage them in learning and make it fun."
-                        </blockquote>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
-                    <div class="testimonial-card border p-3">
-                        <img src="pic2.png" alt="User2" class="img-fluid rounded-circle mb-2">
-                        <h3>Dr. Tanisha Nanjiani</h3>
-                        <p>Manager of Academic Instructional Technology</p>
-                        <blockquote class="blockquote">
-                            "With a declining attention span of today's students, Quizora is a perfect tool to keep them engaged and motivated."
-                        </blockquote>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="flip-left" data-aos-delay="300">
-                    <div class="testimonial-card border p-3">
-                        <img src="pic3.png" alt="User3" class="img-fluid rounded-circle mb-2">
-                        <h3>Steve Smith</h3>
-                        <p>High School Math Teacher</p>
-                        <blockquote class="blockquote">
-                            "Helps me to create quizzes in a matter of minutes and track student progress easily."
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- New Interactive Demo Section -->
-        <section class="demo-section py-5">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6" data-aos="fade-right">
-                        <h2 class="text-white mb-4">Experience Quizora in Action</h2>
-                        <p class="text-light mb-4">See how our platform transforms learning into an engaging experience. Our interactive quizzes adapt to every student's needs.</p>
-                        <div class="demo-features">
-                            <div class="demo-feature d-flex align-items-center mb-3 animate__animated animate__fadeInLeft animate__delay-1s">
-                                <div class="demo-icon me-3">📊</div>
-                                <div class="demo-text text-light">Real-time performance analytics</div>
-                            </div>
-                            <div class="demo-feature d-flex align-items-center mb-3 animate__animated animate__fadeInLeft animate__delay-2s">
-                                <div class="demo-icon me-3">🎮</div>
-                                <div class="demo-text text-light">Gamified learning experience</div>
-                            </div>
-                            <div class="demo-feature d-flex align-items-center mb-3 animate__animated animate__fadeInLeft animate__delay-3s">
-                                <div class="demo-icon me-3">🔄</div>
-                                <div class="demo-text text-light">Adaptive question difficulty</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6" data-aos="fade-left">
-                        <div class="demo-animation-container">
-                            <div class="demo-screen animate__animated animate__zoomIn">
-                                <div class="demo-content text-center p-4">
-                                    <h4 class="text-white">Quiz Demo</h4>
-                                    <div class="demo-question p-3 my-3 animate__animated animate__fadeIn animate__delay-2s">
-                                        <p class="question-text">What is the capital of France?</p>
-                                        <div class="options">
-                                            <div class="option p-2 my-2">London</div>
-                                            <div class="option p-2 my-2">Berlin</div>
-                                            <div class="option p-2 my-2 correct">Paris</div>
-                                            <div class="option p-2 my-2">Madrid</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary animate__animated animate__pulse animate__infinite">Next Question</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="prime text-center py-5">
-            <h2 data-aos="fade-up">Have an experience like no other with our prime membership.</h2>
-            <p data-aos="fade-up" data-aos-delay="100">Whether you're a teacher or a student, we have a plan that suits your needs. <a href="#">learn more</a></p>
-            
-
-            <div class="buttons">
-                <a href="#" class="btn btn-info btn-lg animate__animated animate__heartBeat animate__repeat-3">Teachers Sign up for FREE</a>
-                <a href="#" class="btn btn-success btn-lg animate__animated animate__heartBeat animate__delay-1s animate__repeat-3">Students Sign up for FREE</a>
-            </div>
-        </section>
-        
-        <section class="counter-section text-center py-5">
-            <div class="row">
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="counter-box">
-                        <div class="counter" data-target="500000">500,000+</div>
-                        <p>Total Quizzes Played</p>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="counter-box">
-                        <div class="counter" data-target="1000000">1,000,000+</div>
-                        <p>Questions Generated</p>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="counter-box">
-                        <div class="counter" data-target="180">180+</div>
-                        <p>Countries Using Our Product</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <!-- Footer Section -->
-    <footer class="footer bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <h5 class="mb-3 footer-heading">For Learners</h5>
-                <ul class="list-unstyled">
-                    <li><a id="footerlinks" href="#">The Quizora Blog</a></li>
-                    <li><a id="footerlinks" href="#">Study Resources</a></li>
-                    <li><a id="footerlinks" href="#">Help Center</a></li>
-                    <li><a id="footerlinks" href="#">Learning Tips</a></li>
-                    <li><a id="footerlinks" href="#">Student Community</a></li>
-                    <li><a id="footerlinks" href="#">Quiz Categories</a></li>
-                </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5 class="mb-3 footer-heading">For Educators</h5>
-                <ul class="list-unstyled">
-                    <li><a id="footerlinks" href="#">Teachers' Resources</a></li>
-                    <li><a id="footerlinks" href="#">Lesson Planning</a></li>
-                    <li><a id="footerlinks" href="#">Classroom Tools</a></li>
-                    <li><a id="footerlinks" href="#">Assessment Guides</a></li>
-                    <li><a id="footerlinks" href="#">Professional Development</a></li>
-                    <li><a id="footerlinks" href="#">Educator Community</a></li>
-                </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5 class="mb-3 footer-heading">Company</h5>
-                    <ul class="list-unstyled">
-                        <li><a id="footerlinks" href="#">About Us</a></li>
-                        <li><a id="footerlinks" href="#">Careers</a></li>
-                        <li><a id="footerlinks" href="#">Partners</a></li>
-                        <li><a id="footerlinks" href="#">Press Kit</a></li>
-                        <li><a id="footerlinks" href="#">Contact Us</a></li>
-                        <li><a id="footerlinks" href="#">Become an Affiliate</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5 class="mb-3 footer-heading">Legal & Support</h5>
-                    <ul class="list-unstyled">
-                        <li><a id="footerlinks" href="#">Privacy Policy</a></li>
-                        <li><a id="footerlinks" href="#">Terms of Service</a></li>
-                        <li><a id="footerlinks" href="#">Accessibility</a></li>
-                        <li><a id="footerlinks" href="#">Cookie Settings</a></li>
-                        <li><a id="footerlinks" href="#">Site Map</a></li>
-                        <li><a id="footerlinks" href="#">FAQ</a></li>
-                    </ul>
+<body>
+    <div class="main-container">
+        <div class="card-box">
+            <!-- Initial Choice Section -->
+            <div id="choice-section" class="section">
+                <h2>Sign Up with</h2>
+                <div class="button-group">
+                    <button class="custom-btn google" onclick="googleSignIn()">Sign up with Google</button>
+                    <button class="custom-btn apple" onclick="appleSignIn()">Sign up with Apple</button>
+                    <button class="custom-btn microsoft" onclick="microsoftSignIn()">Sign up with Microsoft</button>
+                    <button class="custom-btn email" onclick="chooseEmail()">Sign up with Email</button>
                 </div>
             </div>
 
-            <div class="row mt-4 pt-3 border-top border-secondary">
-                <div class="col-md-6">
-                    <h5 class="mb-3 footer-heading">Download Our App</h5>
-                    <p class="text-light mb-3">Take Quizora with you wherever you go!</p>
-                    <div class="d-flex">
-                        <a href="#" class="me-3"><img src="playstore.png" style="height:46px; width:auto;" alt="Google Play" class="animate__animated animate__fadeIn"></a>
-                        <a href="#"><img src="appstore.png" style="height:46px; width:auto;" alt="App Store" class="animate__animated animate__fadeIn animate__delay-1s"></a>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h5 class="mb-3 footer-heading">Connect With Us</h5>
-                    <p class="text-light mb-3">Follow us on social media for updates and learning tips!</p>
-                    <div class="social-icons">
-                        <a href="#"><img src="twitter.png" alt="Twitter" style="height:40px; width: auto;" class="animate__animated animate__bounceIn"></a>
-                        <a href="#"><img src="Facebook.png" alt="Facebook" style="height:40px; width: auto;" class="animate__animated animate__bounceIn animate__delay-1s"></a>
-                        <a href="#"><img src="Instagram.png" alt="Instagram" style="height:40px; width: auto;" class="animate__animated animate__bounceIn animate__delay-2s"></a>
-                        <a href="#"><img src="LinkedIn.png" alt="LinkedIn" style="height:40px; width: auto;" class="animate__animated animate__bounceIn animate__delay-3s"></a>
-                        <a href="#"><img src="YouTube.png" alt="YouTube" style="height:40px; width: auto;" class="animate__animated animate__bounceIn animate__delay-3s"></a>
-                    </div>
-                </div>
+            <!-- Email Section -->
+            <div id="email-section" class="section hidden">
+                <h2>Enter Your Email</h2>
+                <input type="email" id="emailInput" class="input-field" placeholder="Enter your email" required>
+                <button class="custom-btn continue" onclick="sendOtp()">Continue</button>
             </div>
 
-            <div class="mt-4 pt-3 border-top border-secondary footer-legal">
-                <div>
-                    <p>© 2024 Quizora Inc. All rights reserved.</p>
-                    <p class="small text-muted">Quizora is committed to making education accessible and engaging for everyone.</p>
-                </div>
-                <div class="newsletter">
-                    <form class="d-flex">
-                        <input type="email" class="form-control form-control-sm me-2" placeholder="Subscribe to newsletter">
-                        <button type="submit" class="btn btn-sm btn-outline-light">Subscribe</button>
-                    </form>
-                </div>
+            <!-- OTP Section -->
+            <div id="otp-section" class="section hidden">
+                <h2>Email Verification</h2>
+                <p>Verification code has been sent to <span id="enteredEmail"></span></p>
+                <input type="text" id="otpInput" class="input-field" placeholder="Enter OTP" required>
+                <button class="custom-btn continue" onclick="validateOtp()">Verify</button>
+            </div>
+
+            <!-- Profile Setup Section -->
+            <div id="profile-setup-section" class="section hidden">
+                <h2>Complete Your Profile</h2>
+                <p>Email: <span id="confirmedEmail"></span></p>
+                <input type="text" id="nameInput" class="input-field" placeholder="Full Name" required>
+                <input type="number" id="ageInput" class="input-field" placeholder="Age" required>
+                <input type="password" id="passwordInput" class="input-field" placeholder="Password" required>
+                <button class="custom-btn finish" onclick="submitProfile()">Finish Signup</button>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="landing page 12.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: false,
-            mirror: true
-        });
-        
-        // Add animation for counter
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            const updateCount = () => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText.replace(/,/g, '').replace(/\+/g, '');
-                const increment = target / 100;
-                
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + increment).toLocaleString() + '+';
-                    setTimeout(updateCount, 50);
-                } else {
-                    counter.innerText = target.toLocaleString() + '+';
-                }
-            };
-            
-            // Start counting when in viewport
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        updateCount();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
-            
-            observer.observe(counter);
-        });
-        
-        // Demo section animation
-        const demoQuestion = document.querySelector('.demo-question');
-        if (demoQuestion) {
-            setInterval(() => {
-                demoQuestion.classList.add('animate__animated', 'animate__fadeOut');
-                setTimeout(() => {
-                    const questions = [
-                        'What is the capital of France?',
-                        'Which planet is known as the Red Planet?',
-                        'What is the chemical symbol for gold?',
-                        'Who wrote "Romeo and Juliet"?'
-                    ];
-                    const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
-                    document.querySelector('.question-text').textContent = randomQuestion;
-                    demoQuestion.classList.remove('animate__fadeOut');
-                    demoQuestion.classList.add('animate__fadeIn');
-                }, 1000);
-            }, 5000);
-        }
-    </script>
+    <script src="js/signup.js"></script>
 </body>
-
 </html>
