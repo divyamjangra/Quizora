@@ -1,66 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizora - Login/Signup</title>
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="nav">
-        <a href="#login">Login</a> | 
-        <a href="#signup">Signup</a>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <div class="tabs">
+                    <button id="login-tab" class="tab active">Login</button>
+                    <button id="signup-tab" class="tab">Sign Up</button>
+                </div>
+            </div>
+            
+            <div id="login-form" class="form active">
+                <h1>Welcome Back!</h1>
+                <p class="subtitle">Log in to your Quizora account</p>
+                
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <label for="username"><i class="fas fa-user"></i> Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#forgot" class="forgot-link">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Login <i class="fas fa-sign-in-alt"></i></button>
+                </form>
+            </div>
+            
+            <div id="signup-form" class="form">
+                <h1>Join Quizora</h1>
+                <p class="subtitle">Create your account today</p>
+                
+                <form action="/signup" method="post">
+                    <div class="form-group">
+                        <label for="fullname"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-username"><i class="fas fa-user-tag"></i> Username</label>
+                        <input type="text" id="new-username" name="username" placeholder="Choose a username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new-password"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="new-password" name="password" placeholder="Choose a password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password"><i class="fas fa-check-circle"></i> Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                    </div>
+                    
+                    <div class="terms">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Sign Up <i class="fas fa-user-plus"></i></button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div id="login">
-        <h1>Login</h1>
-        <form action="/login" method="post">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
-            </div>
-            <div>
-                <input type="checkbox" id="remember" name="remember">
-                <label for="remember">Remember me</label>
-            </div>
-            <div>
-                <input type="submit" value="Login">
-            </div>
-            <div>
-                <a href="#forgot">Forgot Password?</a>
-            </div>
-        </form>
-    </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-    <div id="signup">
-        <h1>Sign Up</h1>
-        <form action="/signup" method="post">
-            <div>
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
-            </div>
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div>
-                <label for="new-username">Username:</label>
-                <input type="text" id="new-username" name="username" placeholder="Choose a username" required>
-            </div>
-            <div>
-                <label for="new-password">Password:</label>
-                <input type="password" id="new-password" name="password" placeholder="Choose a password" required>
-            </div>
-            <div>
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
-            </div>
-            <div>
-                <input type="submit" value="Sign Up">
-            </div>
-        </form>
-    </div>
+    <!-- Custom JavaScript -->
+    <script src="js/auth.js"></script>
+
+    <script>
+        // Toggle between login and signup forms
+        document.getElementById('login-tab').addEventListener('click', function() {
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('signup-form').classList.remove('active');
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('signup-tab').classList.remove('active');
+        });
+        
+        document.getElementById('signup-tab').addEventListener('click', function() {
+            document.getElementById('signup-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+            document.getElementById('signup-tab').classList.add('active');
+            document.getElementById('login-tab').classList.remove('active');
+        });
+    </script>
 </body>
 </html> 
