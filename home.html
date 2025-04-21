@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizora - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body class="bg-dark">
+    <!-- Header Section -->
+    <header class="header">        
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <div class="navbar-brand d-flex align-items-center">
+                    <img src="LOGO transparent.png" alt="Logo Quizora" height="50px">
+                    <img src="LOGO NAME transparent.png" alt="Quizora" height="50px" class="ms-2">
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-search"></i> Explore</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-history"></i> History</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown me-3">
+                            <button class="btn btn-dark dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                                <i class="fas fa-bell"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><a class="dropdown-item" href="#">New quiz added in Science category!</a></li>
+                                <li><a class="dropdown-item" href="#">You earned a new badge!</a></li>
+                                <li><a class="dropdown-item" href="#">Challenge from Alex is waiting</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-dark dropdown-toggle d-flex align-items-center" type="button" id="profileDropdown" data-bs-toggle="dropdown">
+                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                <span>John Doe</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container py-5">
+        <!-- Welcome Section -->
+        <section class="welcome-section mb-5 text-white">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1>Welcome back, John!</h1>
+                    <p class="lead">Ready to challenge your knowledge today?</p>
+                    <div class="stats d-flex flex-wrap gap-4 mt-4">
+                        <div class="stat-card p-3 rounded">
+                            <i class="fas fa-check-circle fa-2x mb-2"></i>
+                            <h3>15</h3>
+                            <p>Quizzes Completed</p>
+                        </div>
+                        <div class="stat-card p-3 rounded">
+                            <i class="fas fa-trophy fa-2x mb-2"></i>
+                            <h3>5</h3>
+                            <p>Achievements</p>
+                        </div>
+                        <div class="stat-card p-3 rounded">
+                            <i class="fas fa-star fa-2x mb-2"></i>
+                            <h3>850</h3>
+                            <p>Total Points</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-flex justify-content-center">
+                    <div class="daily-challenge p-4 rounded text-center">
+                        <h3>Daily Challenge</h3>
+                        <i class="fas fa-brain fa-4x my-3"></i>
+                        <p>Complete today's challenge and earn 50 bonus points!</p>
+                        <button class="btn btn-info mt-2">Start Challenge</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Category Section -->
+        <section class="category-section mb-5">
+            <h2 class="text-white mb-4">Quiz Categories</h2>
+            <div class="row g-4">
+                <div class="col-md-4 col-sm-6">
+                    <div class="category-card h-100 p-4 rounded text-center">
+                        <i class="fas fa-atom fa-3x mb-3"></i>
+                        <h3>Science</h3>
+                        <p>Test your knowledge about physics, chemistry, biology and more</p>
+                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="category-card h-100 p-4 rounded text-center">
+                        <i class="fas fa-calculator fa-3x mb-3"></i>
+                        <h3>Mathematics</h3>
+                        <p>Challenge yourself with algebra, geometry, and calculus questions</p>
+                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="category-card h-100 p-4 rounded text-center">
+                        <i class="fas fa-book fa-3x mb-3"></i>
+                        <h3>Literature</h3>
+                        <p>Explore the world of books, authors, and literary works</p>
+                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="category-card h-100 p-4 rounded text-center">
+                        <i class="fas fa-globe-americas fa-3x mb-3"></i>
+                        <h3>Geography</h3>
+                        <p>Test your knowledge about countries, capitals, and landmarks</p>
+                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="category-card h-100 p-4 rounded text-center">
+                        <i class="fas fa-landmark fa-3x mb-3"></i>
+                        <h3>History</h3>
+                        <p>Journey through ancient civilizations to modern history</p>
+                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="category-card h-100 p-4 rounded text-center">
+                        <i class="fas fa-puzzle-piece fa-3x mb-3"></i>
+                        <h3>General Knowledge</h3>
+                        <p>Test your knowledge on a variety of topics and trivia</p>
+                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Quizzes -->
+        <section class="popular-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-white m-0">Popular Quizzes</h2>
+                <a href="#" class="btn btn-outline-info">View All</a>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card h-100 rounded overflow-hidden">
+                        <div class="quiz-img">
+                            <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
+                        </div>
+                        <div class="quiz-content p-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-primary">Science</span>
+                                <span><i class="fas fa-star text-warning"></i> 4.8</span>
+                            </div>
+                            <h4>The Amazing Human Body</h4>
+                            <p>Test your knowledge about human anatomy and physiology</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span><i class="fas fa-question-circle"></i> 20 Questions</span>
+                                <button class="btn btn-success">Start Quiz</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card h-100 rounded overflow-hidden">
+                        <div class="quiz-img">
+                            <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
+                        </div>
+                        <div class="quiz-content p-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-success">History</span>
+                                <span><i class="fas fa-star text-warning"></i> 4.6</span>
+                            </div>
+                            <h4>World War II</h4>
+                            <p>Test your knowledge about one of history's most significant events</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span><i class="fas fa-question-circle"></i> 25 Questions</span>
+                                <button class="btn btn-success">Start Quiz</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="quiz-card h-100 rounded overflow-hidden">
+                        <div class="quiz-img">
+                            <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
+                        </div>
+                        <div class="quiz-content p-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="badge bg-info">Geography</span>
+                                <span><i class="fas fa-star text-warning"></i> 4.7</span>
+                            </div>
+                            <h4>World Capitals Challenge</h4>
+                            <p>Can you name all these capital cities around the world?</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span><i class="fas fa-question-circle"></i> 30 Questions</span>
+                                <button class="btn btn-success">Start Quiz</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer py-4 text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Quizora</h5>
+                    <p>Challenge your knowledge, learn new things, and have fun!</p>
+                    <div class="social-links">
+                        <a href="#" class="me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Explore</a></li>
+                        <li><a href="#">Leaderboard</a></li>
+                        <li><a href="#">Create Quiz</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">History</a></li>
+                        <li><a href="#">Mathematics</a></li>
+                        <li><a href="#">Literature</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Subscribe</h5>
+                    <p>Get updates on new quizzes and features</p>
+                    <form class="d-flex">
+                        <input type="email" class="form-control me-2" placeholder="Your email">
+                        <button type="submit" class="btn btn-info">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>© 2023 Quizora. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap and custom scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html> 
