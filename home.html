@@ -24,8 +24,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-search"></i> Explore</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#home"><i class="fas fa-home"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#explore-section"><i class="fas fa-search"></i> Explore</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-trophy"></i> Leaderboard</a></li>
                         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-history"></i> History</a></li>
                     </ul>
@@ -219,6 +219,205 @@
             </div>
         </section>
     </main>
+
+    <!-- Explore Section -->
+    <section class="explore-section py-5 bg-darker" id="explore-section">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="display-5 text-white mb-3">Explore Quizzes</h2>
+                <p class="text-light">Discover new challenges and test your knowledge in various topics</p>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="search-filter-bar mb-5">
+                <div class="row g-3">
+                    <div class="col-lg-6">
+                        <div class="search-box">
+                            <form class="d-flex">
+                                <input type="text" class="form-control" placeholder="Search for quizzes, topics, or categories...">
+                                <button type="submit" class="btn btn-primary ms-2"><i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="d-flex justify-content-lg-end">
+                            <div class="dropdown me-2">
+                                <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-filter me-2"></i> Filter
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">All Categories</a></li>
+                                    <li><a class="dropdown-item" href="#">Science</a></li>
+                                    <li><a class="dropdown-item" href="#">Mathematics</a></li>
+                                    <li><a class="dropdown-item" href="#">Literature</a></li>
+                                    <li><a class="dropdown-item" href="#">Geography</a></li>
+                                    <li><a class="dropdown-item" href="#">History</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown me-2">
+                                <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-sort me-2"></i> Sort By
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Most Popular</a></li>
+                                    <li><a class="dropdown-item" href="#">Newest</a></li>
+                                    <li><a class="dropdown-item" href="#">Highest Rated</a></li>
+                                    <li><a class="dropdown-item" href="#">Most Attempted</a></li>
+                                </ul>
+                            </div>
+                            <div class="view-toggle">
+                                <button class="btn btn-outline-light active"><i class="fas fa-th-large"></i></button>
+                                <button class="btn btn-outline-light"><i class="fas fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Collections -->
+            <div class="featured-collections mb-5">
+                <h3 class="text-white mb-4">Featured Collections</h3>
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
+                            <img src="https://via.placeholder.com/300x200" alt="Educational" class="img-fluid w-100">
+                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
+                                <h4>Educational</h4>
+                                <p class="mb-2">Enhance your knowledge with academic quizzes</p>
+                                <span class="badge bg-light text-dark">25 quizzes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
+                            <img src="https://via.placeholder.com/300x200" alt="For Kids" class="img-fluid w-100">
+                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
+                                <h4>For Kids</h4>
+                                <p class="mb-2">Fun and educational quizzes for children</p>
+                                <span class="badge bg-light text-dark">18 quizzes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
+                            <img src="https://via.placeholder.com/300x200" alt="Trivia Night" class="img-fluid w-100">
+                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
+                                <h4>Trivia Night</h4>
+                                <p class="mb-2">Perfect for parties and social gatherings</p>
+                                <span class="badge bg-light text-dark">30 quizzes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
+                            <img src="https://via.placeholder.com/300x200" alt="Professional" class="img-fluid w-100">
+                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
+                                <h4>Professional</h4>
+                                <p class="mb-2">Skill assessment for career advancement</p>
+                                <span class="badge bg-light text-dark">22 quizzes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trending Topics -->
+            <div class="trending-topics mb-5">
+                <h3 class="text-white mb-4">Trending Topics</h3>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="topics-wrapper d-flex flex-wrap gap-2">
+                            <a href="#" class="topic-tag">JavaScript</a>
+                            <a href="#" class="topic-tag">Machine Learning</a>
+                            <a href="#" class="topic-tag">World History</a>
+                            <a href="#" class="topic-tag">Marvel Universe</a>
+                            <a href="#" class="topic-tag">Famous Artists</a>
+                            <a href="#" class="topic-tag">Climate Change</a>
+                            <a href="#" class="topic-tag">Classical Music</a>
+                            <a href="#" class="topic-tag">Human Anatomy</a>
+                            <a href="#" class="topic-tag">Ancient Civilizations</a>
+                            <a href="#" class="topic-tag">Space Exploration</a>
+                            <a href="#" class="topic-tag">Nutrition</a>
+                            <a href="#" class="topic-tag">Olympic Games</a>
+                            <a href="#" class="topic-tag">Literature Classics</a>
+                            <a href="#" class="topic-tag">Psychology</a>
+                            <a href="#" class="topic-tag">World Capitals</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recently Added -->
+            <div class="recently-added">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-white m-0">Recently Added</h3>
+                    <a href="#" class="btn btn-sm btn-outline-info">View All</a>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="quiz-card h-100 rounded overflow-hidden">
+                            <div class="quiz-img">
+                                <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">NEW</span>
+                            </div>
+                            <div class="quiz-content p-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="badge bg-warning text-dark">Technology</span>
+                                    <span><i class="fas fa-star text-warning"></i> 4.9</span>
+                                </div>
+                                <h4>Artificial Intelligence Basics</h4>
+                                <p>Learn the fundamentals of AI and test your knowledge</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span><i class="fas fa-question-circle"></i> 15 Questions</span>
+                                    <button class="btn btn-success">Start Quiz</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="quiz-card h-100 rounded overflow-hidden">
+                            <div class="quiz-img">
+                                <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">NEW</span>
+                            </div>
+                            <div class="quiz-content p-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="badge bg-primary">Music</span>
+                                    <span><i class="fas fa-star text-warning"></i> 4.7</span>
+                                </div>
+                                <h4>Classical Composers</h4>
+                                <p>Test your knowledge of classical music composers and their works</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span><i class="fas fa-question-circle"></i> 20 Questions</span>
+                                    <button class="btn btn-success">Start Quiz</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="quiz-card h-100 rounded overflow-hidden">
+                            <div class="quiz-img">
+                                <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
+                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">NEW</span>
+                            </div>
+                            <div class="quiz-content p-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="badge bg-success">Environment</span>
+                                    <span><i class="fas fa-star text-warning"></i> 4.8</span>
+                                </div>
+                                <h4>Climate Change</h4>
+                                <p>Test your understanding of climate science and global warming</p>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <span><i class="fas fa-question-circle"></i> 25 Questions</span>
+                                    <button class="btn btn-success">Start Quiz</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer py-4 text-white">
