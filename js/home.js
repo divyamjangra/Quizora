@@ -112,4 +112,237 @@ document.addEventListener('DOMContentLoaded', function() {
             notificationDropdown.appendChild(badge);
         }, 3000);
     }
+
+    // Add functionality for view toggle in explore section
+    const gridViewBtn = document.querySelector('.view-toggle .btn:first-child');
+    const listViewBtn = document.querySelector('.view-toggle .btn:last-child');
+    const quizCards = document.querySelectorAll('.recently-added .row');
+    
+    if (gridViewBtn && listViewBtn) {
+        listViewBtn.addEventListener('click', function() {
+            gridViewBtn.classList.remove('active');
+            this.classList.add('active');
+            
+            quizCards.forEach(row => {
+                // Change layout to list view
+                const cards = row.querySelectorAll('.col-lg-4');
+                cards.forEach(card => {
+                    card.classList.remove('col-lg-4', 'col-md-6');
+                    card.classList.add('col-12', 'mb-3');
+                    
+                    // Restructure card for list view
+                    const quizCard = card.querySelector('.quiz-card');
+                    quizCard.classList.add('d-md-flex');
+                    
+                    const imgContainer = quizCard.querySelector('.quiz-img');
+                    if (imgContainer) {
+                        imgContainer.style.width = '30%';
+                        imgContainer.style.minWidth = '200px';
+                    }
+                });
+            });
+        });
+        
+        gridViewBtn.addEventListener('click', function() {
+            listViewBtn.classList.remove('active');
+            this.classList.add('active');
+            
+            quizCards.forEach(row => {
+                // Change layout back to grid view
+                const cards = row.querySelectorAll('.col-12');
+                cards.forEach(card => {
+                    card.classList.remove('col-12', 'mb-3');
+                    card.classList.add('col-lg-4', 'col-md-6');
+                    
+                    // Restore card structure for grid view
+                    const quizCard = card.querySelector('.quiz-card');
+                    quizCard.classList.remove('d-md-flex');
+                    
+                    const imgContainer = quizCard.querySelector('.quiz-img');
+                    if (imgContainer) {
+                        imgContainer.style.width = '';
+                        imgContainer.style.minWidth = '';
+                    }
+                });
+            });
+        });
+    }
+    
+    // Search functionality
+    const searchForm = document.querySelector('.search-box form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchInput = this.querySelector('input').value.trim().toLowerCase();
+            
+            if (searchInput.length > 0) {
+                console.log(`Searching for: ${searchInput}`);
+                
+                // Simulate search - highlight matching cards
+                const allQuizCards = document.querySelectorAll('.quiz-card');
+                let hasMatches = false;
+                
+                allQuizCards.forEach(card => {
+                    const cardTitle = card.querySelector('h4').textContent.toLowerCase();
+                    const cardDescription = card.querySelector('p').textContent.toLowerCase();
+                    const cardCategory = card.querySelector('.badge').textContent.toLowerCase();
+                    
+                    if (cardTitle.includes(searchInput) || 
+                        cardDescription.includes(searchInput) || 
+                        cardCategory.includes(searchInput)) {
+                        card.style.transform = 'scale(1.03)';
+                        card.style.boxShadow = '0 0 15px rgba(108, 99, 255, 0.7)';
+                        hasMatches = true;
+                    } else {
+                        card.style.opacity = '0.5';
+                    }
+                });
+                
+                // Show search results message
+                if (hasMatches) {
+                    alert(`Found quizzes matching "${searchInput}"`);
+                } else {
+                    alert(`No quizzes found matching "${searchInput}"`);
+                }
+                
+                // Reset the highlighting after a delay
+                setTimeout(() => {
+                    allQuizCards.forEach(card => {
+                        card.style.transform = '';
+                        card.style.boxShadow = '';
+                        card.style.opacity = '1';
+                    });
+                }, 3000);
+            }
+        });
+    }
+    
+    // Collection cards animation
+    const collectionCards = document.querySelectorAll('.collection-card');
+    collectionCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const overlay = this.querySelector('.collection-overlay');
+            overlay.style.background = 'linear-gradient(to top, rgba(108, 99, 255, 0.8) 0%, rgba(108, 99, 255, 0.2) 100%)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const overlay = this.querySelector('.collection-overlay');
+            overlay.style.background = 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%)';
+        });
+    });
+    
+    // Filter and Sort functionality
+    const filterButtons = document.querySelectorAll('.search-filter-bar .dropdown-item');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const filterType = this.textContent;
+            console.log(`Filtering by: ${filterType}`);
+            
+            // Update dropdown button text to show selected filter
+            const dropdownButton = this.closest('.dropdown').querySelector('.dropdown-toggle');
+            if (dropdownButton) {
+                if (dropdownButton.textContent.includes('Filter')) {
+                    dropdownButton.innerHTML = `<i class="fas fa-filter me-2"></i> ${filterType}`;
+                } else if (dropdownButton.textContent.includes('Sort')) {
+                    dropdownButton.innerHTML = `<i class="fas fa-sort me-2"></i> ${filterType}`;
+                }
+            }
+            
+            // Simulate filter/sort effect
+            const quizCards = document.querySelectorAll('.quiz-card');
+            
+            // Simple animation to show the filtering effect
+            quizCards.forEach(card => {
+                card.style.opacity = '0.2';
+                card.style.transform = 'scale(0.95)';
+            });
+            
+            setTimeout(() => {
+                quizCards.forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                });
+                
+                // If filtering by category, only show matching cards
+                if (filterType !== 'All Categories' && dropdownButton.textContent.includes('Filter')) {
+                    quizCards.forEach(card => {
+                        const category = card.querySelector('.badge').textContent;
+                        if (category.toLowerCase() !== filterType.toLowerCase()) {
+                            // Just dimming for demo purposes instead of hiding
+                            card.style.opacity = '0.5';
+                        }
+                    });
+                }
+            }, 500);
+        });
+    });
+    
+    // Topic tag hover effect
+    const topicTags = document.querySelectorAll('.topic-tag');
+    topicTags.forEach(tag => {
+        tag.addEventListener('click', function(e) {
+            e.preventDefault();
+            const topic = this.textContent;
+            console.log(`Selected topic: ${topic}`);
+            
+            // Highlight the selected tag
+            topicTags.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            this.style.backgroundColor = 'var(--primary-color)';
+            
+            // Reset other tags
+            setTimeout(() => {
+                this.style.backgroundColor = '';
+            }, 3000);
+        });
+    });
+
+    // Add smooth scrolling and content toggling for navigation links
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    const mainContent = document.querySelector('main');
+    const exploreSection = document.querySelector('#explore-section');
+    
+    // Initially hide the explore section
+    if (exploreSection) {
+        exploreSection.style.display = 'none';
+    }
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Update active class on navigation
+            navLinks.forEach(nl => nl.classList.remove('active'));
+            this.classList.add('active');
+            
+            const href = this.getAttribute('href');
+            
+            if (href === '#explore-section') {
+                // Hide main content, show explore section with fade animation
+                if (mainContent) {
+                    mainContent.style.opacity = '0';
+                    setTimeout(() => {
+                        mainContent.style.display = 'none';
+                        exploreSection.style.display = 'block';
+                        setTimeout(() => {
+                            exploreSection.style.opacity = '1';
+                        }, 50);
+                    }, 300);
+                }
+            } else {
+                // Show main content, hide explore section with fade animation
+                if (exploreSection) {
+                    exploreSection.style.opacity = '0';
+                    setTimeout(() => {
+                        exploreSection.style.display = 'none';
+                        mainContent.style.display = 'block';
+                        setTimeout(() => {
+                            mainContent.style.opacity = '1';
+                        }, 50);
+                    }, 300);
+                }
+            }
+        });
+    });
 }); 
