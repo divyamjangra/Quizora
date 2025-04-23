@@ -36,9 +36,11 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><h6 class="dropdown-header">Notifications</h6></li>
-                                <li><a class="dropdown-item" href="#">New quiz added in Science category!</a></li>
-                                <li><a class="dropdown-item" href="#">You earned a new badge!</a></li>
-                                <li><a class="dropdown-item" href="#">Challenge from Alex is waiting</a></li>
+                                <li><a class="dropdown-item notification-item" href="#" data-notification-id="1" data-notification-type="new-quiz">New quiz added in Science category!</a></li>
+                                <li><a class="dropdown-item notification-item" href="#" data-notification-id="2" data-notification-type="achievement">You earned a new badge!</a></li>
+                                <li><a class="dropdown-item notification-item" href="#" data-notification-id="3" data-notification-type="challenge">Challenge from Alex is waiting</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-center" href="#">View all notifications</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -47,7 +49,7 @@
                                 <span>John Doe</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i> Profile</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a></li>
@@ -717,5 +719,26 @@
     <!-- Bootstrap and custom scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="js/home.js"></script>
+
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header border-bottom border-secondary">
+                    <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="notification-content">
+                        <!-- Notification content will be loaded here dynamically -->
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary notification-action-btn">Action</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html> 
