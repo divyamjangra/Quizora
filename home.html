@@ -26,7 +26,7 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item"><a class="nav-link active" href="home.html"><i class="fas fa-home"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#explore-section"><i class="fas fa-search"></i> Explore</a></li>
-                        <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" id="leaderboardLink"><i class="fas fa-trophy"></i> Leaderboard</a></li>
                         <li class="nav-item"><a class="nav-link" href="#" id="historyLink"><i class="fas fa-history"></i> History</a></li>
                     </ul>
                     <div class="d-flex align-items-center">
@@ -300,6 +300,165 @@
                                     <div class="score-badge bg-danger text-white px-3 py-1 rounded">45%</div>
                                     <p class="text-white-50 mb-0 mt-1">5 days ago</p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-section mb-5" id="leaderboardSection" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-white m-0">Global Leaderboard</h2>
+                <div class="btn-group">
+                    <button class="btn btn-outline-info active" data-type="global">Global</button>
+                    <button class="btn btn-outline-info" data-type="country">Country</button>
+                </div>
+            </div>
+            
+            <div class="leaderboard-container">
+                <div class="leaderboard-header p-3 rounded mb-3">
+                    <div class="row align-items-center">
+                        <div class="col-1 text-center">Rank</div>
+                        <div class="col-4">Player</div>
+                        <div class="col-3">Country</div>
+                        <div class="col-2 text-center">XP</div>
+                        <div class="col-2 text-center">Quizzes</div>
+                    </div>
+                </div>
+                
+                <div class="leaderboard-content">
+                    <!-- Global Rankings -->
+                    <div class="leaderboard-type" data-type="global">
+                        <div class="leaderboard-item p-3 rounded mb-2">
+                            <div class="row align-items-center">
+                                <div class="col-1 text-center">
+                                    <span class="rank-badge bg-warning text-dark">1</span>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                        <div>
+                                            <h5 class="mb-0">Alex Johnson</h5>
+                                            <small class="text-white-50">@alexj</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">United States</div>
+                                <div class="col-2 text-center">
+                                    <span class="xp-badge">12,450</span>
+                                </div>
+                                <div class="col-2 text-center">156</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item p-3 rounded mb-2">
+                            <div class="row align-items-center">
+                                <div class="col-1 text-center">
+                                    <span class="rank-badge bg-secondary">2</span>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                        <div>
+                                            <h5 class="mb-0">Sarah Chen</h5>
+                                            <small class="text-white-50">@sarahc</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">Canada</div>
+                                <div class="col-2 text-center">
+                                    <span class="xp-badge">11,890</span>
+                                </div>
+                                <div class="col-2 text-center">142</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item p-3 rounded mb-2">
+                            <div class="row align-items-center">
+                                <div class="col-1 text-center">
+                                    <span class="rank-badge bg-danger">3</span>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                        <div>
+                                            <h5 class="mb-0">David Kim</h5>
+                                            <small class="text-white-50">@davidk</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">South Korea</div>
+                                <div class="col-2 text-center">
+                                    <span class="xp-badge">10,750</span>
+                                </div>
+                                <div class="col-2 text-center">128</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Country Rankings -->
+                    <div class="leaderboard-type" data-type="country" style="display: none;">
+                        <div class="leaderboard-item p-3 rounded mb-2">
+                            <div class="row align-items-center">
+                                <div class="col-1 text-center">
+                                    <span class="rank-badge bg-warning text-dark">1</span>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                        <div>
+                                            <h5 class="mb-0">John Smith</h5>
+                                            <small class="text-white-50">@johns</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">United States</div>
+                                <div class="col-2 text-center">
+                                    <span class="xp-badge">9,850</span>
+                                </div>
+                                <div class="col-2 text-center">118</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item p-3 rounded mb-2">
+                            <div class="row align-items-center">
+                                <div class="col-1 text-center">
+                                    <span class="rank-badge bg-secondary">2</span>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                        <div>
+                                            <h5 class="mb-0">Emily Brown</h5>
+                                            <small class="text-white-50">@emilyb</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">United States</div>
+                                <div class="col-2 text-center">
+                                    <span class="xp-badge">8,920</span>
+                                </div>
+                                <div class="col-2 text-center">105</div>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item p-3 rounded mb-2">
+                            <div class="row align-items-center">
+                                <div class="col-1 text-center">
+                                    <span class="rank-badge bg-danger">3</span>
+                                </div>
+                                <div class="col-4">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                        <div>
+                                            <h5 class="mb-0">Michael Wilson</h5>
+                                            <small class="text-white-50">@michaelw</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">United States</div>
+                                <div class="col-2 text-center">
+                                    <span class="xp-badge">8,450</span>
+                                </div>
+                                <div class="col-2 text-center">98</div>
                             </div>
                         </div>
                     </div>
