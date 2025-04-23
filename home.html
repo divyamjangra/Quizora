@@ -24,10 +24,10 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link active" href="#home"><i class="fas fa-home"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="home.html"><i class="fas fa-home"></i> Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#explore-section"><i class="fas fa-search"></i> Explore</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-trophy"></i> Leaderboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-history"></i> History</a></li>
+                        <li class="nav-item"><a class="nav-link" href="leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" id="historyLink"><i class="fas fa-history"></i> History</a></li>
                     </ul>
                     <div class="d-flex align-items-center">
                         <div class="dropdown me-3">
@@ -62,7 +62,7 @@
     <!-- Main Content -->
     <main class="container py-5">
         <!-- Welcome Section -->
-        <section class="welcome-section mb-5 text-white">
+        <section class="welcome-section mb-5 text-white" id="welcomeSection">
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h1>Welcome back, John!</h1>
@@ -97,7 +97,7 @@
         </section>
 
         <!-- Category Section -->
-        <section class="category-section mb-5">
+        <section class="category-section mb-5" id="categorySection">
             <h2 class="text-white mb-4">Quiz Categories</h2>
             <div class="row g-4">
                 <div class="col-md-4 col-sm-6">
@@ -152,7 +152,7 @@
         </section>
 
         <!-- Popular Quizzes -->
-        <section class="popular-section mb-5">
+        <section class="popular-section mb-5" id="popularSection">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="text-white m-0">Popular Quizzes</h2>
                 <a href="#" class="btn btn-outline-info">View All</a>
@@ -212,6 +212,94 @@
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <span><i class="fas fa-question-circle"></i> 30 Questions</span>
                                 <button class="btn btn-success">Start Quiz</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="history-section mb-5" id="historySection" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-white m-0">Your Quiz History</h2>
+                <a href="#" class="btn btn-outline-info">View All History</a>
+            </div>
+            
+            <div class="history-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date text-white-50">Today</div>
+                    <div class="timeline-content">
+                        <div class="quiz-history-card p-3 rounded mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="text-white mb-1">The Amazing Human Body</h5>
+                                    <p class="text-white-50 mb-0">Science • 20 Questions</p>
+                                </div>
+                                <div class="text-end">
+                                    <div class="score-badge bg-success text-white px-3 py-1 rounded">85%</div>
+                                    <p class="text-white-50 mb-0 mt-1">15 mins ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-history-card p-3 rounded mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="text-white mb-1">World Capitals Challenge</h5>
+                                    <p class="text-white-50 mb-0">Geography • 30 Questions</p>
+                                </div>
+                                <div class="text-end">
+                                    <div class="score-badge bg-warning text-dark px-3 py-1 rounded">65%</div>
+                                    <p class="text-white-50 mb-0 mt-1">2 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date text-white-50">Yesterday</div>
+                    <div class="timeline-content">
+                        <div class="quiz-history-card p-3 rounded mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="text-white mb-1">World War II</h5>
+                                    <p class="text-white-50 mb-0">History • 25 Questions</p>
+                                </div>
+                                <div class="text-end">
+                                    <div class="score-badge bg-success text-white px-3 py-1 rounded">92%</div>
+                                    <p class="text-white-50 mb-0 mt-1">Yesterday, 3:45 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date text-white-50">This Week</div>
+                    <div class="timeline-content">
+                        <div class="quiz-history-card p-3 rounded mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="text-white mb-1">Classical Music</h5>
+                                    <p class="text-white-50 mb-0">Music • 15 Questions</p>
+                                </div>
+                                <div class="text-end">
+                                    <div class="score-badge bg-success text-white px-3 py-1 rounded">88%</div>
+                                    <p class="text-white-50 mb-0 mt-1">3 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quiz-history-card p-3 rounded mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="text-white mb-1">Basic Mathematics</h5>
+                                    <p class="text-white-50 mb-0">Math • 20 Questions</p>
+                                </div>
+                                <div class="text-end">
+                                    <div class="score-badge bg-danger text-white px-3 py-1 rounded">45%</div>
+                                    <p class="text-white-50 mb-0 mt-1">5 days ago</p>
+                                </div>
                             </div>
                         </div>
                     </div>
