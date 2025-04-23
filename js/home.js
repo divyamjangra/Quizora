@@ -298,51 +298,107 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add smooth scrolling and content toggling for navigation links
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    // Get all necessary elements
+    const historyLink = document.getElementById('historyLink');
+    const leaderboardLink = document.getElementById('leaderboardLink');
+    const historySection = document.getElementById('historySection');
+    const leaderboardSection = document.getElementById('leaderboardSection');
+    const welcomeSection = document.getElementById('welcomeSection');
+    const categorySection = document.getElementById('categorySection');
+    const popularSection = document.getElementById('popularSection');
+    const exploreSection = document.querySelector('.explore-section');
     const mainContent = document.querySelector('main');
-    const exploreSection = document.querySelector('#explore-section');
-    
-    // Initially hide the explore section
-    if (exploreSection) {
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+    // Function to hide all sections
+    function hideAllSections() {
+        historySection.style.display = 'none';
+        leaderboardSection.style.display = 'none';
+        welcomeSection.style.display = 'none';
+        categorySection.style.display = 'none';
+        popularSection.style.display = 'none';
         exploreSection.style.display = 'none';
     }
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
+
+    // Function to show all main sections
+    function showAllSections() {
+        historySection.style.display = 'none';
+        leaderboardSection.style.display = 'none';
+        welcomeSection.style.display = 'block';
+        categorySection.style.display = 'block';
+        popularSection.style.display = 'block';
+        exploreSection.style.display = 'none';
+    }
+
+    // Function to update active navigation
+    function updateActiveNav(activeLink) {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        activeLink.classList.add('active');
+    }
+
+    // History link click handler
+    historyLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (historySection.style.display === 'none') {
+            hideAllSections();
+            historySection.style.display = 'block';
+            updateActiveNav(historyLink);
+        } else {
+            showAllSections();
+            updateActiveNav(document.querySelector('.nav-link[href="home.html"]'));
+        }
+    });
+
+    // Leaderboard link click handler
+    leaderboardLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (leaderboardSection.style.display === 'none') {
+            hideAllSections();
+            leaderboardSection.style.display = 'block';
+            updateActiveNav(leaderboardLink);
+        } else {
+            showAllSections();
+            updateActiveNav(document.querySelector('.nav-link[href="home.html"]'));
+        }
+    });
+
+    // Explore link click handler
+    document.querySelector('.nav-link[href="#explore-section"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        hideAllSections();
+        exploreSection.style.display = 'block';
+        exploreSection.scrollIntoView({ behavior: 'smooth' });
+        updateActiveNav(this);
+    });
+
+    // Home link click handler
+    document.querySelector('.nav-link[href="home.html"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        showAllSections();
+        updateActiveNav(this);
+    });
+
+    // Leaderboard type toggle
+    const leaderboardTypeButtons = document.querySelectorAll('.btn-group .btn');
+    leaderboardTypeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const type = this.dataset.type;
             
-            // Update active class on navigation
-            navLinks.forEach(nl => nl.classList.remove('active'));
+            // Update button active state
+            leaderboardTypeButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
             
-            const href = this.getAttribute('href');
-            
-            if (href === '#explore-section') {
-                // Hide main content, show explore section with fade animation
-                if (mainContent) {
-                    mainContent.style.opacity = '0';
-                    setTimeout(() => {
-                        mainContent.style.display = 'none';
-                        exploreSection.style.display = 'block';
-                        setTimeout(() => {
-                            exploreSection.style.opacity = '1';
-                        }, 50);
-                    }, 300);
-                }
-            } else {
-                // Show main content, hide explore section with fade animation
-                if (exploreSection) {
-                    exploreSection.style.opacity = '0';
-                    setTimeout(() => {
-                        exploreSection.style.display = 'none';
-                        mainContent.style.display = 'block';
-                        setTimeout(() => {
-                            mainContent.style.opacity = '1';
-                        }, 50);
-                    }, 300);
-                }
-            }
+            // Show/hide leaderboard types
+            document.querySelectorAll('.leaderboard-type').forEach(section => {
+                section.style.display = section.dataset.type === type ? 'block' : 'none';
+            });
         });
     });
+
+    // Initialize sections
+    showAllSections();
 }); 
