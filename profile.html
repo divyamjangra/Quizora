@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Quizora</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body class="bg-dark">
+    <!-- Header Section -->
+    <header class="header">        
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <div class="navbar-brand d-flex align-items-center">
+                    <img src="LOGO transparent.png" alt="Logo Quizora" height="50px">
+                    <img src="LOGO NAME transparent.png" alt="Quizora" height="50px" class="ms-2">
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link" href="home.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home.html#explore-section"><i class="fas fa-search"></i> Explore</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home.html#leaderboardSection"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="home.html#historySection"><i class="fas fa-history"></i> History</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown me-3">
+                            <button class="btn btn-dark dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
+                                <i class="fas fa-bell"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><h6 class="dropdown-header">Notifications</h6></li>
+                                <li><a class="dropdown-item" href="#">New quiz added in Science category!</a></li>
+                                <li><a class="dropdown-item" href="#">You earned a new badge!</a></li>
+                                <li><a class="dropdown-item" href="#">Challenge from Alex is waiting</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-dark dropdown-toggle d-flex align-items-center" type="button" id="profileDropdown" data-bs-toggle="dropdown">
+                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
+                                <span>John Doe</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item active" href="profile.html"><i class="fas fa-user me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container py-5">
+        <div class="row">
+            <!-- Profile Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="profile-sidebar p-4 rounded">
+                    <div class="text-center mb-4">
+                        <div class="profile-image-container mb-3">
+                            <img src="https://via.placeholder.com/150" class="profile-image rounded-circle" alt="John Doe">
+                            <button class="btn btn-sm btn-primary edit-profile-btn">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <h4 class="mb-1">John Doe</h4>
+                        <p class="text-white-50">@johndoe</p>
+                        <div class="badge bg-info mb-2">Level 15</div>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="text-white-50 small">850 / 1000 XP to Level 16</p>
+                    </div>
+                    
+                    <div class="sidebar-nav">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#overview" data-bs-toggle="tab">
+                                    <i class="fas fa-user me-2"></i> Overview
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#statistics" data-bs-toggle="tab">
+                                    <i class="fas fa-chart-bar me-2"></i> Statistics
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#achievements" data-bs-toggle="tab">
+                                    <i class="fas fa-trophy me-2"></i> Achievements
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#settings" data-bs-toggle="tab">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Content -->
+            <div class="col-lg-9">
+                <div class="tab-content">
+                    <!-- Overview Tab -->
+                    <div class="tab-pane fade show active" id="overview">
+                        <div class="profile-card p-4 rounded mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3 class="m-0">Overview</h3>
+                                <button class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-edit me-1"></i> Edit Profile
+                                </button>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-group">
+                                        <label>Full Name</label>
+                                        <p>John Doe</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-group">
+                                        <label>Username</label>
+                                        <p>@johndoe</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-group">
+                                        <label>Email</label>
+                                        <p>johndoe@example.com</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-group">
+                                        <label>Member Since</label>
+                                        <p>January 2023</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-group">
+                                        <label>Country</label>
+                                        <p>United States</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-group">
+                                        <label>Bio</label>
+                                        <p>Quiz enthusiast and knowledge seeker. Love to learn new things every day!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card p-4 rounded mb-4">
+                            <h3 class="mb-3">Recent Activity</h3>
+                            <div class="activity-timeline">
+                                <div class="activity-item">
+                                    <div class="activity-icon bg-success">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h5>Completed "The Amazing Human Body" quiz</h5>
+                                        <p class="text-white-50">Score: 85% • 15 mins ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon bg-primary">
+                                        <i class="fas fa-award"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h5>Earned "Science Explorer" badge</h5>
+                                        <p class="text-white-50">2 hours ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon bg-warning">
+                                        <i class="fas fa-level-up-alt"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h5>Reached Level 15</h5>
+                                        <p class="text-white-50">Yesterday</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon bg-info">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <h5>Completed "World War II" quiz</h5>
+                                        <p class="text-white-50">Score: 92% • 2 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics Tab -->
+                    <div class="tab-pane fade" id="statistics">
+                        <div class="profile-card p-4 rounded mb-4">
+                            <h3 class="mb-4">Statistics</h3>
+                            
+                            <div class="row stats-summary mb-4">
+                                <div class="col-md-3 col-6 mb-3">
+                                    <div class="stat-card p-3 text-center rounded">
+                                        <i class="fas fa-check-circle fa-2x mb-2"></i>
+                                        <h3>15</h3>
+                                        <p>Quizzes Completed</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <div class="stat-card p-3 text-center rounded">
+                                        <i class="fas fa-trophy fa-2x mb-2"></i>
+                                        <h3>5</h3>
+                                        <p>Achievements</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <div class="stat-card p-3 text-center rounded">
+                                        <i class="fas fa-star fa-2x mb-2"></i>
+                                        <h3>850</h3>
+                                        <p>Total Points</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <div class="stat-card p-3 text-center rounded">
+                                        <i class="fas fa-percentage fa-2x mb-2"></i>
+                                        <h3>78%</h3>
+                                        <p>Avg. Score</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h4 class="mb-3">Performance by Category</h4>
+                            <div class="category-stats mb-4">
+                                <div class="category-progress mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Science</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-progress mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>History</span>
+                                        <span>92%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-progress mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Geography</span>
+                                        <span>65%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-progress mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Mathematics</span>
+                                        <span>45%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-progress mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span>Music</span>
+                                        <span>88%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 88%" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <h4 class="mb-3">Activity Over Time</h4>
+                                <div class="activity-placeholder bg-dark p-5 text-center rounded">
+                                    <p class="text-white-50 m-0">Activity chart will be displayed here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievements Tab -->
+                    <div class="tab-pane fade" id="achievements">
+                        <div class="profile-card p-4 rounded mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3 class="m-0">Achievements</h3>
+                                <div>
+                                    <span class="badge bg-primary p-2">5/20 Unlocked</span>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3">
+                                            <i class="fas fa-rocket fa-3x text-info"></i>
+                                        </div>
+                                        <h5>Fast Learner</h5>
+                                        <p class="text-white-50 small">Complete 5 quizzes in a single day</p>
+                                        <span class="badge bg-success">Unlocked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3">
+                                            <i class="fas fa-flask fa-3x text-info"></i>
+                                        </div>
+                                        <h5>Science Explorer</h5>
+                                        <p class="text-white-50 small">Score 80%+ on 3 science quizzes</p>
+                                        <span class="badge bg-success">Unlocked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3">
+                                            <i class="fas fa-globe-americas fa-3x text-info"></i>
+                                        </div>
+                                        <h5>Geography Buff</h5>
+                                        <p class="text-white-50 small">Score 90%+ on a geography quiz</p>
+                                        <span class="badge bg-success">Unlocked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3 locked">
+                                            <i class="fas fa-history fa-3x"></i>
+                                        </div>
+                                        <h5>History Buff</h5>
+                                        <p class="text-white-50 small">Complete all history quizzes</p>
+                                        <span class="badge bg-secondary">Locked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3">
+                                            <i class="fas fa-fire fa-3x text-info"></i>
+                                        </div>
+                                        <h5>On Fire</h5>
+                                        <p class="text-white-50 small">Complete quizzes 3 days in a row</p>
+                                        <span class="badge bg-success">Unlocked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3">
+                                            <i class="fas fa-book fa-3x text-info"></i>
+                                        </div>
+                                        <h5>Knowledge Seeker</h5>
+                                        <p class="text-white-50 small">Take quizzes in 5 different categories</p>
+                                        <span class="badge bg-success">Unlocked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3 locked">
+                                            <i class="fas fa-calculator fa-3x"></i>
+                                        </div>
+                                        <h5>Math Wizard</h5>
+                                        <p class="text-white-50 small">Score 100% on any math quiz</p>
+                                        <span class="badge bg-secondary">Locked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3 locked">
+                                            <i class="fas fa-trophy fa-3x"></i>
+                                        </div>
+                                        <h5>Champion</h5>
+                                        <p class="text-white-50 small">Reach the top of the leaderboard</p>
+                                        <span class="badge bg-secondary">Locked</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="achievement-card p-3 rounded text-center">
+                                        <div class="achievement-icon mb-3 locked">
+                                            <i class="fas fa-music fa-3x"></i>
+                                        </div>
+                                        <h5>Music Maestro</h5>
+                                        <p class="text-white-50 small">Ace the classical music quiz</p>
+                                        <span class="badge bg-secondary">Locked</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Tab -->
+                    <div class="tab-pane fade" id="settings">
+                        <div class="profile-card p-4 rounded mb-4">
+                            <h3 class="mb-4">Account Settings</h3>
+                            
+                            <form>
+                                <div class="mb-4">
+                                    <h5>Profile Information</h5>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" value="John Doe">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Username</label>
+                                            <input type="text" class="form-control" value="johndoe">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" value="johndoe@example.com">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Country</label>
+                                            <select class="form-select">
+                                                <option value="us">United States</option>
+                                                <option value="ca">Canada</option>
+                                                <option value="uk">United Kingdom</option>
+                                                <option value="au">Australia</option>
+                                                <option value="in">India</option>
+                                                <option value="jp">Japan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label">Bio</label>
+                                            <textarea class="form-control" rows="3">Quiz enthusiast and knowledge seeker. Love to learn new things every day!</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h5>Change Password</h5>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Current Password</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">New Password</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Confirm New Password</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h5>Privacy Settings</h5>
+                                    <div class="mt-3">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="profileVisibility" checked>
+                                            <label class="form-check-label" for="profileVisibility">Make profile visible to everyone</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="showScores" checked>
+                                            <label class="form-check-label" for="showScores">Show quiz scores on profile</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="showActivity" checked>
+                                            <label class="form-check-label" for="showActivity">Show recent activity</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="allowChallenges" checked>
+                                            <label class="form-check-label" for="allowChallenges">Allow other users to challenge you</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h5>Notification Settings</h5>
+                                    <div class="mt-3">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                            <label class="form-check-label" for="emailNotifications">Email notifications</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="achievementNotifications" checked>
+                                            <label class="form-check-label" for="achievementNotifications">Achievement notifications</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="newQuizNotifications" checked>
+                                            <label class="form-check-label" for="newQuizNotifications">New quiz notifications</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="challengeNotifications" checked>
+                                            <label class="form-check-label" for="challengeNotifications">Challenge notifications</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-info">Save Changes</button>
+                                    <button type="button" class="btn btn-outline-danger">Delete Account</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer py-4 text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <h5>Quizora</h5>
+                    <p>Challenge your knowledge, learn new things, and have fun!</p>
+                    <div class="social-links">
+                        <a href="#" class="me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="home.html#explore-section">Explore</a></li>
+                        <li><a href="home.html#leaderboardSection">Leaderboard</a></li>
+                        <li><a href="#">Create Quiz</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-3 mb-md-0">
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">History</a></li>
+                        <li><a href="#">Mathematics</a></li>
+                        <li><a href="#">Literature</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Subscribe</h5>
+                    <p>Get updates on new quizzes and features</p>
+                    <form class="d-flex">
+                        <input type="email" class="form-control me-2" placeholder="Your email">
+                        <button type="submit" class="btn btn-info">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>© 2023 Quizora. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap and custom scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html> 
