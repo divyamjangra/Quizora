@@ -1,0 +1,420 @@
+/* General Styles */
+:root {
+    --primary-color: #6c63ff;
+    --secondary-color: #4CAF50;
+    --accent-color: #ff5722;
+    --dark-bg: #1a1a2e;
+    --darker-bg: #16213e;
+    --card-bg: #0f3460;
+    --light-text: #ffffff;
+    --muted-text: #b0b0b0;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--light-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+    color: var(--light-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+}
+
+/* Header Styles */
+.header {
+    background-color: var(--darker-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand img {
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: var(--darker-bg);
+    padding-top: 2rem;
+    margin-top: 3rem;
+}
+
+.footer h5 {
+    color: var(--light-text);
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.footer h5::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.footer p {
+    color: var(--muted-text);
+}
+
+.footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer ul li a {
+    color: var(--muted-text);
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.footer ul li a:hover {
+    color: var(--light-text);
+    transform: translateX(5px);
+}
+
+.social-links a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--light-text);
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: var(--primary-color);
+    color: var(--light-text);
+    transform: translateY(-3px);
+}
+
+/* Profile Styles */
+.profile-sidebar {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profile-image-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.edit-profile-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.edit-profile-btn:hover {
+    transform: scale(1.1);
+    background-color: #5a52e0;
+}
+
+.sidebar-nav .nav-link {
+    color: var(--light-text);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 8px 15px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .nav-link.active {
+    background-color: rgba(108, 99, 255, 0.2);
+    color: var(--primary-color);
+}
+
+.sidebar-nav .nav-link::after {
+    display: none;
+}
+
+/* Profile Card Styles */
+.profile-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.info-group label {
+    display: block;
+    color: var(--muted-text);
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.info-group p {
+    font-size: 1rem;
+    margin-bottom: 0;
+    word-break: break-word;
+}
+
+/* Activity Timeline */
+.activity-timeline {
+    position: relative;
+    padding-left: 20px;
+}
+
+.activity-item {
+    display: flex;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.activity-item:last-child {
+    margin-bottom: 0;
+}
+
+.activity-item::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 30px;
+    bottom: -20px;
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.activity-item:last-child::before {
+    display: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-content h5 {
+    margin-bottom: 5px;
+}
+
+/* Statistics Tab */
+.stat-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card i {
+    color: var(--primary-color);
+}
+
+.category-progress .progress {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.chart-container {
+    margin-top: 2rem;
+}
+
+/* Achievements Tab */
+.achievement-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.achievement-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgba(108, 99, 255, 0.1);
+    color: var(--primary-color);
+}
+
+.achievement-icon.locked {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--muted-text);
+}
+
+/* Settings Tab */
+.form-control, .form-select {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--light-text);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--light-text);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(108, 99, 255, 0.25);
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-check-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Button Styles */
+.btn-info {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-info:hover {
+    background-color: #5a52e0;
+    border-color: #5a52e0;
+}
+
+.btn-outline-info {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-info:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Responsive Styles */
+@media (max-width: 991.98px) {
+    .profile-sidebar {
+        margin-bottom: 30px;
+    }
+    
+    .sidebar-nav {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+    
+    .sidebar-nav ul {
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+    
+    .sidebar-nav .nav-item {
+        flex: 0 0 auto;
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .stats-summary .stat-card {
+        margin-bottom: 15px;
+    }
+    
+    .activity-item {
+        flex-direction: column;
+    }
+    
+    .activity-icon {
+        margin-bottom: 10px;
+    }
+    
+    .activity-item::before {
+        left: 20px;
+        top: 40px;
+    }
+}
+
+/* Tab Transitions */
+.tab-pane {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+} 
