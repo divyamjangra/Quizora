@@ -401,4 +401,113 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize sections
     showAllSections();
+    
+    // Notification handling
+    const notificationItems = document.querySelectorAll('.notification-item');
+    const notificationModal = new bootstrap.Modal(document.getElementById('notificationModal'));
+    const notificationContent = document.querySelector('.notification-content');
+    const notificationActionBtn = document.querySelector('.notification-action-btn');
+    
+    // Sample notification data (in a real app, this would come from a database)
+    const notificationsData = {
+        "1": {
+            title: "New Quiz Added",
+            content: `<div class="notification-detail">
+                        <div class="notification-icon bg-primary mb-3">
+                            <i class="fas fa-flask fa-2x"></i>
+                        </div>
+                        <h4>Space Exploration Quiz</h4>
+                        <p>A new quiz has been added to the Science category!</p>
+                        <p>Test your knowledge about space, planets, and space missions in this exciting new quiz.</p>
+                        <div class="quiz-meta mt-3">
+                            <div><i class="fas fa-question-circle me-2"></i> 20 Questions</div>
+                            <div><i class="fas fa-clock me-2"></i> 15 Minutes</div>
+                            <div><i class="fas fa-star me-2"></i> Difficulty: Medium</div>
+                        </div>
+                     </div>`,
+            actionText: "Take Quiz Now",
+            actionHandler: function() {
+                alert("Redirecting to Space Exploration Quiz...");
+                notificationModal.hide();
+            }
+        },
+        "2": {
+            title: "Achievement Unlocked",
+            content: `<div class="notification-detail text-center">
+                        <div class="achievement-icon mb-3">
+                            <i class="fas fa-award fa-3x text-warning"></i>
+                        </div>
+                        <h4>Science Explorer</h4>
+                        <p class="badge bg-success mb-3">Achievement Unlocked</p>
+                        <p>Congratulations! You've completed 3 science quizzes with a score of 80% or higher.</p>
+                        <p>This achievement has earned you 50 bonus XP!</p>
+                        <div class="progress mt-3">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <p class="small mt-2">75% progress towards your next achievement</p>
+                     </div>`,
+            actionText: "View All Achievements",
+            actionHandler: function() {
+                window.location.href = "profile.html#achievements";
+            }
+        },
+        "3": {
+            title: "Challenge Invitation",
+            content: `<div class="notification-detail">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Alex">
+                            <div>
+                                <h5 class="mb-0">Alex Johnson</h5>
+                                <small class="text-muted">@alexj • Top 5 Player</small>
+                            </div>
+                        </div>
+                        <div class="challenge-card p-3 rounded mb-3">
+                            <h5>History Challenge</h5>
+                            <p>Alex has challenged you to beat their score of 85% on the World War II quiz!</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-trophy text-warning"></i> 100 XP Bonus if you win</span>
+                                <span>Expires in 24 hours</span>
+                            </div>
+                        </div>
+                        <p class="text-center">Do you accept this challenge?</p>
+                     </div>`,
+            actionText: "Accept Challenge",
+            actionHandler: function() {
+                alert("Challenge accepted! Good luck!");
+                notificationModal.hide();
+            }
+        }
+    };
+    
+    notificationItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get notification data
+            const notificationId = this.dataset.notificationId;
+            const notificationData = notificationsData[notificationId];
+            
+            if (notificationData) {
+                // Update modal title
+                document.getElementById('notificationModalLabel').textContent = notificationData.title;
+                
+                // Update modal content
+                notificationContent.innerHTML = notificationData.content;
+                
+                // Update action button
+                notificationActionBtn.textContent = notificationData.actionText;
+                
+                // Clear previous event listeners
+                const newActionBtn = notificationActionBtn.cloneNode(true);
+                notificationActionBtn.parentNode.replaceChild(newActionBtn, notificationActionBtn);
+                
+                // Add new event listener
+                newActionBtn.addEventListener('click', notificationData.actionHandler);
+                
+                // Show modal
+                notificationModal.show();
+            }
+        });
+    });
 }); 
+
