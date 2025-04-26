@@ -1,0 +1,472 @@
+/* AI Quiz Generator Styles */
+
+/* Template Selection */
+.template-category h5 {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.template-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.template-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: #adb5bd;
+}
+
+.template-card.selected {
+    border-color: #0d6efd;
+    background-color: #e9f7fe;
+}
+
+.template-icon {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.template-card.selected .template-icon {
+    color: #0d6efd;
+}
+
+.step-indicator {
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.step {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 1px;
+    background-color: #dee2e6;
+}
+
+.step-number {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.step.active .step-number {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+}
+
+.step.completed .step-number {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.step-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.step.active .step-title {
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+.step.completed .step-title {
+    color: #28a745;
+}
+
+/* Quiz Configuration */
+.quiz-config-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.difficulty-options {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.difficulty-option {
+    flex: 1;
+}
+
+.difficulty-option input[type="radio"] {
+    display: none;
+}
+
+.difficulty-option label {
+    display: block;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.difficulty-option input[type="radio"]:checked + label {
+    background-color: #e9f7fe;
+    border-color: #0d6efd;
+    color: #0d6efd;
+}
+
+.difficulty-easy label {
+    border-left: 4px solid #28a745;
+}
+
+.difficulty-medium label {
+    border-left: 4px solid #ffc107;
+}
+
+.difficulty-hard label {
+    border-left: 4px solid #dc3545;
+}
+
+.difficulty-option input[type="radio"]:checked + label.easy-label {
+    background-color: #e8f5e9;
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.difficulty-option input[type="radio"]:checked + label.medium-label {
+    background-color: #fff8e1;
+    border-color: #ffc107;
+    color: #856404;
+}
+
+.difficulty-option input[type="radio"]:checked + label.hard-label {
+    background-color: #fef4f4;
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+/* Question Preview */
+.question-preview-card {
+    margin-bottom: 1.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.question-preview-card .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+}
+
+.question-text {
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.options-list {
+    margin-bottom: 1rem;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    background-color: #f8f9fa;
+}
+
+.option-item.correct-option {
+    background-color: #e8f5e9;
+    border-color: #28a745;
+}
+
+.option-letter {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.correct-option .option-letter {
+    background-color: #28a745;
+    color: white;
+}
+
+.option-text {
+    flex: 1;
+}
+
+.correct-badge {
+    color: #28a745;
+}
+
+.explanation {
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border-left: 3px solid #0d6efd;
+}
+
+/* Save Quota */
+.save-quota {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.save-quota-text {
+    margin-right: 1rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.save-quota-bar {
+    flex: 1;
+    height: 6px;
+    max-width: 200px;
+    background-color: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.save-quota-progress {
+    height: 100%;
+    background-color: #0d6efd;
+    border-radius: 3px;
+}
+
+/* Quiz Edit Modal */
+.edit-question-form .form-label {
+    font-weight: 500;
+}
+
+.edit-option-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.option-radio {
+    margin-right: 0.75rem;
+}
+
+.option-letter-badge {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Subscription Features Display */
+.subscription-features {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem 1.5rem;
+}
+
+.subscription-feature {
+    flex: 1 0 calc(33.333% - 1rem);
+    margin: 0.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #0d6efd;
+}
+
+.feature-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.feature-description {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* Subscription Comparison */
+.subscription-tier {
+    height: 100%;
+}
+
+.subscription-tier .card-header {
+    font-weight: 600;
+}
+
+.popular-tier {
+    border-color: #0d6efd;
+}
+
+.popular-tier .card-header {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.popular-badge {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    font-weight: 600;
+}
+
+.tier-price {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.tier-period {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+.tier-features {
+    margin-bottom: 1.5rem;
+}
+
+.tier-feature {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.tier-feature i {
+    margin-right: 0.5rem;
+}
+
+.feature-available {
+    color: #28a745;
+}
+
+.feature-unavailable {
+    color: #dc3545;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .subscription-feature {
+        flex: 1 0 calc(50% - 1rem);
+    }
+    
+    .difficulty-options {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .subscription-feature {
+        flex: 1 0 100%;
+    }
+    
+    .step-indicator {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .step:not(:last-child)::after {
+        display: none;
+    }
+}
+
+/* Dark theme adjustments */
+.dark-theme .template-category h5 {
+    color: #adb5bd;
+    border-bottom-color: #343a40;
+}
+
+.dark-theme .template-card {
+    background-color: #2a3142;
+    border-color: #343a40;
+}
+
+.dark-theme .template-card:hover {
+    border-color: #495057;
+}
+
+.dark-theme .template-card.selected {
+    background-color: #1e2a3e;
+    border-color: #0d6efd;
+}
+
+.dark-theme .template-icon {
+    color: #adb5bd;
+}
+
+.dark-theme .step-number {
+    background-color: #343a40;
+    border-color: #495057;
+    color: #adb5bd;
+}
+
+.dark-theme .difficulty-option label {
+    background-color: #2a3142;
+    border-color: #343a40;
+    color: #adb5bd;
+}
+
+.dark-theme .option-item {
+    background-color: #2a3142;
+    border-color: #343a40;
+}
+
+.dark-theme .option-item.correct-option {
+    background-color: #1e2a1e;
+}
+
+.dark-theme .option-letter {
+    background-color: #343a40;
+    color: #adb5bd;
+}
+
+.dark-theme .explanation {
+    background-color: #1a2035;
+} 
