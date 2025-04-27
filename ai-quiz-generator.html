@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Generator | Quizora</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/ai-quiz.css">
+    <link rel="stylesheet" href="css/achievements.css">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="landing-page.html">
+                <img src="images/logo.png" alt="Quizora Logo" class="me-2" height="30">
+                <span>Quizora</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="myquizzes.html">My Quizzes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="multiplayer.html">Multiplayer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="ai-quiz-generator.html">AI Quiz Generator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="landing-page.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">AI Quiz Generator</h1>
+        <p class="text-center text-muted mb-5">Create custom quizzes powered by AI in just a few clicks</p>
+        
+        <div class="step-indicator mb-4">
+            <div class="step active" id="templateStep">
+                <div class="step-number">1</div>
+                <div class="step-title">Choose Template</div>
+            </div>
+            <div class="step" id="configureStep">
+                <div class="step-number">2</div>
+                <div class="step-title">Configure Quiz</div>
+            </div>
+            <div class="step" id="previewStep">
+                <div class="step-number">3</div>
+                <div class="step-title">Review & Save</div>
+            </div>
+        </div>
+        
+        <!-- Template Selection Step -->
+        <div class="card mb-4" id="templateSelectionStep">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Choose a Quiz Template</h4>
+                <div id="aiQuizTemplates" class="mb-4">
+                    <!-- Templates will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quiz Configuration Step -->
+        <div class="card mb-4 d-none" id="quizConfigurationStep">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0">Configure Your Quiz</h4>
+                    <div class="selected-template">
+                        Template: <span class="fw-bold" id="selectedTemplateName">General Knowledge</span>
+                    </div>
+                </div>
+                
+                <div class="quiz-config-form">
+                    <div class="mb-3">
+                        <label for="quizTopic" class="form-label">Quiz Topic</label>
+                        <input type="text" class="form-control" id="quizTopic" placeholder="Enter a specific topic (e.g., 'Solar System', 'World War II')">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label d-block">Difficulty Level</label>
+                        <div class="difficulty-options">
+                            <div class="difficulty-option difficulty-easy">
+                                <input type="radio" name="difficultyLevel" id="difficultyEasy" value="easy" checked>
+                                <label for="difficultyEasy" class="easy-label">
+                                    <i class="bi bi-star-fill"></i> Easy
+                                </label>
+                            </div>
+                            <div class="difficulty-option difficulty-medium">
+                                <input type="radio" name="difficultyLevel" id="difficultyMedium" value="medium">
+                                <label for="difficultyMedium" class="medium-label">
+                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> Medium
+                                </label>
+                            </div>
+                            <div class="difficulty-option difficulty-hard">
+                                <input type="radio" name="difficultyLevel" id="difficultyHard" value="hard">
+                                <label for="difficultyHard" class="hard-label">
+                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> Hard
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="questionCount" class="form-label">Number of Questions</label>
+                        <select class="form-select" id="questionCount">
+                            <option value="5">5 Questions</option>
+                            <option value="10" selected>10 Questions</option>
+                            <option value="15">15 Questions</option>
+                            <option value="20">20 Questions</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-secondary" onclick="document.getElementById('templateSelectionStep').classList.remove('d-none'); document.getElementById('quizConfigurationStep').classList.add('d-none'); document.getElementById('templateStep').classList.add('active'); document.getElementById('configureStep').classList.remove('active');">
+                            <i class="bi bi-arrow-left me-1"></i> Back
+                        </button>
+                        <button class="btn btn-primary" id="generateAIQuizBtn">
+                            Generate Quiz <i class="bi bi-lightning-fill ms-1"></i>
+                            <span class="spinner-border spinner-border-sm d-none" id="generationLoadingSpinner" role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quiz Preview Step -->
+        <div class="card mb-4 d-none" id="quizPreviewStep">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="card-title mb-0" id="previewQuizTitle">Quiz Title</h4>
+                    <span class="text-muted" id="previewQuizInfo">Category | Difficulty | Questions</span>
+                </div>
+                
+                <div class="alert alert-success d-flex align-items-center d-none" id="quizSavedAlert" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <div>
+                        Quiz saved successfully to your collection!
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="save-quota">
+                        <span class="save-quota-text" id="saveQuotaDisplay">0/3 saved</span>
+                        <div class="save-quota-bar">
+                            <div class="save-quota-progress" id="saveQuotaProgress" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary" onclick="document.getElementById('quizConfigurationStep').classList.remove('d-none'); document.getElementById('quizPreviewStep').classList.add('d-none'); document.getElementById('configureStep').classList.add('active'); document.getElementById('previewStep').classList.remove('active');">
+                            <i class="bi bi-arrow-left me-1"></i> Back
+                        </button>
+                        <button class="btn btn-primary" id="saveAIQuizBtn">
+                            <i class="bi bi-save me-1"></i> Save Quiz
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="quizPreviewContainer">
+                    <!-- Questions will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Subscription Features -->
+        <div class="card mt-5">
+            <div class="card-body">
+                <h5 class="card-title text-center mb-4">Premium Features</h5>
+                
+                <div class="subscription-features">
+                    <div class="subscription-feature">
+                        <div class="feature-icon">
+                            <i class="bi bi-infinity"></i>
+                        </div>
+                        <div class="feature-title">Unlimited Saves</div>
+                        <div class="feature-description">Save as many AI-generated quizzes as you want</div>
+                    </div>
+                    
+                    <div class="subscription-feature">
+                        <div class="feature-icon">
+                            <i class="bi bi-sliders"></i>
+                        </div>
+                        <div class="feature-title">Advanced Options</div>
+                        <div class="feature-description">More customization options for your quizzes</div>
+                    </div>
+                    
+                    <div class="subscription-feature">
+                        <div class="feature-icon">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div class="feature-title">Priority Generation</div>
+                        <div class="feature-description">Faster quiz generation times</div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="subscription.html" class="btn btn-outline-primary">Upgrade Your Subscription</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Question Modal -->
+    <div class="modal fade" id="editQuestionModal" tabindex="-1" aria-labelledby="editQuestionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editQuestionModalLabel">Edit Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="edit-question-form">
+                        <div class="mb-3">
+                            <label for="editQuestionText" class="form-label">Question Text</label>
+                            <textarea class="form-control" id="editQuestionText" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Options</label>
+                            <div class="edit-option-row">
+                                <div class="option-radio">
+                                    <input type="radio" class="form-check-input" name="editCorrectOption" id="editCorrectOptionA" value="A" checked>
+                                </div>
+                                <div class="option-letter-badge">A</div>
+                                <input type="text" class="form-control" id="editOptionA">
+                            </div>
+                            <div class="edit-option-row">
+                                <div class="option-radio">
+                                    <input type="radio" class="form-check-input" name="editCorrectOption" id="editCorrectOptionB" value="B">
+                                </div>
+                                <div class="option-letter-badge">B</div>
+                                <input type="text" class="form-control" id="editOptionB">
+                            </div>
+                            <div class="edit-option-row">
+                                <div class="option-radio">
+                                    <input type="radio" class="form-check-input" name="editCorrectOption" id="editCorrectOptionC" value="C">
+                                </div>
+                                <div class="option-letter-badge">C</div>
+                                <input type="text" class="form-control" id="editOptionC">
+                            </div>
+                            <div class="edit-option-row">
+                                <div class="option-radio">
+                                    <input type="radio" class="form-check-input" name="editCorrectOption" id="editCorrectOptionD" value="D">
+                                </div>
+                                <div class="option-letter-badge">D</div>
+                                <input type="text" class="form-control" id="editOptionD">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editExplanation" class="form-label">Explanation</label>
+                            <textarea class="form-control" id="editExplanation" rows="2"></textarea>
+                            <div class="form-text">Explain why the correct answer is right (will be shown after answering)</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveQuestionEdits">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Upgrade Subscription Modal -->
+    <div class="modal fade" id="upgradeSubscriptionModal" tabindex="-1" aria-labelledby="upgradeSubscriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="upgradeSubscriptionModalLabel">Upgrade Your Subscription</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <div>
+                            You've reached your save limit with your current subscription.
+                        </div>
+                    </div>
+                    
+                    <p>Upgrade your subscription to unlock:</p>
+                    
+                    <ul class="mb-4">
+                        <li><strong>Unlimited saves</strong> for AI-generated quizzes</li>
+                        <li><strong>Advanced customization</strong> options</li>
+                        <li><strong>Priority generation</strong> for faster results</li>
+                        <li><strong>Premium templates</strong> with specialized content</li>
+                        <li><strong>Exclusive badges</strong> for your profile</li>
+                    </ul>
+                    
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="card subscription-tier">
+                                <div class="card-header bg-light">Premium</div>
+                                <div class="card-body">
+                                    <div class="tier-price">$5.99</div>
+                                    <div class="tier-period">per month</div>
+                                    <div class="tier-features">
+                                        <div class="tier-feature">
+                                            <i class="bi bi-check-circle-fill feature-available"></i>
+                                            <span>10 AI quiz saves</span>
+                                        </div>
+                                        <div class="tier-feature">
+                                            <i class="bi bi-check-circle-fill feature-available"></i>
+                                            <span>Advanced options</span>
+                                        </div>
+                                        <div class="tier-feature">
+                                            <i class="bi bi-x-circle-fill feature-unavailable"></i>
+                                            <span>Premium templates</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-primary w-100" onclick="updateSubscription('premium')">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card subscription-tier popular-tier">
+                                <div class="popular-badge">Popular</div>
+                                <div class="card-header">Pro</div>
+                                <div class="card-body">
+                                    <div class="tier-price">$9.99</div>
+                                    <div class="tier-period">per month</div>
+                                    <div class="tier-features">
+                                        <div class="tier-feature">
+                                            <i class="bi bi-check-circle-fill feature-available"></i>
+                                            <span>Unlimited AI quiz saves</span>
+                                        </div>
+                                        <div class="tier-feature">
+                                            <i class="bi bi-check-circle-fill feature-available"></i>
+                                            <span>All premium features</span>
+                                        </div>
+                                        <div class="tier-feature">
+                                            <i class="bi bi-check-circle-fill feature-available"></i>
+                                            <span>Priority support</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary w-100" onclick="updateSubscription('pro')">Select</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Maybe Later</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2023 Quizora. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-decoration-none text-muted me-3">Privacy Policy</a>
+                    <a href="#" class="text-decoration-none text-muted me-3">Terms of Service</a>
+                    <a href="#" class="text-decoration-none text-muted">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/ai-quiz-manager.js"></script>
+</body>
+</html> 
