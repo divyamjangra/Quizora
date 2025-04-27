@@ -1,744 +1,1760 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizora - Home</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/home.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Quizora</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/home.css">
+  <!-- Enhanced Dashboard Styles -->
+  <link rel="stylesheet" href="css/dashboard-enhanced.css">
+  <link rel="stylesheet" href="css/achievements.css">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-dark">
-    <!-- Header Section -->
-    <header class="header">        
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container">
-                <div class="navbar-brand d-flex align-items-center">
-                    <img src="LOGO transparent.png" alt="Logo Quizora" height="50px">
-                    <img src="LOGO NAME transparent.png" alt="Quizora" height="50px" class="ms-2">
-                </div>
+<body>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="logo p-3">
+      <img src="images/LOGO NAME transparent.png" alt="Quizora" height="50px">
+    </div>
+    <ul class="nav flex-column p-3">
+      <li class="nav-item">
+        <a href="home.html" class="nav-link active" id="dashboardLink"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="myquizzes.html" class="nav-link" id="myQuizzesLink"><i class="fas fa-layer-group"></i> <span>My Quizzes</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="friends.html" class="nav-link" id="friendsLink"><i class="fas fa-user-friends"></i> <span>Friends</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="settings.html" class="nav-link" id="settingsLink"><i class="fas fa-cogs"></i> <span>Settings</span></a>
+      </li>
+      
+      <!-- Divider -->
+      <li class="nav-item divider my-3"></li>
+      
+      <!-- Ranking System -->
+      <li class="nav-item">
+        <a href="#" class="nav-link" id="rankingsLink"><i class="fas fa-trophy"></i> <span>Rankings</span></a>
+      </li>
+      <li class="nav-item sub-menu">
+        <a href="#" class="nav-link sub-link" id="globalRankingsLink"><i class="fas fa-globe"></i> <span>Global</span></a>
+      </li>
+      <li class="nav-item sub-menu">
+        <a href="#" class="nav-link sub-link" id="countryRankingsLink"><i class="fas fa-flag"></i> <span>Country</span></a>
+      </li>
+      <li class="nav-item sub-menu">
+        <a href="#" class="nav-link sub-link" id="stateRankingsLink"><i class="fas fa-map-marker-alt"></i> <span>State/Province</span></a>
+      </li>
+      <li class="nav-item sub-menu">
+        <a href="#" class="nav-link sub-link" id="cityRankingsLink"><i class="fas fa-city"></i> <span>City</span></a>
+      </li>
+      
+      <!-- Coming Soon Features -->
+      <li class="nav-item divider my-3"></li>
+      <li class="nav-item">
+        <span class="coming-soon-header"><i class="fas fa-rocket"></i> <span>Coming Soon</span></span>
+      </li>
+      <li class="nav-item coming-soon">
+        <a href="#" class="nav-link coming-soon-link" id="tournamentLink"><i class="fas fa-gamepad"></i> <span>Tournaments</span></a>
+      </li>
+      <li class="nav-item coming-soon">
+        <a href="#" class="nav-link coming-soon-link" id="achievementsLink"><i class="fas fa-medal"></i> <span>Achievements</span></a>
+      </li>
+      <li class="nav-item coming-soon">
+        <a href="#" class="nav-link coming-soon-link" id="classroomLink"><i class="fas fa-chalkboard-teacher"></i> <span>Classroom</span></a>
+      </li>
+      <li class="nav-item coming-soon">
+        <a href="#" class="nav-link coming-soon-link" id="analyticsLink"><i class="fas fa-chart-line"></i> <span>Analytics</span></a>
+      </li>
+      <li class="nav-item coming-soon">
+        <a href="#" class="nav-link coming-soon-link" id="leaderboardsLink"><i class="fas fa-list-ol"></i> <span>Leaderboards</span></a>
+      </li>
+      <li class="nav-item coming-soon">
+        <a href="#" class="nav-link coming-soon-link" id="customizationLink"><i class="fas fa-paint-brush"></i> <span>Customization</span></a>
+      </li>
+    </ul>
+    <div class="coming-soon-teaser" id="comingSoonTeaser">
+      <p class="teaser-text">"Exciting tournaments with real prizes coming next month!"</p>
+    </div>
+  </nav>
+  
+  <!-- Overlay for mobile -->
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Mobile menu button -->
+  <div class="mobile-menu-btn" id="mobileMenuBtn">
+    <i class="fas fa-bars"></i>
+  </div>
+  
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <!-- Topbar -->
+    <div class="topbar d-flex justify-content-between align-items-center p-3">
+      <input type="text" class="form-control search-bar" placeholder="Search...">
+      <div class="page-title" id="currentPageTitle">Dashboard</div>
+      <div class="profile-settings d-flex align-items-center">
+        <div class="theme-toggle-wrapper me-4">
+          <div class="theme-toggle" id="themeToggle">
+            <i class="fas fa-sun light-icon"></i>
+            <i class="fas fa-moon dark-icon"></i>
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+        <img src="images/profile.png" alt="Profile" class="profile-pic">
+        <span class="username">My Profile</span>
+      </div>
+    </div>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link active" href="home.html"><i class="fas fa-home"></i> Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#explore-section"><i class="fas fa-search"></i> Explore</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" id="leaderboardLink"><i class="fas fa-trophy"></i> Leaderboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" id="historyLink"><i class="fas fa-history"></i> History</a></li>
-                    </ul>
-                    <div class="d-flex align-items-center">
-                        <div class="dropdown me-3">
-                            <button class="btn btn-dark dropdown-toggle" type="button" id="notificationsDropdown" data-bs-toggle="dropdown">
-                                <i class="fas fa-bell"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><h6 class="dropdown-header">Notifications</h6></li>
-                                <li><a class="dropdown-item notification-item" href="#" data-notification-id="1" data-notification-type="new-quiz">New quiz added in Science category!</a></li>
-                                <li><a class="dropdown-item notification-item" href="#" data-notification-id="2" data-notification-type="achievement">You earned a new badge!</a></li>
-                                <li><a class="dropdown-item notification-item" href="#" data-notification-id="3" data-notification-type="challenge">Challenge from Alex is waiting</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-center" href="#">View all notifications</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-dark dropdown-toggle d-flex align-items-center" type="button" id="profileDropdown" data-bs-toggle="dropdown">
-                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
-                                <span>John Doe</span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="login.html"><i class="fas fa-sign-out-alt me-2"></i> Log Out</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container py-5">
-        <!-- Welcome Section -->
-        <section class="welcome-section mb-5 text-white" id="welcomeSection">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1>Welcome back, John!</h1>
-                    <p class="lead">Ready to challenge your knowledge today?</p>
-                    <div class="stats d-flex flex-wrap gap-4 mt-4">
-                        <div class="stat-card p-3 rounded">
-                            <i class="fas fa-check-circle fa-2x mb-2"></i>
-                            <h3>15</h3>
-                            <p>Quizzes Completed</p>
-                        </div>
-                        <div class="stat-card p-3 rounded">
-                            <i class="fas fa-trophy fa-2x mb-2"></i>
-                            <h3>5</h3>
-                            <p>Achievements</p>
-                        </div>
-                        <div class="stat-card p-3 rounded">
-                            <i class="fas fa-star fa-2x mb-2"></i>
-                            <h3>850</h3>
-                            <p>Total Points</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 d-flex justify-content-center">
-                    <div class="daily-challenge p-4 rounded text-center">
-                        <h3>Daily Challenge</h3>
-                        <i class="fas fa-brain fa-4x my-3"></i>
-                        <p>Complete today's challenge and earn 50 bonus points!</p>
-                        <button class="btn btn-info mt-2">Start Challenge</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Category Section -->
-        <section class="category-section mb-5" id="categorySection">
-            <h2 class="text-white mb-4">Quiz Categories</h2>
-            <div class="row g-4">
-                <div class="col-md-4 col-sm-6">
-                    <div class="category-card h-100 p-4 rounded text-center">
-                        <i class="fas fa-atom fa-3x mb-3"></i>
-                        <h3>Science</h3>
-                        <p>Test your knowledge about physics, chemistry, biology and more</p>
-                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="category-card h-100 p-4 rounded text-center">
-                        <i class="fas fa-calculator fa-3x mb-3"></i>
-                        <h3>Mathematics</h3>
-                        <p>Challenge yourself with algebra, geometry, and calculus questions</p>
-                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="category-card h-100 p-4 rounded text-center">
-                        <i class="fas fa-book fa-3x mb-3"></i>
-                        <h3>Literature</h3>
-                        <p>Explore the world of books, authors, and literary works</p>
-                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="category-card h-100 p-4 rounded text-center">
-                        <i class="fas fa-globe-americas fa-3x mb-3"></i>
-                        <h3>Geography</h3>
-                        <p>Test your knowledge about countries, capitals, and landmarks</p>
-                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="category-card h-100 p-4 rounded text-center">
-                        <i class="fas fa-landmark fa-3x mb-3"></i>
-                        <h3>History</h3>
-                        <p>Journey through ancient civilizations to modern history</p>
-                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="category-card h-100 p-4 rounded text-center">
-                        <i class="fas fa-puzzle-piece fa-3x mb-3"></i>
-                        <h3>General Knowledge</h3>
-                        <p>Test your knowledge on a variety of topics and trivia</p>
-                        <button class="btn btn-outline-light mt-3">Browse Quizzes</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Popular Quizzes -->
-        <section class="popular-section mb-5" id="popularSection">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="text-white m-0">Popular Quizzes</h2>
-                <a href="#" class="btn btn-outline-info">View All</a>
-            </div>
+    <!-- Content Area -->
+    <div class="content p-4">
+      <div id="dashboardContent">
+        <!-- New Enhanced Dashboard -->
+        <div class="dashboard-container">
+          <!-- Dashboard Header with Stats -->
+          <div class="dashboard-header fade-in">
+            <h2>Welcome back, John!</h2>
+            <p>Here's a quick overview of your quiz progress and statistics.</p>
             
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="quiz-card h-100 rounded overflow-hidden">
-                        <div class="quiz-img">
-                            <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
-                        </div>
-                        <div class="quiz-content p-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-primary">Science</span>
-                                <span><i class="fas fa-star text-warning"></i> 4.8</span>
-                            </div>
-                            <h4>The Amazing Human Body</h4>
-                            <p>Test your knowledge about human anatomy and physiology</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span><i class="fas fa-question-circle"></i> 20 Questions</span>
-                                <button class="btn btn-success">Start Quiz</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="quiz-card h-100 rounded overflow-hidden">
-                        <div class="quiz-img">
-                            <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
-                        </div>
-                        <div class="quiz-content p-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-success">History</span>
-                                <span><i class="fas fa-star text-warning"></i> 4.6</span>
-                            </div>
-                            <h4>World War II</h4>
-                            <p>Test your knowledge about one of history's most significant events</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span><i class="fas fa-question-circle"></i> 25 Questions</span>
-                                <button class="btn btn-success">Start Quiz</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="quiz-card h-100 rounded overflow-hidden">
-                        <div class="quiz-img">
-                            <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
-                        </div>
-                        <div class="quiz-content p-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="badge bg-info">Geography</span>
-                                <span><i class="fas fa-star text-warning"></i> 4.7</span>
-                            </div>
-                            <h4>World Capitals Challenge</h4>
-                            <p>Can you name all these capital cities around the world?</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span><i class="fas fa-question-circle"></i> 30 Questions</span>
-                                <button class="btn btn-success">Start Quiz</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="dashboard-stats">
+              <div class="stat-card">
+                <div class="stat-value">24</div>
+                <div class="stat-label">Created Quizzes</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">156</div>
+                <div class="stat-label">Questions Created</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">1,287</div>
+                <div class="stat-label">Total Plays</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">4.8</div>
+                <div class="stat-label">Average Rating</div>
+              </div>
             </div>
-        </section>
-
-        <!-- History Section -->
-        <section class="history-section mb-5" id="historySection" style="display: none;">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="text-white m-0">Your Quiz History</h2>
-                <a href="#" class="btn btn-outline-info">View All History</a>
-            </div>
-            
-            <div class="history-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date text-white-50">Today</div>
-                    <div class="timeline-content">
-                        <div class="quiz-history-card p-3 rounded mb-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="text-white mb-1">The Amazing Human Body</h5>
-                                    <p class="text-white-50 mb-0">Science • 20 Questions</p>
-                                </div>
-                                <div class="text-end">
-                                    <div class="score-badge bg-success text-white px-3 py-1 rounded">85%</div>
-                                    <p class="text-white-50 mb-0 mt-1">15 mins ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="quiz-history-card p-3 rounded mb-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="text-white mb-1">World Capitals Challenge</h5>
-                                    <p class="text-white-50 mb-0">Geography • 30 Questions</p>
-                                </div>
-                                <div class="text-end">
-                                    <div class="score-badge bg-warning text-dark px-3 py-1 rounded">65%</div>
-                                    <p class="text-white-50 mb-0 mt-1">2 hours ago</p>
-                                </div>
-                            </div>
-                        </div>
+          </div>
+          
+          <div class="row g-4">
+            <!-- My Quizzes Section -->
+            <div class="col-lg-8">
+              <div class="section-card fade-in" style="animation-delay: 0.1s;">
+                <div class="section-header">
+                  <h4 class="section-title">
+                    <i class="fas fa-file-alt"></i>
+                    My Quizzes
+                  </h4>
+                  <div class="section-actions">
+                    <button class="btn btn-sm btn-primary" id="newDashboardQuizBtn">
+                      <i class="fas fa-plus me-1"></i> Create New Quiz
+                    </button>
+                  </div>
+                </div>
+                <div class="section-body">
+                  <!-- Create Quiz Card -->
+                  <div class="create-quiz-card mb-4" id="newQuizCard">
+                    <div class="create-quiz-icon">
+                      <i class="fas fa-plus"></i>
                     </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-date text-white-50">Yesterday</div>
-                    <div class="timeline-content">
-                        <div class="quiz-history-card p-3 rounded mb-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="text-white mb-1">World War II</h5>
-                                    <p class="text-white-50 mb-0">History • 25 Questions</p>
-                                </div>
-                                <div class="text-end">
-                                    <div class="score-badge bg-success text-white px-3 py-1 rounded">92%</div>
-                                    <p class="text-white-50 mb-0 mt-1">Yesterday, 3:45 PM</p>
-                                </div>
-                            </div>
+                    <h5 class="create-quiz-title">Create a New Quiz</h5>
+                    <p class="create-quiz-text">Start building your next awesome quiz with our interactive editor.</p>
+                  </div>
+                  
+                  <!-- Quiz Cards -->
+                  <div class="quiz-card">
+                    <div class="quiz-info">
+                      <h5 class="quiz-title">Web Development Basics</h5>
+                      <div class="quiz-metadata">
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-calendar"></i> Created 2 days ago
                         </div>
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-users"></i> 45 players
+                        </div>
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-star"></i> 4.7 rating
+                        </div>
+                      </div>
                     </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-date text-white-50">This Week</div>
-                    <div class="timeline-content">
-                        <div class="quiz-history-card p-3 rounded mb-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="text-white mb-1">Classical Music</h5>
-                                    <p class="text-white-50 mb-0">Music • 15 Questions</p>
-                                </div>
-                                <div class="text-end">
-                                    <div class="score-badge bg-success text-white px-3 py-1 rounded">88%</div>
-                                    <p class="text-white-50 mb-0 mt-1">3 days ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="quiz-history-card p-3 rounded mb-3">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="text-white mb-1">Basic Mathematics</h5>
-                                    <p class="text-white-50 mb-0">Math • 20 Questions</p>
-                                </div>
-                                <div class="text-end">
-                                    <div class="score-badge bg-danger text-white px-3 py-1 rounded">45%</div>
-                                    <p class="text-white-50 mb-0 mt-1">5 days ago</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="quiz-actions">
+                      <button class="quiz-action-btn" title="Edit Quiz">
+                        <i class="fas fa-pencil-alt"></i>
+                      </button>
+                      <button class="quiz-action-btn" title="Host Quiz">
+                        <i class="fas fa-play"></i>
+                      </button>
+                      <button class="quiz-action-btn" title="Share Quiz">
+                        <i class="fas fa-share-alt"></i>
+                      </button>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Leaderboard Section -->
-        <section class="leaderboard-section mb-5" id="leaderboardSection" style="display: none;">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="text-white m-0">Global Leaderboard</h2>
-                <div class="btn-group">
-                    <button class="btn btn-outline-info active" data-type="global">Global</button>
-                    <button class="btn btn-outline-info" data-type="country">Country</button>
-                </div>
-            </div>
-            
-            <div class="leaderboard-container">
-                <div class="leaderboard-header p-3 rounded mb-3">
-                    <div class="row align-items-center">
-                        <div class="col-1 text-center">Rank</div>
-                        <div class="col-4">Player</div>
-                        <div class="col-3">Country</div>
-                        <div class="col-2 text-center">XP</div>
-                        <div class="col-2 text-center">Quizzes</div>
+                  </div>
+                  
+                  <div class="quiz-card">
+                    <div class="quiz-info">
+                      <h5 class="quiz-title">JavaScript Fundamentals</h5>
+                      <div class="quiz-metadata">
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-calendar"></i> Created 1 week ago
+                        </div>
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-users"></i> 132 players
+                        </div>
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-star"></i> 4.9 rating
+                        </div>
+                      </div>
                     </div>
+                    <div class="quiz-actions">
+                      <button class="quiz-action-btn" title="Edit Quiz">
+                        <i class="fas fa-pencil-alt"></i>
+                      </button>
+                      <button class="quiz-action-btn" title="Host Quiz">
+                        <i class="fas fa-play"></i>
+                      </button>
+                      <button class="quiz-action-btn" title="Share Quiz">
+                        <i class="fas fa-share-alt"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                
-                <div class="leaderboard-content">
-                    <!-- Global Rankings -->
-                    <div class="leaderboard-type" data-type="global">
-                        <div class="leaderboard-item p-3 rounded mb-2">
-                            <div class="row align-items-center">
-                                <div class="col-1 text-center">
-                                    <span class="rank-badge bg-warning text-dark">1</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
-                                        <div>
-                                            <h5 class="mb-0">Alex Johnson</h5>
-                                            <small class="text-white-50">@alexj</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">United States</div>
-                                <div class="col-2 text-center">
-                                    <span class="xp-badge">12,450</span>
-                                </div>
-                                <div class="col-2 text-center">156</div>
-                            </div>
+                <div class="section-footer">
+                  <button class="btn btn-sm btn-outline-primary">View All Quizzes</button>
+                  <span class="text-muted">Showing 2 of 24 quizzes</span>
+                </div>
+              </div>
+              
+              <!-- Original Quick Actions (Preserved) -->
+              <div class="section-card fade-in" style="animation-delay: 0.2s;">
+                <div class="section-header">
+                  <h4 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Quick Actions
+                  </h4>
+                </div>
+                <div class="section-body">
+                  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    <div class="col">
+                      <div class="action-card">
+                        <div class="action-icon create-icon">
+                          <i class="fas fa-plus"></i>
                         </div>
-                        <div class="leaderboard-item p-3 rounded mb-2">
-                            <div class="row align-items-center">
-                                <div class="col-1 text-center">
-                                    <span class="rank-badge bg-secondary">2</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
-                                        <div>
-                                            <h5 class="mb-0">Sarah Chen</h5>
-                                            <small class="text-white-50">@sarahc</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">Canada</div>
-                                <div class="col-2 text-center">
-                                    <span class="xp-badge">11,890</span>
-                                </div>
-                                <div class="col-2 text-center">142</div>
-                            </div>
+                        <h5>Create Quiz</h5>
+                        <p>Make your own custom quiz</p>
+                        <a href="myquizzes.html" class="stretched-link" id="createQuizLink"></a>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="action-card">
+                        <div class="action-icon join-icon">
+                          <i class="fas fa-users"></i>
                         </div>
-                        <div class="leaderboard-item p-3 rounded mb-2">
-                            <div class="row align-items-center">
-                                <div class="col-1 text-center">
-                                    <span class="rank-badge bg-danger">3</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
-                                        <div>
-                                            <h5 class="mb-0">David Kim</h5>
-                                            <small class="text-white-50">@davidk</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">South Korea</div>
-                                <div class="col-2 text-center">
-                                    <span class="xp-badge">10,750</span>
-                                </div>
-                                <div class="col-2 text-center">128</div>
-                            </div>
+                        <h5>Join Quiz</h5>
+                        <p>Enter a quiz code to play</p>
+                        <button class="btn btn-sm btn-outline-primary mt-2 join-quiz-btn">Enter Code</button>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="action-card">
+                        <div class="action-icon ai-icon">
+                          <i class="fas fa-robot"></i>
                         </div>
+                        <h5>AI Quiz</h5>
+                        <p>Generate quiz with AI</p>
+                        <a href="multiplayer.html?ai=true" class="stretched-link"></a>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="action-card">
+                        <div class="action-icon challenge-icon">
+                          <i class="fas fa-trophy"></i>
+                        </div>
+                        <h5>Challenge Friend</h5>
+                        <p>Compete in real-time</p>
+                        <a href="friends.html" class="stretched-link"></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Ranking System -->
+              <div class="section-card fade-in" style="animation-delay: 0.3s;">
+                <div class="section-header">
+                  <h4 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Leaderboard
+                  </h4>
+                  <div class="section-actions">
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="rankingFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        This Month
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="rankingFilterDropdown">
+                        <li><a class="dropdown-item" href="#">All Time</a></li>
+                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                        <li><a class="dropdown-item" href="#">This Week</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="section-body">
+                  <div class="ranking-list">
+                    <div class="ranking-item">
+                      <div class="ranking-position"></div>
+                      <div class="ranking-avatar">
+                        <img src="images/profile1.png" alt="Avatar">
+                      </div>
+                      <div class="ranking-info">
+                        <div class="ranking-name">Sarah Johnson</div>
+                        <div class="ranking-stats">
+                          <div class="ranking-stat-item">42 quizzes hosted</div>
+                          <div class="ranking-stat-item">1,240 players</div>
+                        </div>
+                        <div class="achievement-badges">
+                          <div class="achievement-badge" data-title="Quiz Master">QM</div>
+                          <div class="achievement-badge" data-title="Content Creator">CC</div>
+                          <div class="achievement-badge" data-title="Community Leader">CL</div>
+                        </div>
+                      </div>
+                      <div class="ranking-points">
+                        9,548 <i class="fas fa-star text-warning"></i>
+                        <span class="ranking-badge legendary">LEGENDARY</span>
+                      </div>
                     </div>
                     
-                    <!-- Country Rankings -->
-                    <div class="leaderboard-type" data-type="country" style="display: none;">
-                        <div class="leaderboard-item p-3 rounded mb-2">
-                            <div class="row align-items-center">
-                                <div class="col-1 text-center">
-                                    <span class="rank-badge bg-warning text-dark">1</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
-                                        <div>
-                                            <h5 class="mb-0">John Smith</h5>
-                                            <small class="text-white-50">@johns</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">United States</div>
-                                <div class="col-2 text-center">
-                                    <span class="xp-badge">9,850</span>
-                                </div>
-                                <div class="col-2 text-center">118</div>
-                            </div>
+                    <div class="ranking-item">
+                      <div class="ranking-position"></div>
+                      <div class="ranking-avatar">
+                        <img src="images/profile2.png" alt="Avatar">
+                      </div>
+                      <div class="ranking-info">
+                        <div class="ranking-name">Michael Chen</div>
+                        <div class="ranking-stats">
+                          <div class="ranking-stat-item">36 quizzes hosted</div>
+                          <div class="ranking-stat-item">980 players</div>
                         </div>
-                        <div class="leaderboard-item p-3 rounded mb-2">
-                            <div class="row align-items-center">
-                                <div class="col-1 text-center">
-                                    <span class="rank-badge bg-secondary">2</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
-                                        <div>
-                                            <h5 class="mb-0">Emily Brown</h5>
-                                            <small class="text-white-50">@emilyb</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">United States</div>
-                                <div class="col-2 text-center">
-                                    <span class="xp-badge">8,920</span>
-                                </div>
-                                <div class="col-2 text-center">105</div>
-                            </div>
+                        <div class="achievement-badges">
+                          <div class="achievement-badge" data-title="Quiz Master">QM</div>
+                          <div class="achievement-badge" data-title="Trendsetter">TS</div>
                         </div>
-                        <div class="leaderboard-item p-3 rounded mb-2">
-                            <div class="row align-items-center">
-                                <div class="col-1 text-center">
-                                    <span class="rank-badge bg-danger">3</span>
-                                </div>
-                                <div class="col-4">
-                                    <div class="d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Profile">
-                                        <div>
-                                            <h5 class="mb-0">Michael Wilson</h5>
-                                            <small class="text-white-50">@michaelw</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">United States</div>
-                                <div class="col-2 text-center">
-                                    <span class="xp-badge">8,450</span>
-                                </div>
-                                <div class="col-2 text-center">98</div>
-                            </div>
+                        <div class="ranking-progress">
+                          <div class="ranking-progress-bar" style="width: 92%;"></div>
                         </div>
+                      </div>
+                      <div class="ranking-points">
+                        8,475 <i class="fas fa-star text-warning"></i>
+                        <span class="ranking-badge master">MASTER</span>
+                      </div>
                     </div>
+                    
+                    <div class="ranking-item">
+                      <div class="ranking-position"></div>
+                      <div class="ranking-avatar">
+                        <img src="images/profile.png" alt="You">
+                      </div>
+                      <div class="ranking-info">
+                        <div class="ranking-name">John Doe <span class="badge bg-primary">You</span></div>
+                        <div class="ranking-stats">
+                          <div class="ranking-stat-item">24 quizzes hosted</div>
+                          <div class="ranking-stat-item">482 players</div>
+                        </div>
+                        <div class="achievement-badges">
+                          <div class="achievement-badge" data-title="Rising Star">RS</div>
+                        </div>
+                        <div class="ranking-progress">
+                          <div class="ranking-progress-bar" style="width: 65%;"></div>
+                        </div>
+                      </div>
+                      <div class="ranking-points">
+                        5,842 <i class="fas fa-star text-warning"></i>
+                        <span class="ranking-badge advanced">ADVANCED</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Explore Section -->
-    <section class="explore-section py-5 bg-darker" id="explore-section">
-        <div class="container">
-            <div class="section-header text-center mb-5">
-                <h2 class="display-5 text-white mb-3">Explore Quizzes</h2>
-                <p class="text-light">Discover new challenges and test your knowledge in various topics</p>
-            </div>
-
-            <!-- Search and Filter Bar -->
-            <div class="search-filter-bar mb-5">
-                <div class="row g-3">
-                    <div class="col-lg-6">
-                        <div class="search-box">
-                            <form class="d-flex">
-                                <input type="text" class="form-control" placeholder="Search for quizzes, topics, or categories...">
-                                <button type="submit" class="btn btn-primary ms-2"><i class="fas fa-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="d-flex justify-content-lg-end">
-                            <div class="dropdown me-2">
-                                <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-filter me-2"></i> Filter
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">All Categories</a></li>
-                                    <li><a class="dropdown-item" href="#">Science</a></li>
-                                    <li><a class="dropdown-item" href="#">Mathematics</a></li>
-                                    <li><a class="dropdown-item" href="#">Literature</a></li>
-                                    <li><a class="dropdown-item" href="#">Geography</a></li>
-                                    <li><a class="dropdown-item" href="#">History</a></li>
-                                </ul>
-                            </div>
-                            <div class="dropdown me-2">
-                                <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-sort me-2"></i> Sort By
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Most Popular</a></li>
-                                    <li><a class="dropdown-item" href="#">Newest</a></li>
-                                    <li><a class="dropdown-item" href="#">Highest Rated</a></li>
-                                    <li><a class="dropdown-item" href="#">Most Attempted</a></li>
-                                </ul>
-                            </div>
-                            <div class="view-toggle">
-                                <button class="btn btn-outline-light active"><i class="fas fa-th-large"></i></button>
-                                <button class="btn btn-outline-light"><i class="fas fa-list"></i></button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="section-footer">
+                  <button class="btn btn-sm btn-outline-primary">View Full Leaderboard</button>
+                  <span class="text-muted">Your Rank: #3 of 162</span>
                 </div>
+              </div>
             </div>
-
-            <!-- Featured Collections -->
-            <div class="featured-collections mb-5">
-                <h3 class="text-white mb-4">Featured Collections</h3>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
-                            <img src="https://via.placeholder.com/300x200" alt="Educational" class="img-fluid w-100">
-                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
-                                <h4>Educational</h4>
-                                <p class="mb-2">Enhance your knowledge with academic quizzes</p>
-                                <span class="badge bg-light text-dark">25 quizzes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
-                            <img src="https://via.placeholder.com/300x200" alt="For Kids" class="img-fluid w-100">
-                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
-                                <h4>For Kids</h4>
-                                <p class="mb-2">Fun and educational quizzes for children</p>
-                                <span class="badge bg-light text-dark">18 quizzes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
-                            <img src="https://via.placeholder.com/300x200" alt="Trivia Night" class="img-fluid w-100">
-                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
-                                <h4>Trivia Night</h4>
-                                <p class="mb-2">Perfect for parties and social gatherings</p>
-                                <span class="badge bg-light text-dark">30 quizzes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="collection-card h-100 rounded overflow-hidden position-relative">
-                            <img src="https://via.placeholder.com/300x200" alt="Professional" class="img-fluid w-100">
-                            <div class="collection-overlay d-flex flex-column justify-content-end p-3">
-                                <h4>Professional</h4>
-                                <p class="mb-2">Skill assessment for career advancement</p>
-                                <span class="badge bg-light text-dark">22 quizzes</span>
-                            </div>
-                        </div>
-                    </div>
+            
+            <!-- Right Column -->
+            <div class="col-lg-4">
+              <!-- Friends Section -->
+              <div class="section-card fade-in" style="animation-delay: 0.2s;">
+                <div class="section-header">
+                  <h4 class="section-title">
+                    <i class="fas fa-user-friends"></i>
+                    Friends
+                  </h4>
+                  <div class="section-actions">
+                    <button class="btn btn-sm btn-outline-primary">
+                      <i class="fas fa-user-plus"></i>
+                    </button>
+                  </div>
                 </div>
+                <div class="section-body">
+                  <!-- Friend requests -->
+                  <div class="friend-request">
+                    <div class="request-avatar">
+                      <img src="images/profile3.png" alt="Avatar">
+                    </div>
+                    <div class="request-info">
+                      <div class="request-name">Lisa Taylor</div>
+                      <div class="request-mutual">3 mutual friends</div>
+                    </div>
+                    <div class="request-actions">
+                      <button class="request-action-btn accept">Accept</button>
+                      <button class="request-action-btn decline">Decline</button>
+                    </div>
+                  </div>
+                  
+                  <!-- Online friends -->
+                  <div class="friends-list mt-4">
+                    <div class="friend-card">
+                      <div class="friend-card-header"></div>
+                      <div class="friend-avatar">
+                        <img src="images/profile1.png" alt="Friend Avatar">
+                      </div>
+                      <div class="friend-card-body">
+                        <h5 class="friend-name">Alex Stevens</h5>
+                        <div class="friend-status">
+                          <i class="fas fa-circle"></i> Online
+                        </div>
+                        <div class="friend-stats">
+                          <div class="friend-stat">
+                            <div class="friend-stat-value">32</div>
+                            <div class="friend-stat-label">Quizzes</div>
+                          </div>
+                          <div class="friend-stat">
+                            <div class="friend-stat-value">847</div>
+                            <div class="friend-stat-label">Points</div>
+                          </div>
+                          <div class="friend-stat">
+                            <div class="friend-stat-value">8</div>
+                            <div class="friend-stat-label">Rank</div>
+                          </div>
+                        </div>
+                        <div class="friend-actions">
+                          <button class="friend-action-btn">
+                            <i class="fas fa-gamepad"></i> Challenge
+                          </button>
+                          <button class="friend-action-btn">
+                            <i class="fas fa-comment"></i> Message
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="section-footer">
+                  <button class="btn btn-sm btn-outline-primary">View All Friends</button>
+                  <span class="text-muted">1/18 friends online</span>
+                </div>
+              </div>
+              
+              <!-- Featured Quizzes (Preserved from Original) -->
+              <div class="section-card fade-in" style="animation-delay: 0.3s;">
+                <div class="section-header">
+                  <h4 class="section-title">
+                    <i class="fas fa-star"></i>
+                    Featured Quizzes
+                  </h4>
+                  <div class="section-actions">
+                    <a href="#" class="btn btn-sm btn-outline-primary">See All</a>
+                  </div>
+                </div>
+                <div class="section-body">
+                  <!-- Featured Quiz Card -->
+                  <div class="quiz-card">
+                    <div class="quiz-info">
+                      <h5 class="quiz-title">Science Trivia Challenge</h5>
+                      <div class="quiz-metadata">
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-question-circle"></i> 15 Questions
+                        </div>
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-users"></i> 1.2k Plays
+                        </div>
+                      </div>
+                    </div>
+                    <div class="quiz-actions">
+                      <button class="quiz-action-btn" title="Play Quiz" data-quiz-code="SCI123">
+                        <i class="fas fa-play"></i>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div class="quiz-card">
+                    <div class="quiz-info">
+                      <h5 class="quiz-title">Movie Quotes Quiz</h5>
+                      <div class="quiz-metadata">
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-question-circle"></i> 12 Questions
+                        </div>
+                        <div class="quiz-metadata-item">
+                          <i class="fas fa-users"></i> 1.5k Plays
+                        </div>
+                      </div>
+                    </div>
+                    <div class="quiz-actions">
+                      <button class="quiz-action-btn" title="Play Quiz" data-quiz-code="MOV789">
+                        <i class="fas fa-play"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Achievements Section - NEW -->
+              <div class="section-card fade-in" style="animation-delay: 0.4s;">
+                <div class="section-header">
+                  <h4 class="section-title">
+                    <i class="fas fa-medal"></i>
+                    My Achievements
+                  </h4>
+                  <div class="section-actions">
+                    <a href="#" class="btn btn-sm btn-outline-primary" id="viewAllBadgesBtn">See All</a>
+                  </div>
+                </div>
+                <div class="section-body">
+                  <div class="achievements-showcase">
+                    <div class="achievement-row">
+                      <div class="achievement-badge earned" data-badge-id="quiz-creator">
+                        <div class="badge-icon">
+                          <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <div class="badge-tooltip">Quiz Creator</div>
+                      </div>
+                      <div class="achievement-badge earned" data-badge-id="fast-learner">
+                        <div class="badge-icon">
+                          <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="badge-tooltip">Fast Learner</div>
+                      </div>
+                      <div class="achievement-badge" data-badge-id="ai-master">
+                        <div class="badge-icon">
+                          <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="badge-tooltip">AI Master (Pro subscription required)</div>
+                      </div>
+                      <div class="achievement-badge" data-badge-id="social-butterfly">
+                        <div class="badge-icon">
+                          <i class="fas fa-users"></i>
+                        </div>
+                        <div class="badge-tooltip">Social Butterfly</div>
+                      </div>
+                    </div>
+                    <div class="achievement-row">
+                      <div class="achievement-badge" data-badge-id="streak-master">
+                        <div class="badge-icon">
+                          <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="badge-tooltip">7-Day Streak (Pro subscription required)</div>
+                      </div>
+                      <div class="achievement-badge" data-badge-id="perfect-score">
+                        <div class="badge-icon">
+                          <i class="fas fa-star"></i>
+                        </div>
+                        <div class="badge-tooltip">Perfect Score</div>
+                      </div>
+                      <div class="achievement-badge earned" data-badge-id="early-bird">
+                        <div class="badge-icon">
+                          <i class="fas fa-coffee"></i>
+                        </div>
+                        <div class="badge-tooltip">Early Bird</div>
+                      </div>
+                      <div class="achievement-badge" data-badge-id="night-owl">
+                        <div class="badge-icon">
+                          <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="badge-tooltip">Night Owl (Pro+ subscription required)</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="achievement-progress">
+                    <div class="progress-label">
+                      <span>Achievement Progress</span>
+                      <span>3/8 Unlocked</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 37.5%" aria-valuenow="37.5" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="achievement-hint mt-2">
+                      <i class="fas fa-lightbulb text-warning"></i>
+                      <span>Create an AI quiz to earn the AI Master badge!</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Coming Soon Section -->
+              <div class="section-card fade-in" style="animation-delay: 0.5s;">
+                <div class="section-header">
+                  <h4 class="section-title">
+                    <i class="fas fa-rocket"></i>
+                    Coming Soon
+                  </h4>
+                </div>
+                <div class="section-body">
+                  <div class="coming-soon-card">
+                    <div class="coming-soon-badge">SOON</div>
+                    <div class="coming-soon-icon">
+                      <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h5 class="coming-soon-title">Mobile App</h5>
+                    <p class="coming-soon-description">Take your quizzes on the go with our upcoming mobile application. Create and host quizzes from anywhere!</p>
+                    
+                    <div class="notify-input">
+                      <input type="email" placeholder="Enter your email" class="form-control">
+                      <button>Notify Me</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-
-            <!-- Trending Topics -->
-            <div class="trending-topics mb-5">
-                <h3 class="text-white mb-4">Trending Topics</h3>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="topics-wrapper d-flex flex-wrap gap-2">
-                            <a href="#" class="topic-tag">JavaScript</a>
-                            <a href="#" class="topic-tag">Machine Learning</a>
-                            <a href="#" class="topic-tag">World History</a>
-                            <a href="#" class="topic-tag">Marvel Universe</a>
-                            <a href="#" class="topic-tag">Famous Artists</a>
-                            <a href="#" class="topic-tag">Climate Change</a>
-                            <a href="#" class="topic-tag">Classical Music</a>
-                            <a href="#" class="topic-tag">Human Anatomy</a>
-                            <a href="#" class="topic-tag">Ancient Civilizations</a>
-                            <a href="#" class="topic-tag">Space Exploration</a>
-                            <a href="#" class="topic-tag">Nutrition</a>
-                            <a href="#" class="topic-tag">Olympic Games</a>
-                            <a href="#" class="topic-tag">Literature Classics</a>
-                            <a href="#" class="topic-tag">Psychology</a>
-                            <a href="#" class="topic-tag">World Capitals</a>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          
+          <!-- Recent Activity (Preserved from Original) -->
+          <div class="section-card fade-in" style="animation-delay: 0.5s; margin-top: 1.5rem;">
+            <div class="section-header">
+              <h4 class="section-title">
+                <i class="fas fa-history"></i>
+                Recent Activity
+              </h4>
+              <div class="section-actions">
+                <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+              </div>
             </div>
-
-            <!-- Recently Added -->
-            <div class="recently-added">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-white m-0">Recently Added</h3>
-                    <a href="#" class="btn btn-sm btn-outline-info">View All</a>
+            <div class="section-body">
+              <div class="activity-list">
+                <div class="activity-item">
+                  <div class="activity-icon completed">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <div class="activity-content">
+                    <h5>You completed "Science Trivia Challenge"</h5>
+                    <p>Score: 12/15 (80%)</p>
+                    <span class="activity-time">2 hours ago</span>
+                  </div>
+                  <div class="activity-actions">
+                    <button class="btn btn-outline-primary btn-sm">Play Again</button>
+                  </div>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="quiz-card h-100 rounded overflow-hidden">
-                            <div class="quiz-img">
-                                <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
-                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">NEW</span>
-                            </div>
-                            <div class="quiz-content p-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="badge bg-warning text-dark">Technology</span>
-                                    <span><i class="fas fa-star text-warning"></i> 4.9</span>
-                                </div>
-                                <h4>Artificial Intelligence Basics</h4>
-                                <p>Learn the fundamentals of AI and test your knowledge</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span><i class="fas fa-question-circle"></i> 15 Questions</span>
-                                    <button class="btn btn-success">Start Quiz</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="quiz-card h-100 rounded overflow-hidden">
-                            <div class="quiz-img">
-                                <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
-                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">NEW</span>
-                            </div>
-                            <div class="quiz-content p-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="badge bg-primary">Music</span>
-                                    <span><i class="fas fa-star text-warning"></i> 4.7</span>
-                                </div>
-                                <h4>Classical Composers</h4>
-                                <p>Test your knowledge of classical music composers and their works</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span><i class="fas fa-question-circle"></i> 20 Questions</span>
-                                    <button class="btn btn-success">Start Quiz</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="quiz-card h-100 rounded overflow-hidden">
-                            <div class="quiz-img">
-                                <img src="https://via.placeholder.com/400x200" alt="Quiz thumbnail" class="img-fluid w-100">
-                                <span class="badge bg-danger position-absolute top-0 end-0 m-2">NEW</span>
-                            </div>
-                            <div class="quiz-content p-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span class="badge bg-success">Environment</span>
-                                    <span><i class="fas fa-star text-warning"></i> 4.8</span>
-                                </div>
-                                <h4>Climate Change</h4>
-                                <p>Test your understanding of climate science and global warming</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span><i class="fas fa-question-circle"></i> 25 Questions</span>
-                                    <button class="btn btn-success">Start Quiz</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="activity-item">
+                  <div class="activity-icon created">
+                    <i class="fas fa-plus"></i>
+                  </div>
+                  <div class="activity-content">
+                    <h5>You created "Geography Quiz"</h5>
+                    <p>10 questions about world geography</p>
+                    <span class="activity-time">Yesterday</span>
+                  </div>
+                  <div class="activity-actions">
+                    <button class="btn btn-outline-primary btn-sm">Edit</button>
+                  </div>
                 </div>
+                <div class="activity-item">
+                  <div class="activity-icon friend">
+                    <i class="fas fa-user-friends"></i>
+                  </div>
+                  <div class="activity-content">
+                    <h5>John Smith challenged you to "Movie Quotes Quiz"</h5>
+                    <p>Test your knowledge of famous movie quotes</p>
+                    <span class="activity-time">2 days ago</span>
+                  </div>
+                  <div class="activity-actions">
+                    <button class="btn btn-outline-primary btn-sm">Accept</button>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Footer -->
-    <footer class="footer py-4 text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <h5>Quizora</h5>
-                    <p>Challenge your knowledge, learn new things, and have fun!</p>
-                    <div class="social-links">
-                        <a href="#" class="me-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3 mb-md-0">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Explore</a></li>
-                        <li><a href="#">Leaderboard</a></li>
-                        <li><a href="#">Create Quiz</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-3 mb-md-0">
-                    <h5>Categories</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Science</a></li>
-                        <li><a href="#">History</a></li>
-                        <li><a href="#">Mathematics</a></li>
-                        <li><a href="#">Literature</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Subscribe</h5>
-                    <p>Get updates on new quizzes and features</p>
-                    <form class="d-flex">
-                        <input type="email" class="form-control me-2" placeholder="Your email">
-                        <button type="submit" class="btn btn-info">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p>© 2023 Quizora. All rights reserved.</p>
-            </div>
+      <!-- My Quizzes Content Section -->
+      <div id="myQuizzesContent" class="d-none">
+        <div class="section-header d-flex justify-content-between align-items-center mb-4">
+          <h2><i class="fas fa-layer-group me-2"></i>My Quizzes</h2>
+          <button class="btn btn-primary" id="createNewQuizBtn">
+            <i class="fas fa-plus me-2"></i>Create New Quiz
+          </button>
         </div>
-    </footer>
 
-    <!-- Bootstrap and custom scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="js/home.js"></script>
+        <!-- Quiz Categories Tabs -->
+        <ul class="nav nav-tabs mb-4" id="quizTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="all-quizzes-tab" data-bs-toggle="tab" data-bs-target="#all-quizzes" type="button" role="tab">
+              All Quizzes <span class="badge bg-primary ms-2">6</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="recent-tab" data-bs-toggle="tab" data-bs-target="#recent" type="button" role="tab">
+              Recent <span class="badge bg-primary ms-2">2</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="popular-tab" data-bs-toggle="tab" data-bs-target="#popular" type="button" role="tab">
+              Popular <span class="badge bg-primary ms-2">3</span>
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="drafts-tab" data-bs-toggle="tab" data-bs-target="#drafts" type="button" role="tab">
+              Drafts <span class="badge bg-secondary ms-2">1</span>
+            </button>
+          </li>
+        </ul>
 
-    <!-- Notification Modal -->
-    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark text-white">
-                <div class="modal-header border-bottom border-secondary">
-                    <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="notification-content">
-                        <!-- Notification content will be loaded here dynamically -->
+        <!-- Tab Content -->
+        <div class="tab-content" id="quizTabsContent">
+          <!-- All Quizzes Tab -->
+          <div class="tab-pane fade show active" id="all-quizzes" role="tabpanel">
+            <div class="row g-4">
+              <!-- Quiz Card 1 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="quiz-item-card">
+                  <div class="quiz-item-header">
+                    <span class="quiz-category">Science</span>
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-pencil-alt me-2"></i>Edit</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>Duplicate</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-share-alt me-2"></i>Share</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                      </ul>
                     </div>
+                  </div>
+                  <div class="quiz-item-body">
+                    <h4 class="quiz-title">Web Development Basics</h4>
+                    <div class="quiz-meta">
+                      <span><i class="fas fa-calendar-alt"></i> Created 3 days ago</span>
+                      <span><i class="fas fa-question-circle"></i> 15 questions</span>
+                    </div>
+                    <div class="quiz-stats">
+                      <div class="stat">
+                        <span class="stat-value">45</span>
+                        <span class="stat-label">Plays</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">4.7</span>
+                        <span class="stat-label">Rating</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">85%</span>
+                        <span class="stat-label">Avg. Score</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="quiz-item-footer">
+                    <button class="btn btn-outline-primary"><i class="fas fa-play me-2"></i>Start</button>
+                    <button class="btn btn-outline-secondary"><i class="fas fa-chart-bar me-2"></i>Results</button>
+                  </div>
                 </div>
-                <div class="modal-footer border-top border-secondary">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary notification-action-btn">Action</button>
+              </div>
+
+              <!-- Quiz Card 2 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="quiz-item-card">
+                  <div class="quiz-item-header">
+                    <span class="quiz-category">Programming</span>
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-pencil-alt me-2"></i>Edit</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>Duplicate</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-share-alt me-2"></i>Share</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="quiz-item-body">
+                    <h4 class="quiz-title">JavaScript Fundamentals</h4>
+                    <div class="quiz-meta">
+                      <span><i class="fas fa-calendar-alt"></i> Created 1 week ago</span>
+                      <span><i class="fas fa-question-circle"></i> 20 questions</span>
+                    </div>
+                    <div class="quiz-stats">
+                      <div class="stat">
+                        <span class="stat-value">132</span>
+                        <span class="stat-label">Plays</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">4.9</span>
+                        <span class="stat-label">Rating</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">78%</span>
+                        <span class="stat-label">Avg. Score</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="quiz-item-footer">
+                    <button class="btn btn-outline-primary"><i class="fas fa-play me-2"></i>Start</button>
+                    <button class="btn btn-outline-secondary"><i class="fas fa-chart-bar me-2"></i>Results</button>
+                  </div>
                 </div>
+              </div>
+
+              <!-- Quiz Card 3 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="quiz-item-card">
+                  <div class="quiz-item-header">
+                    <span class="quiz-category">History</span>
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-pencil-alt me-2"></i>Edit</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>Duplicate</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-share-alt me-2"></i>Share</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="quiz-item-body">
+                    <h4 class="quiz-title">World War II Quiz</h4>
+                    <div class="quiz-meta">
+                      <span><i class="fas fa-calendar-alt"></i> Created 2 weeks ago</span>
+                      <span><i class="fas fa-question-circle"></i> 25 questions</span>
+                    </div>
+                    <div class="quiz-stats">
+                      <div class="stat">
+                        <span class="stat-value">89</span>
+                        <span class="stat-label">Plays</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">4.5</span>
+                        <span class="stat-label">Rating</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">72%</span>
+                        <span class="stat-label">Avg. Score</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="quiz-item-footer">
+                    <button class="btn btn-outline-primary"><i class="fas fa-play me-2"></i>Start</button>
+                    <button class="btn btn-outline-secondary"><i class="fas fa-chart-bar me-2"></i>Results</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quiz Card 4 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="quiz-item-card">
+                  <div class="quiz-item-header">
+                    <span class="quiz-category">Geography</span>
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-pencil-alt me-2"></i>Edit</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>Duplicate</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-share-alt me-2"></i>Share</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="quiz-item-body">
+                    <h4 class="quiz-title">World Capitals</h4>
+                    <div class="quiz-meta">
+                      <span><i class="fas fa-calendar-alt"></i> Created 3 weeks ago</span>
+                      <span><i class="fas fa-question-circle"></i> 30 questions</span>
+                    </div>
+                    <div class="quiz-stats">
+                      <div class="stat">
+                        <span class="stat-value">65</span>
+                        <span class="stat-label">Plays</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">4.2</span>
+                        <span class="stat-label">Rating</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">68%</span>
+                        <span class="stat-label">Avg. Score</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="quiz-item-footer">
+                    <button class="btn btn-outline-primary"><i class="fas fa-play me-2"></i>Start</button>
+                    <button class="btn btn-outline-secondary"><i class="fas fa-chart-bar me-2"></i>Results</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Create New Quiz Card -->
+              <div class="col-md-6 col-lg-4">
+                <div class="quiz-item-card create-card" id="createQuizCardMyQuizzes">
+                  <div class="quiz-item-body text-center">
+                    <div class="create-icon">
+                      <i class="fas fa-plus"></i>
+                    </div>
+                    <h4 class="create-title">Create New Quiz</h4>
+                    <p class="create-text">Add a new quiz to your collection</p>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <!-- Recent Tab -->
+          <div class="tab-pane fade" id="recent" role="tabpanel">
+            <div class="row g-4">
+              <!-- Recent Quiz Card 1 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="quiz-item-card">
+                  <div class="quiz-item-header">
+                    <span class="quiz-category">Science</span>
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-pencil-alt me-2"></i>Edit</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>Duplicate</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-share-alt me-2"></i>Share</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="quiz-item-body">
+                    <h4 class="quiz-title">Web Development Basics</h4>
+                    <div class="quiz-meta">
+                      <span><i class="fas fa-calendar-alt"></i> Created 3 days ago</span>
+                      <span><i class="fas fa-question-circle"></i> 15 questions</span>
+                    </div>
+                    <div class="quiz-stats">
+                      <div class="stat">
+                        <span class="stat-value">45</span>
+                        <span class="stat-label">Plays</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">4.7</span>
+                        <span class="stat-label">Rating</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="quiz-item-footer">
+                    <button class="btn btn-outline-primary"><i class="fas fa-play me-2"></i>Start</button>
+                    <button class="btn btn-outline-secondary"><i class="fas fa-chart-bar me-2"></i>Results</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Quiz Card 2 -->
+              <div class="col-md-6 col-lg-4">
+                <div class="quiz-item-card">
+                  <div class="quiz-item-header">
+                    <span class="quiz-category">Programming</span>
+                    <div class="dropdown">
+                      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-pencil-alt me-2"></i>Edit</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-copy me-2"></i>Duplicate</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-share-alt me-2"></i>Share</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="quiz-item-body">
+                    <h4 class="quiz-title">JavaScript Fundamentals</h4>
+                    <div class="quiz-meta">
+                      <span><i class="fas fa-calendar-alt"></i> Created 1 week ago</span>
+                      <span><i class="fas fa-question-circle"></i> 20 questions</span>
+                    </div>
+                    <div class="quiz-stats">
+                      <div class="stat">
+                        <span class="stat-value">132</span>
+                        <span class="stat-label">Plays</span>
+                      </div>
+                      <div class="stat">
+                        <span class="stat-value">4.9</span>
+                        <span class="stat-label">Rating</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="quiz-item-footer">
+                    <button class="btn btn-outline-primary"><i class="fas fa-play me-2"></i>Start</button>
+                    <button class="btn btn-outline-secondary"><i class="fas fa-chart-bar me-2"></i>Results</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other tabs... -->
+          <div class="tab-pane fade" id="popular" role="tabpanel">
+            <!-- Popular quizzes content -->
+            <p>Your most popular quizzes will appear here.</p>
+          </div>
+
+          <div class="tab-pane fade" id="drafts" role="tabpanel">
+            <!-- Drafts content -->
+            <p>Your draft quizzes will appear here.</p>
+          </div>
         </div>
+      </div>
+
+      <!-- Ranking content -->
+      <div id="rankingsContent" class="d-none">
+        <!-- Ranking content will be loaded by JavaScript -->
+      </div>
+
+      <!-- Coming Soon content -->
+      <div id="comingSoonContent" class="d-none">
+        <!-- Coming soon content will be loaded by JavaScript -->
+      </div>
     </div>
+  </div>
+  
+  <!-- Join Quiz Modal -->
+  <div class="modal fade" id="joinQuizModal" tabindex="-1" aria-labelledby="joinQuizModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="joinQuizModalLabel">Join Quiz</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Enter the 6-digit code provided by the quiz creator.</p>
+          <div class="code-input-container">
+            <input type="text" class="form-control code-input" id="quizCode" placeholder="Enter quiz code" maxlength="6">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="joinQuizBtn">Join Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Create Quiz Modal -->
+  <div class="modal fade" id="createQuizModal" tabindex="-1" aria-labelledby="createQuizModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="createQuizModalLabel">Configure Your Quiz</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="quiz-setup-steps">
+            <!-- Step indicators -->
+            <div class="setup-steps-indicator mb-4">
+              <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-name">Basic Info</div>
+              </div>
+              <div class="step-connector"></div>
+              <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-name">Settings</div>
+              </div>
+              <div class="step-connector"></div>
+              <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-name">Controls</div>
+              </div>
+            </div>
+            
+            <!-- Step 1: Basic Quiz Info -->
+            <div class="setup-step active" id="step1">
+              <h5 class="mb-3">Quiz Information</h5>
+              
+              <div class="mb-3">
+                <label for="quizTitle" class="form-label">Quiz Title <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="quizTitle" placeholder="Enter a title for your quiz" required>
+              </div>
+              
+              <div class="mb-3">
+                <label for="quizDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="quizDescription" rows="2" placeholder="Brief description of your quiz"></textarea>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="quizCategory" class="form-label">Category <span class="text-danger">*</span></label>
+                  <select class="form-select" id="quizCategory" required>
+                    <option value="" selected disabled>Select category</option>
+                    <option value="science">Science</option>
+                    <option value="history">History</option>
+                    <option value="geography">Geography</option>
+                    <option value="literature">Literature</option>
+                    <option value="sports">Sports</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="technology">Technology</option>
+                    <option value="art">Art & Culture</option>
+                    <option value="music">Music</option>
+                    <option value="movies">Movies & TV</option>
+                    <option value="general">General Knowledge</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="numQuestions" class="form-label">Number of Questions <span class="text-danger">*</span></label>
+                  <select class="form-select" id="numQuestions" required>
+                    <option value="5">5 questions</option>
+                    <option value="10" selected>10 questions</option>
+                    <option value="15">15 questions</option>
+                    <option value="20">20 questions</option>
+                    <option value="25">25 questions</option>
+                    <option value="30">30 questions</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="text-end mt-3">
+                <button class="btn btn-primary" id="goToStep2Btn">Next <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+            
+            <!-- Step 2: Quiz Settings -->
+            <div class="setup-step" id="step2">
+              <h5 class="mb-3">Quiz Settings</h5>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="quizMode" class="form-label">Quiz Mode</label>
+                  <select class="form-select" id="quizMode">
+                    <option value="solo">Solo Mode</option>
+                    <option value="multiplayer" selected>Multiplayer Mode</option>
+                  </select>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="participantLimit" class="form-label">Participant Limit</label>
+                  <select class="form-select" id="participantLimit">
+                    <option value="5">5 participants</option>
+                    <option value="10" selected>10 participants</option>
+                    <option value="25">25 participants</option>
+                    <option value="50">50 participants</option>
+                    <option value="unlimited">Unlimited</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="timePerQuestion" class="form-label">Time Per Question</label>
+                  <select class="form-select" id="timePerQuestion">
+                    <option value="10">10 seconds</option>
+                    <option value="15">15 seconds</option>
+                    <option value="20" selected>20 seconds</option>
+                    <option value="30">30 seconds</option>
+                    <option value="45">45 seconds</option>
+                    <option value="60">60 seconds</option>
+                    <option value="unlimited">Unlimited</option>
+                  </select>
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                  <label for="chatDuration" class="form-label">Chat Duration Between Questions</label>
+                  <select class="form-select" id="chatDuration">
+                    <option value="0">No chat</option>
+                    <option value="15" selected>15 seconds</option>
+                    <option value="30">30 seconds</option>
+                    <option value="60">60 seconds</option>
+                    <option value="120">2 minutes</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label d-block">Quiz Access</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="quizAccess" id="accessPublic" value="public" checked>
+                  <label class="form-check-label" for="accessPublic">Public</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="quizAccess" id="accessPrivate" value="private">
+                  <label class="form-check-label" for="accessPrivate">Private</label>
+                </div>
+              </div>
+              
+              <div class="text-end mt-3">
+                <button class="btn btn-outline-secondary me-2" id="backToStep1Btn"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="btn btn-primary" id="goToStep3Btn">Next <i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+            
+            <!-- Step 3: Advanced Controls -->
+            <div class="setup-step" id="step3">
+              <h5 class="mb-3">Advanced Controls</h5>
+              
+              <div class="mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="passwordProtection">
+                  <label class="form-check-label" for="passwordProtection">Password Protection</label>
+                </div>
+                <div id="passwordField" class="mt-2 d-none">
+                  <input type="password" class="form-control" id="quizPassword" placeholder="Enter password">
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="requireApproval">
+                  <label class="form-check-label" for="requireApproval">Require Join Approval</label>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="enableAttentionDetection" checked>
+                  <label class="form-check-label" for="enableAttentionDetection">Attention Detection (Tab Switching)</label>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="enableAIModeration" checked>
+                  <label class="form-check-label" for="enableAIModeration">AI Chat Moderation</label>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="showLeaderboard" checked>
+                  <label class="form-check-label" for="showLeaderboard">Show Live Leaderboard</label>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="allowRetakes">
+                  <label class="form-check-label" for="allowRetakes">Allow Quiz Retakes</label>
+                </div>
+              </div>
+              
+              <div class="text-end mt-3">
+                <button class="btn btn-outline-secondary me-2" id="backToStep2Btn"><i class="fas fa-arrow-left"></i> Back</button>
+                <button class="btn btn-success" id="createQuizSubmitBtn">Create Quiz <i class="fas fa-check"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <div class="quiz-settings-summary">
+            <small class="text-muted">Quiz summary: <span id="quizSummary">10-question multiplayer quiz with 20-second time limit</span></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Question Type Selection Modal -->
+  <div class="modal fade" id="questionTypeModal" tabindex="-1" aria-labelledby="questionTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="questionTypeModalLabel">Select Question Type</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="question-types-container">
+            <div class="question-type-card" data-type="multiple-choice">
+              <div class="question-type-icon">
+                <i class="fas fa-list-ul"></i>
+              </div>
+              <h5>Multiple Choice</h5>
+              <p>Classic format with 4 options and one correct answer</p>
+            </div>
+            
+            <div class="question-type-card" data-type="true-false">
+              <div class="question-type-icon">
+                <i class="fas fa-toggle-on"></i>
+              </div>
+              <h5>True/False</h5>
+              <p>Simple true or false statements</p>
+            </div>
+            
+            <div class="question-type-card" data-type="short-answer">
+              <div class="question-type-icon">
+                <i class="fas fa-comment-dots"></i>
+              </div>
+              <h5>Short Answer</h5>
+              <p>Text-based answers with exact or keyword matching</p>
+            </div>
+            
+            <div class="question-type-card" data-type="matching">
+              <div class="question-type-icon">
+                <i class="fas fa-exchange-alt"></i>
+              </div>
+              <h5>Matching</h5>
+              <p>Match items from two different columns</p>
+            </div>
+            
+            <div class="question-type-card" data-type="fill-blank">
+              <div class="question-type-icon">
+                <i class="fas fa-pencil-alt"></i>
+              </div>
+              <h5>Fill in the Blank</h5>
+              <p>Complete sentences by filling in missing words</p>
+            </div>
+            
+            <div class="question-type-card" data-type="ordering">
+              <div class="question-type-icon">
+                <i class="fas fa-sort-numeric-down"></i>
+              </div>
+              <h5>Ordering</h5>
+              <p>Place items in the correct sequence or order</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates for modals -->
+  <div class="d-none">
+    <!-- Quiz Preview Modal Template -->
+    <div id="quizPreviewModalTemplate">
+      <div class="quiz-preview-container">
+        <div class="quiz-preview-header">
+          <div class="quiz-badge"><i class="fas fa-robot"></i> AI-Generated</div>
+          <div class="quiz-title">Your Custom Quiz</div>
+          <div class="quiz-meta">
+            <span><i class="fas fa-question-circle"></i> <span class="question-count">10</span> Questions</span>
+            <span><i class="fas fa-chart-line"></i> <span class="difficulty">Medium</span></span>
+          </div>
+        </div>
+        
+        <div class="quiz-preview-content">
+          <div class="sample-question-container">
+            <div class="sample-label">Sample Question:</div>
+            <div class="sample-question">
+              What is the difference between synchronous and asynchronous programming?
+            </div>
+            <div class="answer-options">
+              <div class="answer-option correct"><i class="fas fa-check-circle"></i> Synchronous code executes sequentially while asynchronous allows operations to complete in the future</div>
+              <div class="answer-option"><i class="far fa-circle"></i> There is no difference between them</div>
+              <div class="answer-option"><i class="far fa-circle"></i> Synchronous means the code is optimized for performance</div>
+              <div class="answer-option"><i class="far fa-circle"></i> Asynchronous programming is only used in frontend web development</div>
+            </div>
+          </div>
+          
+          <div class="quiz-info">
+            <div class="info-section">
+              <h5><i class="fas fa-info-circle"></i> About This Quiz</h5>
+              <p>This AI-generated quiz contains questions on <span class="topic-name">Technology</span> with <span class="difficulty-level">medium</span> difficulty. Each question has been verified for accuracy and offers a good mix of challenges.</p>
+            </div>
+            
+            <div class="quiz-stats">
+              <div class="stat-item">
+                <div class="stat-value"><i class="fas fa-star"></i></div>
+                <div class="stat-label">Premium Quality</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value"><i class="fas fa-clock"></i></div>
+                <div class="stat-label">~10 Minutes</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value"><i class="fas fa-trophy"></i></div>
+                <div class="stat-label">Earn Badges</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- AI Generator Modal Template -->
+    <div id="aiGeneratorModalTemplate">
+      <div class="ai-generator-container">
+        <div class="ai-status">
+          <div class="ai-icon">
+            <div class="ai-pulse"></div>
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="ai-status-message">Generating quiz content...</div>
+        </div>
+        
+        <div class="progress mb-3">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+        </div>
+        
+        <div class="ai-log">
+          <div class="ai-log-header">Generation Log:</div>
+          <div class="ai-log-messages"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Challenge Friend Modal Template -->
+    <div id="challengeFriendModalTemplate">
+      <div class="challenge-sent-container">
+        <div class="success-animation">
+          <div class="checkmark-circle">
+            <div class="checkmark"></div>
+          </div>
+        </div>
+        
+        <div class="challenge-details">
+          <h5>Challenge Sent!</h5>
+          <p>Your challenge has been sent to <strong class="friend-name">Alex Stevens</strong>.</p>
+          
+          <div class="challenge-card">
+            <div class="challenge-card-header">
+              <i class="fas fa-trophy"></i> Quiz Duel
+            </div>
+            <div class="challenge-card-body">
+              <div class="challenge-quiz-name">Web Development Basics</div>
+              <div class="challenge-status">
+                <span class="status-badge">Pending</span>
+                <span class="challenge-time">Just now</span>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-muted mt-2">They'll receive a notification and can accept your challenge to begin the duel.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Join Quiz Modal Template -->
+    <div id="joinQuizModalTemplate">
+      <div class="join-quiz-success">
+        <div class="quiz-found-icon">
+          <i class="fas fa-check"></i>
+        </div>
+        
+        <div class="quiz-details">
+          <h5>Quiz Found!</h5>
+          <div class="quiz-card">
+            <div class="quiz-host">
+              <img src="images/avatar-1.jpg" alt="Host" class="host-avatar">
+              <span class="host-name">Michael Johnson</span>
+            </div>
+            <div class="quiz-info-card">
+              <div class="quiz-info-name">Science Quiz Challenge</div>
+              <div class="quiz-info-meta">
+                <span><i class="fas fa-users"></i> 4 Players</span>
+                <span><i class="fas fa-question-circle"></i> 15 Questions</span>
+              </div>
+              <div class="quiz-status">
+                <span class="status-badge waiting">Waiting to Start</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="join-actions mt-3">
+            <p>Click "Join Now" to enter the waiting room.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Achievements Modal -->
+  <div class="modal fade" id="allAchievementsModal" tabindex="-1" aria-labelledby="allAchievementsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="allAchievementsModalLabel">All Achievements</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between mb-3 align-items-center">
+            <div class="total-points">
+              Total Points: <span class="points-value">0</span>
+            </div>
+            <div class="category-buttons btn-group">
+              <button class="btn btn-sm btn-primary category-filter" data-category="all">All</button>
+              <button class="btn btn-sm btn-outline-primary category-filter" data-category="quiz">Quizzes</button>
+              <button class="btn btn-sm btn-outline-primary category-filter" data-category="social">Social</button>
+              <button class="btn btn-sm btn-outline-primary category-filter" data-category="progression">Progress</button>
+            </div>
+          </div>
+          <div class="achievements-grid" id="achievementsGrid">
+            <!-- Achievements will be populated here by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievement Detail Modal -->
+  <div class="modal fade" id="achievementDetailModal" tabindex="-1" aria-labelledby="achievementDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="achievementDetailModalLabel">Achievement Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="achievement-detail-badge">
+            <i class="badge-icon bi bi-trophy"></i>
+          </div>
+          <h5 class="mt-3 mb-2 badge-name">Achievement Name</h5>
+          <p class="badge-description">Description of what this achievement represents and how to earn it.</p>
+          
+          <div class="achievement-status-display">
+            <div class="earned-status d-none">
+              <i class="bi bi-check-circle-fill me-2"></i>Earned on <span class="earned-date">Jan 1, 2023</span>
+            </div>
+            <div class="locked-status">
+              <i class="bi bi-lock-fill me-2"></i>Locked
+              <p class="mt-2 subscription-requirement">Requires <span class="required-subscription">Pro</span> subscription</p>
+            </div>
+            <div class="progress-status mt-3">
+              <p class="mb-1 small">Progress: <span class="progress-text">0/5</span></p>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="achievement-rewards">
+            <h6><i class="bi bi-gift me-2"></i>Rewards</h6>
+            <div class="reward-item">
+              <i class="bi bi-star-fill"></i> <span class="reward-points">50</span> points
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievement Unlock Modal -->
+  <div class="modal fade" id="achievementUnlockModal" tabindex="-1" aria-labelledby="achievementUnlockModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="achievementUnlockModalLabel">Achievement Unlocked!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="achievement-unlock-animation">
+            <div class="confetti-container" id="confettiContainer"></div>
+            <div class="achievement-detail-badge earned">
+              <i class="badge-icon bi bi-trophy"></i>
+            </div>
+          </div>
+          <h4 class="unlock-badge-name mb-2">Achievement Name</h4>
+          <p class="unlock-badge-description">Description of the achievement you've just earned.</p>
+          <div class="achievement-rewards mt-4">
+            <h6><i class="bi bi-gift me-2"></i>Rewards</h6>
+            <div class="reward-item">
+              <i class="bi bi-star-fill"></i> <span class="unlock-reward-points">50</span> points
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Awesome!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/home-page.js"></script>
+  <script src="js/user-profile.js"></script>
+  <script src="js/dashboard-actions.js"></script>
+  <script src="js/achievements.js"></script>
+
+  <script>
+    // Mobile menu functionality with improved transition handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.getElementById('overlay');
+      const body = document.body;
+      let transitionInProgress = false;
+      
+      // Check viewport size on load and set appropriate classes
+      function checkViewportSize() {
+        const isMobile = window.innerWidth <= 576;
+        if (!isMobile && sidebar.classList.contains('active')) {
+          sidebar.classList.remove('active');
+          body.classList.remove('sidebar-active');
+        }
+      }
+      
+      // Run on page load
+      checkViewportSize();
+      
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (transitionInProgress) return;
+          
+          transitionInProgress = true;
+          sidebar.classList.toggle('active');
+          body.classList.toggle('sidebar-active');
+          
+          // Reset the flag after transition completes
+          setTimeout(() => {
+            transitionInProgress = false;
+          }, 300); // Match this to the transition time in CSS
+        });
+      }
+      
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            body.classList.remove('sidebar-active');
+          }
+        });
+      }
+      
+      // Handle window resize with debounce
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          checkViewportSize();
+        }, 250);
+      });
+      
+      // Update page title when sidebar links are clicked
+      const navLinks = document.querySelectorAll('.nav-link');
+      const pageTitle = document.getElementById('currentPageTitle');
+      
+      // Get the current active page from URL or default to Dashboard
+      function setActivePage() {
+        const currentPath = window.location.pathname;
+        let activeTitle = 'Dashboard'; // Default
+        
+        navLinks.forEach(link => {
+          // Remove active class from all links
+          link.classList.remove('active');
+          
+          // If this is the current page link
+          if (link.getAttribute('href') === currentPath || 
+              currentPath.endsWith(link.getAttribute('href'))) {
+            link.classList.add('active');
+            activeTitle = link.querySelector('span').textContent;
+          }
+        });
+        
+        // If no match found, activate dashboard (first link)
+        if (!document.querySelector('.nav-link.active')) {
+          document.getElementById('dashboardLink').classList.add('active');
+        }
+        
+        // Update page title
+        if (pageTitle) {
+          pageTitle.textContent = activeTitle;
+        }
+      }
+      
+      // Set active page on load
+      setActivePage();
+      
+      // Add click handlers to each nav link
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only if it's not already active and not external link
+          if (!this.classList.contains('active') && this.getAttribute('href').includes('.html')) {
+            // Update the page title with the clicked link text
+            if (pageTitle) {
+              const linkText = this.querySelector('span').textContent;
+              pageTitle.textContent = linkText;
+            }
+          }
+        });
+      });
+      
+      // Initialize dashboard animations
+      document.querySelectorAll('.fade-in').forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, 100 + (index * 100));
+      });
+      
+      // Initialize stat counters
+      document.querySelectorAll('.stat-value').forEach(statValue => {
+        const finalValue = parseInt(statValue.textContent);
+        animateCounter(statValue, 0, finalValue, 1500);
+      });
+      
+      // Set position numbers for ranking items
+      document.querySelectorAll('.ranking-item').forEach((item, index) => {
+        const position = item.querySelector('.ranking-position');
+        position.textContent = `#${index + 1}`;
+        
+        // Add hover effect
+        item.addEventListener('mouseenter', () => {
+          item.classList.add('ranking-item-hover');
+        });
+        
+        item.addEventListener('mouseleave', () => {
+          item.classList.remove('ranking-item-hover');
+        });
+      });
+      
+      // Connect new create quiz button to existing functionality
+      const newDashboardQuizBtn = document.getElementById('newDashboardQuizBtn');
+      const newQuizCard = document.getElementById('newQuizCard');
+      if (newDashboardQuizBtn && newQuizCard) {
+        newDashboardQuizBtn.addEventListener('click', createManualQuiz);
+        newQuizCard.addEventListener('click', createManualQuiz);
+      }
+    });
+    
+    /**
+     * Animate counter from start to end value
+     */
+    function animateCounter(element, start, end, duration) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        
+        // Format the number with commas if it's large
+        element.textContent = value.toLocaleString();
+        
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      
+      window.requestAnimationFrame(step);
+    }
+  </script>
 </body>
-</html> 
+</html>
