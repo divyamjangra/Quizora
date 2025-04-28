@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quizora - Dashboard</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <!-- Google Fonts - Inter -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/create-questions.css">
+  <link rel="stylesheet" href="css/dashboard-enhanced.css">
+</head>
+<body>
+  <!-- Quiz Creator Header -->
+  <header class="quiz-creator-header">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="quiz-title">Quizora Dashboard</h1>
+      <div class="d-flex align-items-center">
+        <div class="theme-toggle-wrapper me-4">
+          <div class="theme-toggle">
+            <i class="bi bi-sun-fill light-icon"></i>
+            <i class="bi bi-moon-fill dark-icon"></i>
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+        <div class="user-profile d-flex align-items-center">
+          <span class="user-name me-2">John Doe</span>
+          <div class="user-avatar">
+            <img src="https://via.placeholder.com/32" alt="User Avatar" class="rounded-circle">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Content -->
+  <div class="dashboard-container">
+    <div class="container">
+      <!-- Dashboard Header with Stats -->
+      <div class="dashboard-header fade-in">
+        <h2>Welcome back, John!</h2>
+        <p>Here's a quick overview of your quiz progress and statistics.</p>
+        
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-value">24</div>
+            <div class="stat-label">Created Quizzes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">156</div>
+            <div class="stat-label">Questions Created</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">1,287</div>
+            <div class="stat-label">Total Plays</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">4.8</div>
+            <div class="stat-label">Average Rating</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row g-4">
+        <!-- My Quizzes Section -->
+        <div class="col-lg-8">
+          <div class="section-card fade-in" style="animation-delay: 0.1s;">
+            <div class="section-header">
+              <h4 class="section-title">
+                <i class="bi bi-file-earmark-text"></i>
+                My Quizzes
+              </h4>
+              <div class="section-actions">
+                <button class="btn btn-sm btn-primary">
+                  <i class="bi bi-plus-lg me-1"></i> Create New Quiz
+                </button>
+              </div>
+            </div>
+            <div class="section-body">
+              <!-- Create Quiz Card -->
+              <div class="create-quiz-card mb-4">
+                <div class="create-quiz-icon">
+                  <i class="bi bi-plus-circle"></i>
+                </div>
+                <h5 class="create-quiz-title">Create a New Quiz</h5>
+                <p class="create-quiz-text">Start building your next awesome quiz with our interactive editor.</p>
+              </div>
+              
+              <!-- Quiz Cards -->
+              <div class="quiz-card">
+                <div class="quiz-info">
+                  <h5 class="quiz-title">Web Development Basics</h5>
+                  <div class="quiz-metadata">
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-calendar3"></i> Created 2 days ago
+                    </div>
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-people-fill"></i> 45 players
+                    </div>
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-star-fill"></i> 4.7 rating
+                    </div>
+                  </div>
+                </div>
+                <div class="quiz-actions">
+                  <button class="quiz-action-btn" title="Edit Quiz">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="quiz-action-btn" title="Host Quiz">
+                    <i class="bi bi-play-fill"></i>
+                  </button>
+                  <button class="quiz-action-btn" title="Share Quiz">
+                    <i class="bi bi-share"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="quiz-card">
+                <div class="quiz-info">
+                  <h5 class="quiz-title">JavaScript Fundamentals</h5>
+                  <div class="quiz-metadata">
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-calendar3"></i> Created 1 week ago
+                    </div>
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-people-fill"></i> 132 players
+                    </div>
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-star-fill"></i> 4.9 rating
+                    </div>
+                  </div>
+                </div>
+                <div class="quiz-actions">
+                  <button class="quiz-action-btn" title="Edit Quiz">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="quiz-action-btn" title="Host Quiz">
+                    <i class="bi bi-play-fill"></i>
+                  </button>
+                  <button class="quiz-action-btn" title="Share Quiz">
+                    <i class="bi bi-share"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="quiz-card">
+                <div class="quiz-info">
+                  <h5 class="quiz-title">Python for Beginners</h5>
+                  <div class="quiz-metadata">
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-calendar3"></i> Created 3 weeks ago
+                    </div>
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-people-fill"></i> 67 players
+                    </div>
+                    <div class="quiz-metadata-item">
+                      <i class="bi bi-star-fill"></i> 4.5 rating
+                    </div>
+                  </div>
+                </div>
+                <div class="quiz-actions">
+                  <button class="quiz-action-btn" title="Edit Quiz">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="quiz-action-btn" title="Host Quiz">
+                    <i class="bi bi-play-fill"></i>
+                  </button>
+                  <button class="quiz-action-btn" title="Share Quiz">
+                    <i class="bi bi-share"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="section-footer">
+              <button class="btn btn-sm btn-outline-primary">View All Quizzes</button>
+              <span class="text-muted">Showing 3 of 24 quizzes</span>
+            </div>
+          </div>
+          
+          <!-- Ranking System -->
+          <div class="section-card fade-in" style="animation-delay: 0.3s;">
+            <div class="section-header">
+              <h4 class="section-title">
+                <i class="bi bi-trophy"></i>
+                Leaderboard
+              </h4>
+              <div class="section-actions">
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="rankingFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    This Month
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="rankingFilterDropdown">
+                    <li><a class="dropdown-item" href="#">All Time</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Week</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="section-body">
+              <div class="ranking-list">
+                <div class="ranking-item">
+                  <div class="ranking-position"></div>
+                  <div class="ranking-avatar">
+                    <img src="https://via.placeholder.com/40" alt="Avatar">
+                  </div>
+                  <div class="ranking-info">
+                    <div class="ranking-name">Sarah Johnson</div>
+                    <div class="ranking-stats">
+                      <div class="ranking-stat-item">42 quizzes hosted</div>
+                      <div class="ranking-stat-item">1,240 players</div>
+                    </div>
+                    <div class="achievement-badges">
+                      <div class="achievement-badge" data-title="Quiz Master">QM</div>
+                      <div class="achievement-badge" data-title="Content Creator">CC</div>
+                      <div class="achievement-badge" data-title="Community Leader">CL</div>
+                    </div>
+                  </div>
+                  <div class="ranking-points">
+                    9,548 <i class="bi bi-star-fill text-warning"></i>
+                    <span class="ranking-badge legendary">LEGENDARY</span>
+                  </div>
+                </div>
+                
+                <div class="ranking-item">
+                  <div class="ranking-position"></div>
+                  <div class="ranking-avatar">
+                    <img src="https://via.placeholder.com/40" alt="Avatar">
+                  </div>
+                  <div class="ranking-info">
+                    <div class="ranking-name">Michael Chen</div>
+                    <div class="ranking-stats">
+                      <div class="ranking-stat-item">36 quizzes hosted</div>
+                      <div class="ranking-stat-item">980 players</div>
+                    </div>
+                    <div class="achievement-badges">
+                      <div class="achievement-badge" data-title="Quiz Master">QM</div>
+                      <div class="achievement-badge" data-title="Trendsetter">TS</div>
+                    </div>
+                    <div class="ranking-progress">
+                      <div class="ranking-progress-bar" style="width: 92%;"></div>
+                    </div>
+                  </div>
+                  <div class="ranking-points">
+                    8,475 <i class="bi bi-star-fill text-warning"></i>
+                    <span class="ranking-badge master">MASTER</span>
+                  </div>
+                </div>
+                
+                <div class="ranking-item">
+                  <div class="ranking-position"></div>
+                  <div class="ranking-avatar">
+                    <img src="https://via.placeholder.com/40" alt="Avatar">
+                  </div>
+                  <div class="ranking-info">
+                    <div class="ranking-name">Emily Rodriguez</div>
+                    <div class="ranking-stats">
+                      <div class="ranking-stat-item">31 quizzes hosted</div>
+                      <div class="ranking-stat-item">754 players</div>
+                    </div>
+                    <div class="achievement-badges">
+                      <div class="achievement-badge" data-title="Quiz Master">QM</div>
+                    </div>
+                    <div class="ranking-progress">
+                      <div class="ranking-progress-bar" style="width: 78%;"></div>
+                    </div>
+                  </div>
+                  <div class="ranking-points">
+                    7,216 <i class="bi bi-star-fill text-warning"></i>
+                    <span class="ranking-badge expert">EXPERT</span>
+                  </div>
+                </div>
+                
+                <div class="ranking-item">
+                  <div class="ranking-position"></div>
+                  <div class="ranking-avatar">
+                    <img src="https://via.placeholder.com/40" alt="You">
+                  </div>
+                  <div class="ranking-info">
+                    <div class="ranking-name">John Doe <span class="badge bg-primary">You</span></div>
+                    <div class="ranking-stats">
+                      <div class="ranking-stat-item">24 quizzes hosted</div>
+                      <div class="ranking-stat-item">482 players</div>
+                    </div>
+                    <div class="achievement-badges">
+                      <div class="achievement-badge" data-title="Rising Star">RS</div>
+                    </div>
+                    <div class="ranking-progress">
+                      <div class="ranking-progress-bar" style="width: 65%;"></div>
+                    </div>
+                  </div>
+                  <div class="ranking-points">
+                    5,842 <i class="bi bi-star-fill text-warning"></i>
+                    <span class="ranking-badge advanced">ADVANCED</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="section-footer">
+              <button class="btn btn-sm btn-outline-primary">View Full Leaderboard</button>
+              <span class="text-muted">Your Rank: #4 of 162</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Sidebar -->
+        <div class="col-lg-4">
+          <!-- Friends Section -->
+          <div class="section-card fade-in" style="animation-delay: 0.2s;">
+            <div class="section-header">
+              <h4 class="section-title">
+                <i class="bi bi-people"></i>
+                Friends
+              </h4>
+              <div class="section-actions">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-person-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="section-body">
+              <!-- Friend requests -->
+              <div class="friend-request">
+                <div class="request-avatar">
+                  <img src="https://via.placeholder.com/50" alt="Avatar">
+                </div>
+                <div class="request-info">
+                  <div class="request-name">Lisa Taylor</div>
+                  <div class="request-mutual">3 mutual friends</div>
+                </div>
+                <div class="request-actions">
+                  <button class="request-action-btn accept">Accept</button>
+                  <button class="request-action-btn decline">Decline</button>
+                </div>
+              </div>
+              
+              <!-- Online friends -->
+              <div class="friends-list mt-4">
+                <div class="friend-card">
+                  <div class="friend-card-header"></div>
+                  <div class="friend-avatar">
+                    <img src="https://via.placeholder.com/60" alt="Friend Avatar">
+                  </div>
+                  <div class="friend-card-body">
+                    <h5 class="friend-name">Alex Stevens</h5>
+                    <div class="friend-status">
+                      <i class="bi bi-circle-fill"></i> Online
+                    </div>
+                    <div class="friend-stats">
+                      <div class="friend-stat">
+                        <div class="friend-stat-value">32</div>
+                        <div class="friend-stat-label">Quizzes</div>
+                      </div>
+                      <div class="friend-stat">
+                        <div class="friend-stat-value">847</div>
+                        <div class="friend-stat-label">Points</div>
+                      </div>
+                      <div class="friend-stat">
+                        <div class="friend-stat-value">8</div>
+                        <div class="friend-stat-label">Rank</div>
+                      </div>
+                    </div>
+                    <div class="friend-actions">
+                      <button class="friend-action-btn">
+                        <i class="bi bi-controller"></i> Challenge
+                      </button>
+                      <button class="friend-action-btn">
+                        <i class="bi bi-chat-dots"></i> Message
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="friend-card">
+                  <div class="friend-card-header"></div>
+                  <div class="friend-avatar">
+                    <img src="https://via.placeholder.com/60" alt="Friend Avatar">
+                  </div>
+                  <div class="friend-card-body">
+                    <h5 class="friend-name">Olivia Kim</h5>
+                    <div class="friend-status offline">
+                      <i class="bi bi-circle-fill"></i> Offline
+                    </div>
+                    <div class="friend-stats">
+                      <div class="friend-stat">
+                        <div class="friend-stat-value">18</div>
+                        <div class="friend-stat-label">Quizzes</div>
+                      </div>
+                      <div class="friend-stat">
+                        <div class="friend-stat-value">532</div>
+                        <div class="friend-stat-label">Points</div>
+                      </div>
+                      <div class="friend-stat">
+                        <div class="friend-stat-value">15</div>
+                        <div class="friend-stat-label">Rank</div>
+                      </div>
+                    </div>
+                    <div class="friend-actions">
+                      <button class="friend-action-btn">
+                        <i class="bi bi-controller"></i> Challenge
+                      </button>
+                      <button class="friend-action-btn">
+                        <i class="bi bi-chat-dots"></i> Message
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="section-footer">
+              <button class="btn btn-sm btn-outline-primary">View All Friends</button>
+              <span class="text-muted">2/18 friends online</span>
+            </div>
+          </div>
+          
+          <!-- Coming Soon Section -->
+          <div class="section-card fade-in" style="animation-delay: 0.4s;">
+            <div class="section-header">
+              <h4 class="section-title">
+                <i class="bi bi-lightning-charge"></i>
+                Coming Soon
+              </h4>
+            </div>
+            <div class="section-body">
+              <div class="coming-soon-card">
+                <div class="coming-soon-badge">SOON</div>
+                <div class="coming-soon-icon">
+                  <i class="bi bi-phone"></i>
+                </div>
+                <h5 class="coming-soon-title">Mobile App</h5>
+                <p class="coming-soon-description">Take your quizzes on the go with our upcoming mobile application. Create and host quizzes from anywhere!</p>
+                
+                <div class="notify-input">
+                  <input type="email" placeholder="Enter your email" class="form-control">
+                  <button>Notify Me</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bootstrap 5 JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/dashboard.js"></script>
+  <script>
+    // Initialize theme toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for saved theme
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+      }
+      
+      // Theme toggle functionality
+      const themeToggle = document.querySelector('.theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          const isDarkTheme = document.body.classList.toggle('dark-theme');
+          localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+        });
+      }
+      
+      // Add animation classes with delay
+      document.querySelectorAll('.fade-in').forEach((element, index) => {
+        element.style.opacity = '0';
+        setTimeout(() => {
+          element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, 100 + (index * 100));
+      });
+    });
+  </script>
+</body>
+</html> 
