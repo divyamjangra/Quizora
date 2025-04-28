@@ -860,3 +860,541 @@ body.dark-theme .search-bar {
         transform: translateY(0);
     }
 }
+
+/* Form styling */
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #dde2e6;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #2594a9;
+    box-shadow: 0 0 0 3px rgba(37, 148, 169, 0.2);
+    background-color: #fff;
+}
+
+body.dark-theme .form-control, 
+body.dark-theme .form-select {
+    background-color: #2a2a45;
+    border-color: #3a3a55;
+    color: #e6e6e6;
+}
+
+body.dark-theme .form-control:focus, 
+body.dark-theme .form-select:focus {
+    border-color: #2594a9;
+    box-shadow: 0 0 0 3px rgba(37, 148, 169, 0.3);
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #4a5568;
+}
+
+body.dark-theme .form-label {
+    color: #e6e6e6;
+}
+
+/* Button styling */
+.btn-primary {
+    background: linear-gradient(135deg, #3e2d64, #2594a9);
+    border: none;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(37, 148, 169, 0.2);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background: linear-gradient(135deg, #352858, #1e7c8f);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37, 148, 169, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(32, 201, 151, 0.2);
+}
+
+.btn-success:hover, .btn-success:focus {
+    background: linear-gradient(135deg, #218838, #1ca984);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(32, 201, 151, 0.3);
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #dde2e6;
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    color: #495057;
+    border-color: #c1c9d0;
+}
+
+body.dark-theme .btn-outline-secondary {
+    color: #e6e6e6;
+    border-color: #3a3a55;
+}
+
+body.dark-theme .btn-outline-secondary:hover {
+    background-color: #3a3a55;
+    color: #fff;
+}
+
+/* Quiz settings summary */
+.quiz-settings-summary {
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.modal-footer.bg-light {
+    background-color: #f8fafc !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.dark-theme .modal-footer.bg-light {
+    background-color: #212136 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Question Types Modal Styles - Enhanced */
+.question-types-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.question-type-card {
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 25px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+}
+
+body.dark-theme .question-type-card {
+    background-color: #2a2a45;
+    border-color: #3a3a55;
+}
+
+.question-type-card:hover {
+    border-color: #2594a9;
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme .question-type-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.question-type-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(60deg, transparent, rgba(37, 148, 169, 0.1), transparent);
+    transform: rotate(30deg);
+    transition: transform 1.5s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.question-type-card:hover::after {
+    transform: rotate(30deg) translate(0, 100%);
+}
+
+.question-type-card.selected {
+    border-color: #2594a9;
+    background-color: rgba(37, 148, 169, 0.05);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(37, 148, 169, 0.2);
+}
+
+.question-type-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3e2d64, #2594a9);
+    color: white;
+    font-size: 28px;
+    box-shadow: 0 5px 15px rgba(37, 148, 169, 0.3);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.question-type-card:hover .question-type-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.question-type-card h5 {
+    margin-bottom: 12px;
+    color: #333;
+    font-weight: 600;
+    font-size: 18px;
+    position: relative;
+    z-index: 2;
+}
+
+body.dark-theme .question-type-card h5 {
+    color: #e6e6e6;
+}
+
+.question-type-card p {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 2;
+}
+
+body.dark-theme .question-type-card p {
+    color: #adb5bd;
+}
+
+/* Quiz Code Display Styling - Enhanced */
+.quiz-code-display {
+    background: linear-gradient(135deg, #f8fafc, #f0f5f7);
+    border: 1px dashed #dee2e6;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-theme .quiz-code-display {
+    background: linear-gradient(135deg, #2a2a45, #212136);
+    border-color: #3a3a55;
+}
+
+.quiz-code-display::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(30deg);
+    animation: shimmer 3s infinite linear;
+    z-index: 1;
+    pointer-events: none;
+}
+
+body.dark-theme .quiz-code-display::after {
+    background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+
+@keyframes shimmer {
+    from {
+        transform: rotate(30deg) translate(-100%, -100%);
+    }
+    to {
+        transform: rotate(30deg) translate(100%, 100%);
+    }
+}
+
+.quiz-code {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    color: #2594a9;
+    margin-bottom: 10px;
+    display: block;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme .quiz-code {
+    color: #4db6cd;
+}
+
+.quiz-code-label {
+    display: block;
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+}
+
+body.dark-theme .quiz-code-label {
+    color: #adb5bd;
+}
+
+.copy-code-btn {
+    background: linear-gradient(135deg, #3e2d64, #2594a9);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(37, 148, 169, 0.2);
+}
+
+.copy-code-btn:hover {
+    background: linear-gradient(135deg, #352858, #1e7c8f);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37, 148, 169, 0.3);
+}
+
+/* Animation for success message */
+.copy-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    z-index: 1050;
+    opacity: 0;
+    animation: fadeInOut 2s ease forwards;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.copy-success i {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    15% { opacity: 1; transform: translateY(0); }
+    85% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Theme Toggle */
+.theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle {
+    width: 60px;
+    height: 30px;
+    background: linear-gradient(135deg, #4d92ff, #3e2d64);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+body.dark-theme .theme-toggle {
+    background: linear-gradient(135deg, #1a1a2e, #2594a9);
+}
+
+.theme-toggle .light-icon, 
+.theme-toggle .dark-icon {
+    font-size: 14px;
+    color: #fff;
+    z-index: 1;
+}
+
+.toggle-circle {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    left: 3px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .toggle-circle {
+    transform: translateX(30px);
+}
+
+/* Enhanced Dashboard Styling */
+.dashboard-welcome {
+    background: linear-gradient(135deg, #3e2d64, #2594a9);
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-welcome::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 100%;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTUwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNTAgMEMxMDAgMCAxMDAgMTAwIDE1MCAxMDBWMjAwSDBWMTAwQzAgNTAgMTAwIDUwIDUwIDB6IiBmaWxsPSIjZmZmZmZmMTAiLz48L3N2Zz4=');
+    background-size: cover;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.dashboard-welcome h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-welcome p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+    max-width: 80%;
+    position: relative;
+    z-index: 1;
+}
+
+.action-card {
+    border-radius: 12px;
+    padding: 20px;
+    height: 100%;
+    transition: all 0.3s ease;
+    background-color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-theme .action-card {
+    background-color: #2a2a45;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme .action-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.action-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.03) 50%);
+    z-index: 0;
+    border-radius: 0 0 12px 0;
+    transition: all 0.3s ease;
+}
+
+.action-card:hover::after {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(0, 0, 0, 0.03) 40%);
+}
+
+.action-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: white;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.create-icon {
+    background: linear-gradient(135deg, #2594a9, #3e2d64);
+}
+
+.join-icon {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+.ai-icon {
+    background: linear-gradient(135deg, #4776e6, #8e54e9);
+}
+
+.challenge-icon {
+    background: linear-gradient(135deg, #56ab2f, #a8e063);
+}
+
+.action-card h5 {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .action-card h5 {
+    color: #fff;
+}
+
+.action-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+body.dark-theme .action-card p {
+    color: #bbb;
+}
