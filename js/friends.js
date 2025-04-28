@@ -387,3 +387,58 @@ async function removeFriend(friendId) {
     showAlert('Error removing friend. Please try again.', 'danger');
   }
 }
+// Event Listeners
+if (addFriendForm) {
+  addFriendForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const friendEmail = document.getElementById('friendEmail').value;
+    
+    if (!friendEmail) {
+      showAlert('Please enter your friend\'s email', 'warning');
+      return;
+    }
+    
+    sendFriendRequest(friendEmail);
+    this.reset();
+  });
+}
+
+if (challengeFriendBtn) {
+  challengeFriendBtn.addEventListener('click', function() {
+    if (currentFriendId) {
+      const modal = bootstrap.Modal.getInstance(friendProfileModal);
+      if (modal) {
+        modal.hide();
+      }
+      challengeFriend(currentFriendId, friendProfileName.textContent);
+    }
+  });
+}
+
+if (removeFriendBtn) {
+  removeFriendBtn.addEventListener('click', function() {
+    if (currentFriendId) {
+      if (confirm('Are you sure you want to remove this friend?')) {
+        removeFriend(currentFriendId);
+      }
+    }
+  });
+}
+
+// Show alert message
+function showAlert(message, type = 'info') {
+  const alertDiv = document.createElement('div');
+  alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+  alertDiv.style.zIndex = '9999';
+  alertDiv.innerHTML = `
+    ${message}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  `;
+  
+  document.body.appendChild(alertDiv);
+  
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    alertDiv.remove();
+  }, 5000);
+} 
