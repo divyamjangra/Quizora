@@ -1063,7 +1063,8 @@
         </div>
         <div class="modal-body">
           <div class="quiz-setup-steps">
- <div class="setup-steps-indicator mb-4">
+            <div class="setup-steps-indicator mb-4">
+
               <div class="step active" data-step="1">
                 <div class="step-number">1</div>
                 <div class="step-name">Basic Info</div>
@@ -1407,3 +1408,353 @@
         </div>
       </div>
     </div>
+    
+    <!-- Challenge Friend Modal Template -->
+    <div id="challengeFriendModalTemplate">
+      <div class="challenge-sent-container">
+        <div class="success-animation">
+          <div class="checkmark-circle">
+            <div class="checkmark"></div>
+          </div>
+        </div>
+        
+        <div class="challenge-details">
+          <h5>Challenge Sent!</h5>
+          <p>Your challenge has been sent to <strong class="friend-name">Alex Stevens</strong>.</p>
+          
+          <div class="challenge-card">
+            <div class="challenge-card-header">
+              <i class="fas fa-trophy"></i> Quiz Duel
+            </div>
+            <div class="challenge-card-body">
+              <div class="challenge-quiz-name">Web Development Basics</div>
+              <div class="challenge-status">
+                <span class="status-badge">Pending</span>
+                <span class="challenge-time">Just now</span>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-muted mt-2">They'll receive a notification and can accept your challenge to begin the duel.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Join Quiz Modal Template -->
+    <div id="joinQuizModalTemplate">
+      <div class="join-quiz-success">
+        <div class="quiz-found-icon">
+          <i class="fas fa-check"></i>
+        </div>
+        
+        <div class="quiz-details">
+          <h5>Quiz Found!</h5>
+          <div class="quiz-card">
+            <div class="quiz-host">
+              <img src="images/avatar-1.jpg" alt="Host" class="host-avatar">
+              <span class="host-name">Michael Johnson</span>
+            </div>
+            <div class="quiz-info-card">
+              <div class="quiz-info-name">Science Quiz Challenge</div>
+              <div class="quiz-info-meta">
+                <span><i class="fas fa-users"></i> 4 Players</span>
+                <span><i class="fas fa-question-circle"></i> 15 Questions</span>
+              </div>
+              <div class="quiz-status">
+                <span class="status-badge waiting">Waiting to Start</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="join-actions mt-3">
+            <p>Click "Join Now" to enter the waiting room.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Achievements Modal -->
+  <div class="modal fade" id="allAchievementsModal" tabindex="-1" aria-labelledby="allAchievementsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="allAchievementsModalLabel">All Achievements</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between mb-3 align-items-center">
+            <div class="total-points">
+              Total Points: <span class="points-value">0</span>
+            </div>
+            <div class="category-buttons btn-group">
+              <button class="btn btn-sm btn-primary category-filter" data-category="all">All</button>
+              <button class="btn btn-sm btn-outline-primary category-filter" data-category="quiz">Quizzes</button>
+              <button class="btn btn-sm btn-outline-primary category-filter" data-category="social">Social</button>
+              <button class="btn btn-sm btn-outline-primary category-filter" data-category="progression">Progress</button>
+            </div>
+          </div>
+          <div class="achievements-grid" id="achievementsGrid">
+            <!-- Achievements will be populated here by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievement Detail Modal -->
+  <div class="modal fade" id="achievementDetailModal" tabindex="-1" aria-labelledby="achievementDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="achievementDetailModalLabel">Achievement Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="achievement-detail-badge">
+            <i class="badge-icon bi bi-trophy"></i>
+          </div>
+          <h5 class="mt-3 mb-2 badge-name">Achievement Name</h5>
+          <p class="badge-description">Description of what this achievement represents and how to earn it.</p>
+          
+          <div class="achievement-status-display">
+            <div class="earned-status d-none">
+              <i class="bi bi-check-circle-fill me-2"></i>Earned on <span class="earned-date">Jan 1, 2023</span>
+            </div>
+            <div class="locked-status">
+              <i class="bi bi-lock-fill me-2"></i>Locked
+              <p class="mt-2 subscription-requirement">Requires <span class="required-subscription">Pro</span> subscription</p>
+            </div>
+            <div class="progress-status mt-3">
+              <p class="mb-1 small">Progress: <span class="progress-text">0/5</span></p>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="achievement-rewards">
+            <h6><i class="bi bi-gift me-2"></i>Rewards</h6>
+            <div class="reward-item">
+              <i class="bi bi-star-fill"></i> <span class="reward-points">50</span> points
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievement Unlock Modal -->
+  <div class="modal fade" id="achievementUnlockModal" tabindex="-1" aria-labelledby="achievementUnlockModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="achievementUnlockModalLabel">Achievement Unlocked!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="achievement-unlock-animation">
+            <div class="confetti-container" id="confettiContainer"></div>
+            <div class="achievement-detail-badge earned">
+              <i class="badge-icon bi bi-trophy"></i>
+            </div>
+          </div>
+          <h4 class="unlock-badge-name mb-2">Achievement Name</h4>
+          <p class="unlock-badge-description">Description of the achievement you've just earned.</p>
+          <div class="achievement-rewards mt-4">
+            <h6><i class="bi bi-gift me-2"></i>Rewards</h6>
+            <div class="reward-item">
+              <i class="bi bi-star-fill"></i> <span class="unlock-reward-points">50</span> points
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Awesome!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/home-page.js"></script>
+  <script src="js/user-profile.js"></script>
+  <script src="js/dashboard-actions.js"></script>
+  <script src="js/achievements.js"></script>
+
+  <script>
+    // Mobile menu functionality with improved transition handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.getElementById('overlay');
+      const body = document.body;
+      let transitionInProgress = false;
+      
+      // Check viewport size on load and set appropriate classes
+      function checkViewportSize() {
+        const isMobile = window.innerWidth <= 576;
+        if (!isMobile && sidebar.classList.contains('active')) {
+          sidebar.classList.remove('active');
+          body.classList.remove('sidebar-active');
+        }
+      }
+      
+      // Run on page load
+      checkViewportSize();
+      
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (transitionInProgress) return;
+          
+          transitionInProgress = true;
+          sidebar.classList.toggle('active');
+          body.classList.toggle('sidebar-active');
+          
+          // Reset the flag after transition completes
+          setTimeout(() => {
+            transitionInProgress = false;
+          }, 300); // Match this to the transition time in CSS
+        });
+      }
+      
+      if (overlay) {
+        overlay.addEventListener('click', function() {
+          if (sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+            body.classList.remove('sidebar-active');
+          }
+        });
+      }
+      
+      // Handle window resize with debounce
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          checkViewportSize();
+        }, 250);
+      });
+      
+      // Update page title when sidebar links are clicked
+      const navLinks = document.querySelectorAll('.nav-link');
+      const pageTitle = document.getElementById('currentPageTitle');
+      
+      // Get the current active page from URL or default to Dashboard
+      function setActivePage() {
+        const currentPath = window.location.pathname;
+        let activeTitle = 'Dashboard'; // Default
+        
+        navLinks.forEach(link => {
+          // Remove active class from all links
+          link.classList.remove('active');
+          
+          // If this is the current page link
+          if (link.getAttribute('href') === currentPath || 
+              currentPath.endsWith(link.getAttribute('href'))) {
+            link.classList.add('active');
+            activeTitle = link.querySelector('span').textContent;
+          }
+        });
+        
+        // If no match found, activate dashboard (first link)
+        if (!document.querySelector('.nav-link.active')) {
+          document.getElementById('dashboardLink').classList.add('active');
+        }
+        
+        // Update page title
+        if (pageTitle) {
+          pageTitle.textContent = activeTitle;
+        }
+      }
+      
+      // Set active page on load
+      setActivePage();
+      
+      // Add click handlers to each nav link
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only if it's not already active and not external link
+          if (!this.classList.contains('active') && this.getAttribute('href').includes('.html')) {
+            // Update the page title with the clicked link text
+            if (pageTitle) {
+              const linkText = this.querySelector('span').textContent;
+              pageTitle.textContent = linkText;
+            }
+          }
+        });
+      });
+      
+      // Initialize dashboard animations
+      document.querySelectorAll('.fade-in').forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, 100 + (index * 100));
+      });
+      
+      // Initialize stat counters
+      document.querySelectorAll('.stat-value').forEach(statValue => {
+        const finalValue = parseInt(statValue.textContent);
+        animateCounter(statValue, 0, finalValue, 1500);
+      });
+      
+      // Set position numbers for ranking items
+      document.querySelectorAll('.ranking-item').forEach((item, index) => {
+        const position = item.querySelector('.ranking-position');
+        position.textContent = `#${index + 1}`;
+        
+        // Add hover effect
+        item.addEventListener('mouseenter', () => {
+          item.classList.add('ranking-item-hover');
+        });
+        
+        item.addEventListener('mouseleave', () => {
+          item.classList.remove('ranking-item-hover');
+        });
+      });
+      
+      // Connect new create quiz button to existing functionality
+      const newDashboardQuizBtn = document.getElementById('newDashboardQuizBtn');
+      const newQuizCard = document.getElementById('newQuizCard');
+      if (newDashboardQuizBtn && newQuizCard) {
+        newDashboardQuizBtn.addEventListener('click', createManualQuiz);
+        newQuizCard.addEventListener('click', createManualQuiz);
+      }
+    });
+    
+    /**
+     * Animate counter from start to end value
+     */
+    function animateCounter(element, start, end, duration) {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+        
+        // Format the number with commas if it's large
+        element.textContent = value.toLocaleString();
+        
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      
+      window.requestAnimationFrame(step);
+    }
+  </script>
+</body>
+</html>
