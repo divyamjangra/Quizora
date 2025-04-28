@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solo Trivia Quiz - Quizora</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/Trivia.css">
+  <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+
+<body>
+  <!-- Top Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="home.html">
+        <img src="images/LOGO NAME transparent.png" alt="Quizora" height="40">
+      </a>
+      <div class="d-flex align-items-center">
+        <div class="theme-toggle me-3">
+          <button id="theme-toggle-btn" class="btn btn-sm">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+        <div class="quiz-mode-display me-3">
+          <span class="quiz-mode-label">MODE:</span>
+          <span class="quiz-mode">SOLO TRIVIA</span>
+        </div>
+        <button class="btn btn-outline-primary" id="homeBtn">
+          <i class="fas fa-home me-1"></i> Home
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Intro Section -->
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="intro-banner">
+          <h1 class="welcome-text">Welcome to Solo Trivia</h1>
+          <p class="intro-text">Challenge yourself with this quiz to test your knowledge! Answer questions correctly to earn points and achieve a high rank.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Container -->
+  <div class="container mt-3 mb-5">
+    <div class="row">
+      <!-- Quiz Area (Left side) -->
+      <div class="col-lg-8">
+        <!-- Progress Bar -->
+        <div class="progress mb-4" style="height: 8px;">
+          <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 0%"></div>
+        </div>
+        
+        <!-- Quiz Content -->
+        <div class="card mb-4" id="quizContent">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><span id="currentQuestionNum">1</span>/<span id="totalQuestions">4</span></h5>
+            <div class="quiz-timer" id="timerContainer">
+              <i class="fas fa-clock me-1"></i> <span id="timer">60</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="question-text mb-4" id="question">Question text goes here?</h3>
+            
+            <div id="media-container" class="text-center mb-4"></div>
+            
+            <div class="options-container" id="options">
+              <!-- Options will be generated dynamically -->
+            </div>
+            
+            <div class="explanation-container mt-4" id="explanation" style="display: none;">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title"><i class="fas fa-info-circle me-2"></i>Explanation</h5>
+                  <p class="card-text" id="explanation-text"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <div id="rank-display" class="badge bg-primary">Rank: Beginner</div>
+            <button class="btn btn-primary" id="next-button" onclick="nextQuestion()">
+              Next <i class="fas fa-arrow-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Quiz Results (shown after quiz ends) -->
+        <div class="card" id="result" style="display: none;">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Quiz Results</h5>
+          </div>
+          <div class="card-body text-center py-4">
+            <h2>Quiz Completed!</h2>
+            <div class="results-summary mt-4">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="result-item">
+                    <div class="result-value" id="scoreValue">0%</div>
+                    <div class="result-label">Your Score</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="result-item">
+                    <div class="result-value" id="correctAnswers">0</div>
+                    <div class="result-label">Correct Answers</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="result-item">
+                    <div class="result-value" id="playerRank">Beginner</div>
+                    <div class="result-label">Your Rank</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="achievement-display mt-4" id="achievementDisplay">
+              <div class="achievement-badge">
+                <i class="fas fa-award"></i>
+              </div>
+              <div class="achievement-text" id="achievementText">Well done!</div>
+            </div>
+            
+            <div class="action-buttons mt-5">
+              <button class="btn btn-outline-primary me-2" id="restart-button" onclick="restartQuiz()">
+                <i class="fas fa-redo me-1"></i> Play Again
+              </button>
+              <button class="btn btn-success" id="signup-button" onclick="signUp()">
+                <i class="fas fa-user-plus me-1"></i> Sign Up for More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar (Right side) -->
+      <div class="col-lg-4">
+        <!-- Player Stats Panel -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-user-chart me-2"></i>Your Stats</h5>
+          </div>
+          <div class="card-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                  <div class="stat-value" id="sidebar-score">0</div>
+                  <div class="stat-label">Current Score</div>
+                </div>
+              </div>
+              
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-info">
+                  <div class="stat-value" id="sidebar-rank">Beginner</div>
+                  <div class="stat-label">Current Rank</div>
+                </div>
+              </div>
+              
+              <div class="stat-divider"></div>
+              
+              <div class="quote-container">
+                <div class="quote-icon">
+                  <i class="fas fa-quote-left"></i>
+                </div>
+                <blockquote class="quote-text" id="motivational-quote">
+                  "Knowledge is power. The more you learn, the more you grow!"
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- How to Play Panel -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-question-circle me-2"></i>How to Play</h5>
+          </div>
+          <div class="card-body">
+            <ul class="how-to-play-list">
+              <li>
+                <div class="step-number">1</div>
+                <div class="step-text">Read each question carefully</div>
+              </li>
+              <li>
+                <div class="step-number">2</div>
+                <div class="step-text">Select the correct answer from the options</div>
+              </li>
+              <li>
+                <div class="step-number">3</div>
+                <div class="step-text">Get points for correct answers</div>
+              </li>
+              <li>
+                <div class="step-number">4</div>
+                <div class="step-text">Complete all questions to see your final score</div>
+              </li>
+              <li>
+                <div class="step-number">5</div>
+                <div class="step-text">Challenge yourself to improve your rank!</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Animation Container -->
+  <div id="animation-container" class="animation-overlay">
+    <div id="animation-content"></div>
+  </div>
+
+  <!-- Ribbon Animation -->
+  <div id="ribbon-container" class="ribbon-container">
+    <div class="ribbon-text">
+      <div class="ribbon-inner">
+        <span id="ribbon-message">Correct Answer!</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Audio Elements -->
+  <audio id="correct-sound" src="https://assets.mixkit.co/active_storage/sfx/254/254.wav" preload="auto"></audio>
+  <audio id="wrong-sound" src="https://assets.mixkit.co/active_storage/sfx/227/227.wav" preload="auto"></audio>
+  <audio id="timer-sound" src="https://assets.mixkit.co/active_storage/sfx/270/270.wav" preload="auto"></audio>
+  <audio id="complete-sound" src="https://assets.mixkit.co/active_storage/sfx/183/183.wav" preload="auto"></audio>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="js/Trivia.js"></script>
+</body>
+
+</html>
