@@ -500,3 +500,232 @@
                   <i class="bi bi-trophy fs-1"></i>
                   <p class="mt-3">Leaderboard will appear after the first question</p>
                 </div>
+
+                <!-- Example leaderboard item (will be dynamically generated) -->
+                <!-- <div class="leaderboard-item">
+                  <div class="leaderboard-rank">
+                    <div class="rank-number top-1">1</div>
+                    <div class="player-info">
+                      <div class="participant-avatar">JD</div>
+                      <span>John Doe</span>
+                    </div>
+                  </div>
+                  <div class="player-score">
+                    2400
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            
+            <div class="host-actions card mt-4">
+              <div class="card-header">
+                <h5 class="mb-0">Quiz Controls</h5>
+              </div>
+              <div class="card-body">
+                <div class="d-grid gap-2">
+                  <button class="btn btn-warning" id="pauseQuizBtn">
+                    <i class="bi bi-pause-fill me-2"></i>Pause Quiz
+                  </button>
+                  <button class="btn btn-danger" id="endQuizBtn">
+                    <i class="bi bi-x-circle me-2"></i>End Quiz
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Results Screen -->
+      <div class="results-screen" id="resultsScreen">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="mb-0">Quiz Results</h3>
+              </div>
+              <div class="card-body">
+                <div class="quiz-summary">
+                  <h4 id="finalQuizTitle">Quiz Title</h4>
+                  <div class="quiz-stats d-flex gap-4 mt-3">
+                    <div class="stat-item">
+                      <div class="stat-value" id="totalParticipantsValue">10</div>
+                      <div class="stat-label">Participants</div>
+                    </div>
+                    <div class="stat-item">
+                      <div class="stat-value" id="totalQuestionsValue">10</div>
+                      <div class="stat-label">Questions</div>
+                    </div>
+                    <div class="stat-item">
+                      <div class="stat-value" id="avgScoreValue">1520</div>
+                      <div class="stat-label">Avg. Score</div>
+                    </div>
+                    <div class="stat-item">
+                      <div class="stat-value" id="correctAnswersRateValue">75%</div>
+                      <div class="stat-label">Correct</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="top-performer mt-4">
+                  <h5>Top Performer</h5>
+                  <div class="top-performer-card p-3 bg-light rounded d-flex align-items-center">
+                    <div class="rank-number top-1 me-3">1</div>
+                    <div class="player-info flex-grow-1">
+                      <div class="participant-avatar me-2" id="topPlayerInitials">JD</div>
+                      <div>
+                        <div class="fw-bold" id="topPlayerName">John Doe</div>
+                        <div class="text-muted small">Correct answers: <span id="topPlayerCorrect">9/10</span></div>
+                      </div>
+                    </div>
+                    <div class="top-score">
+                      <div class="fw-bold fs-4 text-primary" id="topPlayerScore">2750</div>
+                      <div class="text-muted small">points</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="quiz-actions mt-4">
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-primary" id="shareResultsBtn">
+                      <i class="bi bi-share me-2"></i>Share Results
+                    </button>
+                    <button class="btn btn-outline-primary" id="downloadResultsBtn">
+                      <i class="bi bi-download me-2"></i>Download CSV
+                    </button>
+                    <button class="btn btn-outline-secondary" id="newQuizBtn">
+                      <i class="bi bi-plus-circle me-2"></i>Create New Quiz
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="question-analysis card mt-4">
+              <div class="card-header">
+                <h5 class="mb-0">Question Analysis</h5>
+              </div>
+              <div class="card-body">
+                <div class="question-analysis-list" id="questionAnalysisList">
+                  <!-- Question analysis items will be added here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-4">
+            <div class="leaderboard">
+              <div class="leaderboard-header">
+                <div class="leaderboard-title">
+                  <i class="bi bi-trophy me-2"></i>Final Leaderboard
+                </div>
+              </div>
+              
+              <div class="leaderboard-list" id="finalLeaderboardList">
+                <!-- Final leaderboard items will be added here -->
+              </div>
+            </div>
+            
+            <div class="card mt-4">
+              <div class="card-header">
+                <h5 class="mb-0">Host Again</h5>
+              </div>
+              <div class="card-body">
+                <div class="d-grid gap-2">
+                  <button class="btn btn-primary" id="hostAgainBtn">
+                    <i class="bi bi-arrow-repeat me-2"></i>Host Again
+                  </button>
+                  <button class="btn btn-outline-primary" id="editAndHostBtn">
+                    <i class="bi bi-pencil me-2"></i>Edit & Host
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Warning Player Modal -->
+  <div class="modal fade" id="warnPlayerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Warn Player</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Send a warning to <strong id="warnPlayerName">Player Name</strong>:</p>
+          <select class="form-select mb-3" id="warnReasonSelect">
+            <option value="behavior">Inappropriate behavior</option>
+            <option value="cheating">Suspected cheating</option>
+            <option value="disruption">Disrupting the quiz</option>
+            <option value="custom">Custom message</option>
+          </select>
+          <div id="customWarnMessageContainer" style="display: none;">
+            <textarea class="form-control" id="customWarnMessage" rows="3" placeholder="Enter custom warning message"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-warning" id="sendWarnBtn">Send Warning</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Remove Player Modal -->
+  <div class="modal fade" id="removePlayerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Remove Player</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to remove <strong id="removePlayerName">Player Name</strong> from this quiz?</p>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="banPlayerCheck">
+            <label class="form-check-label" for="banPlayerCheck">
+              Also ban this player from rejoining
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmRemoveBtn">Remove Player</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- End Quiz Confirmation Modal -->
+  <div class="modal fade" id="endQuizConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">End Quiz</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <strong>Warning:</strong> Ending the quiz early will stop all players from answering more questions.
+          </div>
+          <p>Are you sure you want to end this quiz now?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmEndQuizBtn">End Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/host-quiz.js"></script>
+</body>
+</html> 
