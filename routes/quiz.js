@@ -91,3 +91,46 @@ router.post('/', authMiddleware, async (req, res) => {
     res.status(500).json({ message: 'Failed to create quiz' });
   }
 });
+
+
+// Update a quiz
+router.put('/:id', authMiddleware, async (req, res) => {
+  try {
+    const { title, description, questions, category, isPublic } = req.body;
+    const quizId = req.params.id;
+    
+    const db = admin.firestore();
+    const quizDoc = await db.collection('quizzes').doc(quizId).get();
+    
+    if (!quizDoc.exists) {
+      return res.status(404).json({ message: 'Quiz not found' });
+    }
+    
+    const quizData = quizDoc.data();
+    
+    // Check if user is the owner
+    if (req.user.uid !== quizData.createdBy) {
+      return res.status(403).json({ message: 'You can only edit your own quizzes' });
+    }
+    
+    const updatedQuiz = {
+      title: title || quizData.title,
+      description: description || quizData.description,
+      questions: questions || quizData.questions,
+      category: category || quizData.category,
+      isPublic: isPublic !== undefined ? isPublic : quizData.isPublic,
+      updatedAt: admin.firestore.FieldValue.serverTimestamp()
+    };
+    
+    await db.collection('quizzes').doc(quizId).update(updatedQuiz);
+    
+    res.status(200).json({
+      id: quizId,
+      message: 'Quiz updated successfully'
+    });
+  } catch (error) {
+    console.error('Error updating quiz:', error);
+    res.status(500).json({ message: 'Failed to update quiz' });
+  }
+});
+
