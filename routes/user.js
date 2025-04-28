@@ -62,3 +62,33 @@ router.put('/profile', authMiddleware, async (req, res) => {
     res.status(500).json({ message: 'Failed to update profile' });
   }
 });
+
+
+
+// Get user settings
+router.get('/settings', authMiddleware, async (req, res) => {
+  try {
+    const db = admin.firestore();
+    const userDoc = await db.collection('users').doc(req.user.uid).get();
+    
+    if (!userDoc.exists) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    const userData = userDoc.data();
+    
+    // Return settings or create default if doesn't exist
+    const settings = userData.settings || {
+      theme: 'light',
+      notifications: true,
+      language: 'en',
+      soundEffects: true,
+      privacyMode: false
+    };
+    
+    res.status(200).json(settings);
+  } catch (error) {
+    console.error('Error fetching user settings:', error);
+    res.status(500).json({ message: 'Failed to fetch settings' });
+  }
+});
