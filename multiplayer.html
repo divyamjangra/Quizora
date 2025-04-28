@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quizora - Multiplayer Quiz</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <!-- Google Fonts - Inter -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/multiplayer.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="landing-page.html">
+        <img src="assets/logo-light.png" alt="Quizora Logo">
+      </a>
+      <div class="d-flex align-items-center">
+        <div class="quiz-code-display me-3" id="quizCodeDisplay">
+          <div class="quiz-code-label">QUIZ CODE</div>
+          <div class="quiz-code" id="quizCode">ABC123</div>
+          <button class="copy-btn" id="copyCodeBtn" title="Copy to clipboard">
+            <i class="bi bi-clipboard"></i>
+          </button>
+        </div>
+        <button class="btn btn-outline-light me-3" id="aiQuizToggleBtn">
+          <i class="bi bi-robot"></i> AI Quiz
+        </button>
+        <div class="theme-toggle-wrapper">
+          <div class="theme-toggle">
+            <i class="bi bi-sun-fill light-icon"></i>
+            <i class="bi bi-moon-fill dark-icon"></i>
+            <div class="toggle-circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Main Content -->
+  <div class="container my-4">
+    <div class="row">
+      <!-- Left Column - Quiz Content -->
+      <div class="col-lg-8">
+        <!-- Waiting Room Card -->
+        <div class="card fade-in" id="waitingRoom">
+          <div class="card-header">
+            <h5><i class="bi bi-people-fill"></i> Waiting Room</h5>
+          </div>
+          <div class="card-body text-center">
+            <h3 id="quizTitle">Web Development Quiz</h3>
+            <p class="text-muted">Waiting for players to join...</p>
+            
+            <div class="waiting-animation my-4">
+              <div class="spinner-grow text-primary" role="status"></div>
+              <div class="spinner-grow text-primary" role="status"></div>
+              <div class="spinner-grow text-primary" role="status"></div>
+              <div class="spinner-grow text-primary" role="status"></div>
+            </div>
+            
+            <div class="player-counter mb-3">
+              <span id="playerCount">0</span> players joined
+            </div>
+            
+            <button class="btn btn-success pulse" id="startQuizBtn">
+              <i class="bi bi-play-fill"></i> Start Quiz
+            </button>
+          </div>
+        </div>
+        
+        <!-- Quiz Content -->
+        <div class="card fade-in d-none" id="quizContent">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5><i class="bi bi-question-circle-fill"></i> <span id="questionNumber">Question 1</span></h5>
+            <div class="quiz-timer" id="quizTimer">
+              <i class="bi bi-clock me-1"></i> <span id="timer">30</span>s
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="question-text" id="questionText">What does HTML stand for?</h4>
+            
+            <div class="options-container" id="optionsContainer">
+              <!-- Options will be dynamically inserted here -->
+            </div>
+          </div>
+          <div class="card-footer text-muted d-flex justify-content-between">
+            <div>Question <span id="currentQuestionIndex">1</span> of <span id="totalQuestions">10</span></div>
+            <div><span id="answersCount">0</span> players answered</div>
+          </div>
+        </div>
+        
+        <!-- Quiz Results -->
+        <div class="card fade-in d-none" id="quizResults">
+          <div class="card-header">
+            <h5><i class="bi bi-trophy-fill"></i> Quiz Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="results-summary">
+              <div class="row g-3">
+                <div class="col-md-3 col-6">
+                  <div class="result-item">
+                    <div class="result-value" id="totalQuestionsResult">10</div>
+                    <div class="result-label">Total Questions</div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="result-item">
+                    <div class="result-value" id="correctAnswersResult">7</div>
+                    <div class="result-label">Correct Answers</div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="result-item">
+                    <div class="result-value" id="totalPlayersResult">8</div>
+                    <div class="result-label">Total Players</div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-6">
+                  <div class="result-item">
+                    <div class="result-value" id="yourRankResult">3rd</div>
+                    <div class="result-label">Your Rank</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="winner-display" id="winnerDisplay">
+              <div class="winner-badge">WINNER</div>
+              <div class="winner-name" id="winnerName">John Doe</div>
+              <div class="score-text">Score: <span id="winnerScore">850</span> points</div>
+            </div>
+            
+            <div class="action-buttons mt-4">
+              <button class="btn btn-primary me-2" id="playAgainBtn">
+                <i class="bi bi-arrow-repeat"></i> Play Again
+              </button>
+              <button class="btn btn-success me-2" id="shareResultsBtn">
+                <i class="bi bi-share"></i> Share Results
+              </button>
+              <button class="btn btn-outline-primary" id="backToDashboardBtn">
+                <i class="bi bi-house"></i> Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- AI Quiz Generator Card - New Addition -->
+        <div class="card fade-in d-none" id="aiQuizGenerator">
+          <div class="card-header">
+            <h5><i class="bi bi-robot"></i> AI Quiz Generator</h5>
+          </div>
+          <div class="card-body text-center">
+            <div class="mb-4">
+              <i class="bi bi-robot fs-1 text-primary mb-3"></i>
+              <h4>Generate a Custom AI Quiz</h4>
+              <p class="text-muted">Let our AI create a unique quiz based on your preferences</p>
+            </div>
+            
+            <!-- AI Quiz Button -->
+            <button type="button" class="btn btn-primary ai-btn">
+              <i class="bi bi-magic"></i> Generate Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column - Player List & Chat -->
+      <div class="col-lg-4">
+        <!-- Players Card -->
+        <div class="card fade-in" style="animation-delay: 0.1s;">
+          <div class="card-header">
+            <h5><i class="bi bi-people"></i> Players (<span id="playersListCount">0</span>)</h5>
+          </div>
+          <div class="card-body p-0">
+            <ul class="player-list" id="playersList">
+              <!-- Players will be dynamically inserted here -->
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Chat Card -->
+        <div class="card fade-in mt-4" style="animation-delay: 0.2s;">
+          <div class="card-header">
+            <h5><i class="bi bi-chat-dots"></i> Chat</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="chat-container">
+              <div class="chat-messages" id="chatMessages">
+                <!-- Chat messages will be dynamically inserted here -->
+                <div class="chat-message system-message">
+                  <div class="message-content">
+                    <p>Welcome to the quiz chat! Be respectful and have fun!</p>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-input">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="chatInput" placeholder="Type a message...">
+                  <button class="btn btn-primary" id="sendChatBtn">
+                    <i class="bi bi-send"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Join Quiz Modal -->
+  <div class="modal fade" id="joinQuizModal" tabindex="-1" aria-labelledby="joinQuizModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="joinQuizModalLabel">Join Quiz</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="joinQuizForm">
+            <div class="mb-3">
+              <label for="quizCodeInput" class="form-label">Quiz Code</label>
+              <input type="text" class="form-control" id="quizCodeInput" placeholder="Enter 6-digit code" maxlength="6" required>
+            </div>
+            <div class="mb-3">
+              <label for="usernameInput" class="form-label">Your Name</label>
+              <input type="text" class="form-control" id="usernameInput" placeholder="Enter your name" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="joinQuizBtn">Join Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Share Results Modal -->
+  <div class="modal fade" id="shareResultsModal" tabindex="-1" aria-labelledby="shareResultsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="shareResultsModalLabel">Share Your Results</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="result-card">
+            <div class="result-card-header">
+              <img src="assets/logo-icon.png" alt="Quizora" width="24">
+              <span>Quizora Quiz Results</span>
+            </div>
+            <div class="result-card-body">
+              <p>I just played <strong id="sharedQuizTitle">Web Development Quiz</strong> on Quizora!</p>
+              <div class="result-stats">
+                <div class="stat-item">
+                  <div class="stat-value" id="sharedCorrectAnswers">7/10</div>
+                  <div class="stat-label">Score</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" id="sharedRank">3rd</div>
+                  <div class="stat-label">Rank</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-value" id="sharedTotalPlayers">8</div>
+                  <div class="stat-label">Players</div>
+                </div>
+              </div>
+              <div class="share-options">
+                <button class="share-btn btn btn-primary" data-platform="facebook">
+                  <i class="bi bi-facebook"></i>
+                </button>
+                <button class="share-btn btn btn-info" data-platform="twitter">
+                  <i class="bi bi-twitter"></i>
+                </button>
+                <button class="share-btn btn btn-success" data-platform="whatsapp">
+                  <i class="bi bi-whatsapp"></i>
+                </button>
+                <button class="share-btn btn btn-secondary" data-platform="email">
+                  <i class="bi bi-envelope"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+  
+  <!-- Bootstrap 5 JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Socket.io Client -->
+  <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/multiplayer.js"></script>
+</body>
+</html> 
