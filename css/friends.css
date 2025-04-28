@@ -1,0 +1,252 @@
+/* Friends Page Styles */
+
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  font-weight: 600;
+}
+
+/* Friend Item Styles */
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.friend-item:last-child {
+  border-bottom: none;
+}
+
+.friend-item:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.friend-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+  margin-right: 15px;
+}
+
+.friend-info {
+  flex: 1;
+}
+
+.friend-info h6 {
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+
+.friend-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Friend Suggestion Styles */
+.friend-suggestion {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.friend-suggestion:last-child {
+  border-bottom: none;
+}
+
+.suggested-friends {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Friend Request Styles */
+.friend-request {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.friend-request:last-child {
+  border-bottom: none;
+}
+
+.request-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Activity List Styles */
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-text {
+  margin-bottom: 3px;
+}
+
+.activity-time {
+  color: #6c757d;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+/* Friend Profile Modal Styles */
+.friend-profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #eee;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.friend-stats {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.friend-stat h5 {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #495057;
+}
+
+.friend-stat p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Empty State Styles */
+.no-friends, .no-requests {
+  padding: 30px 0;
+}
+
+.no-friends i, .no-requests i {
+  color: #adb5bd;
+  margin-bottom: 15px;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  padding: 30px 0;
+}
+
+/* Alert Styles */
+.alert {
+  max-width: 90%;
+  width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark Mode Styles */
+body.dark-theme .card {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-theme .card-header {
+  background-color: #3a3a3a;
+  border-bottom-color: #444;
+}
+
+body.dark-theme .friend-item,
+body.dark-theme .friend-suggestion,
+body.dark-theme .friend-request,
+body.dark-theme .activity-item {
+  border-bottom-color: #444;
+}
+
+body.dark-theme .friend-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-theme .friend-stats {
+  background-color: #333;
+}
+
+body.dark-theme .friend-stat h5 {
+  color: #e9ecef;
+}
+
+body.dark-theme .modal-content {
+  background-color: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+body.dark-theme .list-group-item {
+  background-color: #333;
+  border-color: #444;
+  color: #f0f0f0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .friend-info h6 {
+    font-size: 0.9rem;
+  }
+  
+  .friend-info p {
+    font-size: 0.8rem;
+  }
+  
+  .friend-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .activity-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+} 
