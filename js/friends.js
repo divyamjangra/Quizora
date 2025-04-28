@@ -154,3 +154,100 @@ function loadFriendRequests() {
     </div>
   `;
   
+   // Example of how it would look with requests:
+  /*
+  friendRequests.innerHTML = `
+    <div class="friend-request">
+      <img src="images/profile4.png" alt="User" class="friend-avatar">
+      <div class="friend-info">
+        <h6>Michael Brown</h6>
+        <p class="text-muted small">Quiz Enthusiast</p>
+      </div>
+      <div class="request-actions">
+        <button class="btn btn-sm btn-success accept-btn" data-friend-id="123">
+          <i class="fas fa-check"></i>
+        </button>
+        <button class="btn btn-sm btn-danger reject-btn" data-friend-id="123">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  `;
+  */
+}
+
+// Load suggested friends
+function loadSuggestedFriends() {
+  // For now using placeholder data
+  // In a real implementation, this would fetch from the API
+  suggestedFriends.innerHTML = `
+    <div class="friend-suggestion">
+      <img src="images/profile1.png" alt="User" class="friend-avatar">
+      <div class="friend-info">
+        <h6>Jane Cooper</h6>
+        <p class="text-muted small">Quiz Expert • 15 quizzes</p>
+      </div>
+      <button class="btn btn-sm btn-outline-primary suggest-add-btn" data-email="jane@example.com">Add</button>
+    </div>
+    <div class="friend-suggestion">
+      <img src="images/profile2.png" alt="User" class="friend-avatar">
+      <div class="friend-info">
+        <h6>Robert Johnson</h6>
+        <p class="text-muted small">Quiz Master • 42 quizzes</p>
+      </div>
+      <button class="btn btn-sm btn-outline-primary suggest-add-btn" data-email="robert@example.com">Add</button>
+    </div>
+    <div class="friend-suggestion">
+      <img src="images/profile3.png" alt="User" class="friend-avatar">
+      <div class="friend-info">
+        <h6>Emily Davis</h6>
+        <p class="text-muted small">Quiz Enthusiast • 7 quizzes</p>
+      </div>
+      <button class="btn btn-sm btn-outline-primary suggest-add-btn" data-email="emily@example.com">Add</button>
+    </div>
+  `;
+  
+  // Add event listeners to suggestion buttons
+  const addButtons = document.querySelectorAll('.suggest-add-btn');
+  addButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const email = this.getAttribute('data-email');
+      sendFriendRequest(email);
+    });
+  });
+}
+
+// Load friend activity
+function loadFriendActivity() {
+  // For now using placeholder data
+  // In a real implementation, this would fetch from the API
+  activityList.innerHTML = `
+    <li class="activity-item">
+      <div class="activity-icon bg-success">
+        <i class="fas fa-trophy"></i>
+      </div>
+      <div class="activity-content">
+        <p class="activity-text"><strong>Emma Watson</strong> scored 95% on <strong>Science Quiz</strong></p>
+        <p class="activity-time">2 hours ago</p>
+      </div>
+    </li>
+    <li class="activity-item">
+      <div class="activity-icon bg-primary">
+        <i class="fas fa-pencil-alt"></i>
+      </div>
+      <div class="activity-content">
+        <p class="activity-text"><strong>John Doe</strong> created a new quiz: <strong>World History</strong></p>
+        <p class="activity-time">Yesterday</p>
+      </div>
+    </li>
+    <li class="activity-item">
+      <div class="activity-icon bg-warning">
+        <i class="fas fa-user-plus"></i>
+      </div>
+      <div class="activity-content">
+        <p class="activity-text"><strong>Alex Smith</strong> and <strong>Sarah Johnson</strong> are now friends</p>
+        <p class="activity-time">2 days ago</p>
+      </div>
+    </li>
+  `;
+}
