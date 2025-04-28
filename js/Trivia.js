@@ -345,3 +345,253 @@ function updateMotivationalQuote() {
     const randomIndex = Math.floor(Math.random() * quotes[quoteCategory].length);
     quoteEl.textContent = quotes[quoteCategory][randomIndex];
 }
+// Timer Function with Warning Colors
+function startTimer() {
+    const timerEl = document.getElementById('timer');
+    const timerContainer = document.getElementById('timerContainer');
+    
+    timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft--;
+            timerEl.textContent = timeLeft;
+            
+            // Add warning colors
+            if (timeLeft <= 10) {
+                timerContainer.className = 'quiz-timer danger';
+                if (timeLeft === 10) {
+                    timerSound.play();
+                }
+            } else if (timeLeft <= 20) {
+                timerContainer.className = 'quiz-timer warning';
+            }
+        } else {
+            clearInterval(timerInterval);
+            showCorrectAnswer();
+            showTimesUpAnimation();
+            setTimeout(nextQuestion, 3000);
+        }
+    }, 1000);
+}
+
+// Check Answer
+function checkAnswer(button, selectedOption) {
+    // Prevent multiple selections
+    if (userSelectedOption !== null) return;
+    userSelectedOption = selectedOption;
+    
+    clearInterval(timerInterval);
+    disableOptions();
+    
+    const currentQuestion = questions[currentQuestionIndex];
+    const explanationEl = document.getElementById('explanation');
+    const explanationText = document.getElementById('explanation-text');
+    const isCorrect = selectedOption === currentQuestion.answer;
+    
+    // Set color and animation based on correctness
+    if (isCorrect) {
+        button.classList.add('correct');
+        score++;
+        correctSound.play();
+        showAnimation('correct');
+        showRibbonAnimation('Correct! Well done!');
+        createConfetti();
+    } else {
+        button.classList.add('incorrect');
+        showCorrectAnswer();
+        wrongSound.play();
+        // Vibrate if supported
+        if (navigator.vibrate) {
+            navigator.vibrate(200);
+        }
+        showAnimation('incorrect');
+        showRibbonAnimation('Incorrect! Try again!');
+    }
+    
+    // Show explanation
+    explanationText.textContent = currentQuestion.explanation || "Explanation not provided.";
+    explanationEl.style.display = 'block';
+    
+    // Update sidebar
+    updateSidebar();
+    
+    // Enable next button after a delay
+    setTimeout(() => {
+        document.getElementById('next-button').focus();
+    }, 1000);
+}
+
+// Show correct answer when time is up or wrong answer is clicked
+function showCorrectAnswer() {
+    const options = document.getElementsByClassName('option');
+    const correctAnswer = questions[currentQuestionIndex].answer;
+    
+    Array.from(options).forEach(option => {
+        if (option.querySelector('span').textContent === correctAnswer) {
+            option.classList.add('correct');
+        }
+    });
+}
+
+// Disable option buttons after answering or timeout
+function disableOptions() {
+    const optionButtons = document.getElementsByClassName('option');
+    Array.from(optionButtons).forEach(button => {
+        button.disabled = true;
+    });
+}
+
+// Show animation based on answer correctness
+function showAnimation(result) {
+    const animationContainer = document.getElementById('animation-container');
+    const animationContent = document.getElementById('animation-content');
+    
+    animationContainer.style.display = 'flex';
+    
+    if (result === 'correct') {
+        animationContent.innerHTML = '🎉 CORRECT! 🎉';
+        animationContent.className = 'correct-animation';
+    } else {
+        animationContent.innerHTML = '❌ INCORRECT ❌';
+        animationContent.className = 'incorrect-animation';
+    }
+    
+    setTimeout(() => {
+        animationContainer.style.display = 'none';
+    }, 1500);
+}
+
+// Show ribbon animation
+function showRibbonAnimation(message) {
+    const ribbonContainer = document.getElementById('ribbon-container');
+    const ribbonMessage = document.getElementById('ribbon-message');
+    
+    ribbonMessage.textContent = message;
+    ribbonContainer.style.display = 'block';
+    
+    // Hide the ribbon after animation completes
+    setTimeout(() => {
+        ribbonContainer.style.display = 'none';
+    }, 3000);
+}
+
+// Show animation when time is up
+function showTimesUpAnimation() {
+    const animationContainer = document.getElementById('animation-container');
+    const animationContent = document.getElementById('animation-content');
+    
+    animationContainer.style.display = 'flex';
+    animationContent.innerHTML = '⏰ TIME\'S UP! ⏰';
+    animationContent.className = 'incorrect-animation';
+    
+    showRibbonAnimation('Time\'s Up!');
+    wrongSound.play();
+    
+    setTimeout(() => {
+        animationContainer.style.display = 'none';
+    }, 1500);
+}
+
+// Create confetti effect for correct answers
+function createConfetti() {
+    const container = document.body;
+    const confettiCount = 100;
+    const colors = ['#f00', '#0f0', '#00f', '#ff0', '#0ff', '#f0f', '#6e48aa', '#9d50bb'];
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = `${3 + Math.random() * 2}s`;
+        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+        container.appendChild(confetti);
+        
+        setTimeout(() => {
+            confetti.remove();
+        }, 5000);
+    }
+}
+
+// Navigate to next question
+function nextQuestion() {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    } else {
+        endQuiz();
+    }
+}
+
+// End Quiz and Show Results
+function endQuiz() {
+    clearInterval(timerInterval);
+    completeSound.play();
+    
+    const quizContent = document.getElementById('quizContent');
+    const resultContainer = document.getElementById('result');
+    
+    // Hide quiz content and show results
+    quizContent.style.display = 'none';
+    resultContainer.style.display = 'block';
+    
+    // Update result values
+    const scorePercentage = Math.round((score / questions.length) * 100);
+    document.getElementById('scoreValue').textContent = `${scorePercentage}%`;
+    document.getElementById('correctAnswers').textContent = `${score}/${questions.length}`;
+    document.getElementById('playerRank').textContent = calculateRank(score);
+    
+    // Set achievement text based on score
+    const achievementText = document.getElementById('achievementText');
+    if (scorePercentage === 100) {
+        achievementText.textContent = 'Perfect Score! You\'re Amazing!';
+        showRibbonAnimation('Perfect Score! 🏆');
+    } else if (scorePercentage >= 75) {
+        achievementText.textContent = 'Great Job! Almost Perfect!';
+        showRibbonAnimation('Great Score! 🎉');
+    } else if (scorePercentage >= 50) {
+        achievementText.textContent = 'Well Done! Keep Practicing!';
+        showRibbonAnimation('Good Job! 👍');
+    } else {
+        achievementText.textContent = 'Nice Try! Keep Learning!';
+        showRibbonAnimation('Quiz Complete! 📚');
+    }
+    
+    // Create final confetti for good scores
+    if (scorePercentage >= 70) {
+        createConfetti();
+    }
+}
+
+// Calculate a sample rank based on score
+function calculateRank(score) {
+    const percentage = questions.length > 0 ? (score / questions.length) * 100 : 0;
+    
+    if (percentage === 100) return "Expert";
+    if (percentage >= 80) return "Master";
+    if (percentage >= 60) return "Advanced";
+    if (percentage >= 40) return "Intermediate";
+    if (percentage >= 20) return "Beginner";
+    return "Novice";
+}
+
+// Restart Quiz
+function restartQuiz() {
+    score = 0;
+    currentQuestionIndex = 0;
+    
+    const quizContent = document.getElementById('quizContent');
+    const resultContainer = document.getElementById('result');
+    
+    // Hide results and show quiz content
+    resultContainer.style.display = 'none';
+    quizContent.style.display = 'block';
+    
+    // Reset and load first question
+    loadQuestion();
+    updateSidebar();
+}
+
+// Go to Sign Up Page
+function signUp() {
+    window.location.href = 'auth.html';
+}
