@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizora - Login & Sign Up</title>
+    <!-- Bootstrap CSS for basic styling and grid system -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts - Montserrat (same as landing page) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS for auth page -->
+    <link rel="stylesheet" href="css/auth.css">
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <!-- Firebase scripts - adjust path as needed -->
+    <script type="module" src="js/firebase.js" defer></script>
+    <!-- Google reCAPTCHA API -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body>
+    <!-- Main container -->
+    <div class="auth-container">
+        <!-- Left panel with decorative elements and branding -->
+        <div class="auth-left-panel">
+            <div class="branding">
+                <img src="images/LOGO transparent.png" alt="Quizora Logo" class="logo">
+                <img src="images/LOGO NAME transparent.png" alt="Quizora" class="logo-text">
+            </div>
+            
+            <div class="illustration">
+                <!-- Replace with your own illustration image -->
+                <img src="images/login-illustration.svg" alt="Quiz illustration" class="illustration-img">
+            </div>
+            
+            <div class="auth-features">
+                <h3>Why Choose Quizora?</h3>
+                <ul>
+                    <li><i class="fas fa-brain"></i> Test your knowledge across various subjects</li>
+                    <li><i class="fas fa-users"></i> Challenge friends in real-time competitions</li>
+                    <li><i class="fas fa-robot"></i> Experience unique AI-generated quizzes</li>
+                    <li><i class="fas fa-chart-line"></i> Track your progress and improvement</li>
+                </ul>
+            </div>
+            
+            <a href="landing-page.html" class="back-to-home">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+        
+        <!-- Right panel with auth forms -->
+        <div class="auth-right-panel">
+            <!-- Toggle buttons to switch between login and signup -->
+            <div class="auth-toggle-container">
+                <button class="auth-toggle-btn active" id="loginToggle">Login</button>
+                <button class="auth-toggle-btn" id="signupToggle">Sign Up</button>
+            </div>
+            
+            <!-- Login form -->
+            <div class="auth-form login-form" id="loginForm">
+                <h2>Welcome Back!</h2>
+                <p class="auth-subtitle">Login to continue your learning journey</p>
+                
+                <!-- Social login options -->
+                <div class="social-auth">
+                    <button class="social-btn google-btn">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button class="social-btn microsoft-btn">
+                        <i class="fab fa-microsoft"></i> Continue with Microsoft
+                    </button>
+                </div>
+                
+                <div class="divider">
+                    <span>or login with email</span>
+                </div>
+                
+                <!-- Email login form - Simplified -->
+                <form id="emailLoginForm">
+                    <!-- Email input - simplified -->
+                    <div class="input-group">
+                        <label for="loginEmail">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input 
+                                type="email" 
+                                id="loginEmail" 
+                                placeholder="Enter your email" 
+                                required
+                            >
+                        </div>
+                        <span class="validation-message" id="loginEmailValidation"></span>
+                    </div>
+                    
+                    <!-- Password input - simplified -->
+                    <div class="input-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input 
+                                type="password" 
+                                id="loginPassword" 
+                                placeholder="Enter your password" 
+                                required
+                            >
+                            <button type="button" class="password-toggle">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="validation-message" id="loginPasswordValidation"></span>
+                    </div>
+                    
+                    <!-- Remember me and forgot password -->
+                    <div class="form-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <!-- CAPTCHA verification with the provided site key -->
+                    <div class="captcha-container">
+                        <div class="g-recaptcha" data-sitekey="6LcXt-4qAAAAAArUhCCVhUhRktsM3_ORUMAma2-r"></div>
+                        <span class="validation-message" id="loginCaptchaValidation"></span>
+                    </div>
+                    
+                    <!-- Submit button -->
+                    <button type="submit" class="auth-submit-btn">
+                        Login <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+                
+                <!-- Switch to signup for mobile -->
+                <p class="switch-form-mobile">
+                    Don't have an account? <a href="#" id="switchToSignupMobile">Sign up</a>
+                </p>
+            </div>
+            
+            <!-- Sign Up form -->
+            <div class="auth-form signup-form hidden" id="signupForm">
+                <h2>Create Account</h2>
+                <p class="auth-subtitle">Join thousands of learners on Quizora</p>
+                
+                <!-- Social signup options -->
+                <div class="social-auth">
+                    <button class="social-btn google-btn">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button class="social-btn microsoft-btn">
+                        <i class="fab fa-microsoft"></i> Continue with Microsoft
+                    </button>
+                </div>
+                
+                <div class="divider">
+                    <span>or sign up with email</span>
+                </div>
+                
+                <!-- Email signup form -->
+                <form id="emailSignupForm">
+                    <!-- Full name input with validation -->
+                    <div class="input-group">
+                        <label for="signupName">Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input 
+                                type="text" 
+                                id="signupName" 
+                                placeholder="Enter your full name" 
+                                required
+                                minlength="2"
+                                maxlength="50"
+                                pattern="[A-Za-z ]{2,50}"
+                                data-validation-message="Please enter a valid name (2-50 characters)"
+                            >
+                        </div>
+                        <span class="validation-message" id="signupNameValidation"></span>
+                    </div>
+                    
+                    <!-- Personal Details Section - NEW -->
+                    <div class="input-group">
+                        <label for="signupAge">Age</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-birthday-cake"></i>
+                            <input 
+                                type="number" 
+                                id="signupAge" 
+                                placeholder="Enter your age" 
+                                required
+                                min="8"
+                                max="120"
+                                data-validation-message="Please enter a valid age (8-120)"
+                            >
+                        </div>
+                        <span class="validation-message" id="signupAgeValidation"></span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="signupGender">Gender</label>
+                        <div class="input-with-icon select-wrapper">
+                            <i class="fas fa-venus-mars"></i>
+                            <select id="signupGender" required>
+                                <option value="" disabled selected>Select your gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        <span class="validation-message" id="signupGenderValidation"></span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="signupEducation">Education Level</label>
+                        <div class="input-with-icon select-wrapper">
+                            <i class="fas fa-graduation-cap"></i>
+                            <select id="signupEducation" required>
+                                <option value="" disabled selected>Select your education level</option>
+                                <option value="elementary">Elementary School</option>
+                                <option value="middle">Middle School</option>
+                                <option value="high">High School</option>
+                                <option value="bachelor">Bachelor's Degree</option>
+                                <option value="master">Master's Degree</option>
+                                <option value="phd">PhD or Higher</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <span class="validation-message" id="signupEducationValidation"></span>
+                    </div>
+                    
+                    <!-- Email input with validation -->
+                    <div class="input-group">
+                        <label for="signupEmail">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input 
+                                type="email" 
+                                id="signupEmail" 
+                                placeholder="Enter your email" 
+                                required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                maxlength="50"
+                                data-validation-message="Please enter a valid email address"
+                            >
+                        </div>
+                        <span class="validation-message" id="signupEmailValidation"></span>
+                    </div>
+                    
+                    <!-- Password input with validation, requirements list, and show/hide toggle -->
+                    <div class="input-group">
+                        <label for="signupPassword">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input 
+                                type="password" 
+                                id="signupPassword" 
+                                placeholder="Create a password" 
+                                required
+                                minlength="8"
+                                maxlength="32"
+                                data-validation-message="Password must meet all requirements"
+                            >
+                            <button type="button" class="password-toggle">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Password requirements list -->
+                        <div class="password-requirements">
+                            <p>Password must contain:</p>
+                            <ul>
+                                <li id="length-check"><i class="fas fa-times-circle"></i> At least 8 characters</li>
+                                <li id="uppercase-check"><i class="fas fa-times-circle"></i> One uppercase letter</li>
+                                <li id="lowercase-check"><i class="fas fa-times-circle"></i> One lowercase letter</li>
+                                <li id="number-check"><i class="fas fa-times-circle"></i> One number</li>
+                                <li id="special-check"><i class="fas fa-times-circle"></i> One special character</li>
+                            </ul>
+                        </div>
+                        <span class="validation-message" id="signupPasswordValidation"></span>
+                    </div>
+                    
+                    <!-- Confirm password input -->
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                placeholder="Confirm your password" 
+                                required
+                                data-validation-message="Passwords don't match"
+                            >
+                            <button type="button" class="password-toggle">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="validation-message" id="confirmPasswordValidation"></span>
+                    </div>
+                    
+                    <!-- Terms and conditions checkbox -->
+                    <div class="checkbox-group terms-group">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                        </label>
+                        <span class="validation-message" id="termsValidation"></span>
+                    </div>
+                    
+                    <!-- CAPTCHA verification with the provided site key -->
+                    <div class="captcha-container">
+                        <div class="g-recaptcha" data-sitekey="6LcXt-4qAAAAAArUhCCVhUhRktsM3_ORUMAma2-r"></div>
+                        <span class="validation-message" id="signupCaptchaValidation"></span>
+                    </div>
+                    
+                    <!-- Submit button -->
+                    <button type="submit" class="auth-submit-btn">
+                        Create Account <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+                
+                <!-- Switch to login for mobile -->
+                <p class="switch-form-mobile">
+                    Already have an account? <a href="#" id="switchToLoginMobile">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Security notice modal -->
+    <div class="modal fade" id="securityModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Security Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><i class="fas fa-shield-alt text-primary"></i> Your security is important to us.</p>
+                    <ul>
+                        <li>We use secure SSL encryption to protect your data</li>
+                        <li>We never store passwords in plain text</li>
+                        <li>We use CAPTCHA verification to prevent automated attacks</li>
+                        <li>We implement strict input validation to prevent malicious entries</li>
+                    </ul>
+                    <p>Please ensure you're using a strong, unique password and keep your account details secure.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- jQuery (needed for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom auth script -->
+    <script src="js/auth.js"></script>
+</body>
+</html> 
