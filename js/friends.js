@@ -251,3 +251,139 @@ function loadFriendActivity() {
     </li>
   `;
 }
+
+// Open friend profile modal
+async function openFriendProfile(friendId) {
+  try {
+    currentFriendId = friendId;
+    
+    // In a real implementation, fetch friend profile from API
+    // For now, using mock data
+    const friendData = {
+      uid: friendId,
+      displayName: 'Jane Smith',
+      avatarUrl: 'images/profile1.png',
+      rank: 'Quiz Expert',
+      quizCount: 15,
+      avgScore: 87,
+      completedCount: 32,
+      recentQuizzes: [
+        { id: '1', title: 'Science Quiz', score: '95%', date: '2 days ago' },
+        { id: '2', title: 'History Trivia', score: '78%', date: '1 week ago' },
+        { id: '3', title: 'Math Challenge', score: '82%', date: '2 weeks ago' }
+      ]
+    };
+    
+    // Update modal with friend data
+    friendProfileImage.src = friendData.avatarUrl || 'images/profile.png';
+    friendProfileName.textContent = friendData.displayName;
+    friendProfileRank.textContent = friendData.rank;
+    friendQuizCount.textContent = friendData.quizCount;
+    friendAvgScore.textContent = `${friendData.avgScore}%`;
+    friendCompletedCount.textContent = friendData.completedCount;
+    
+    // Update recent quizzes
+    if (friendData.recentQuizzes && friendData.recentQuizzes.length > 0) {
+      let quizzesHTML = '';
+      friendData.recentQuizzes.forEach(quiz => {
+        quizzesHTML += `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>${quiz.title}</span>
+            <div>
+              <span class="badge bg-success">${quiz.score}</span>
+              <small class="text-muted ms-2">${quiz.date}</small>
+            </div>
+          </li>
+        `;
+      });
+      friendRecentQuizzes.innerHTML = quizzesHTML;
+    } else {
+      friendRecentQuizzes.innerHTML = `
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>No quizzes found</span>
+        </li>
+      `;
+    }
+    
+    // Show the modal
+    const modal = new bootstrap.Modal(friendProfileModal);
+    modal.show();
+  } catch (error) {
+    console.error('Error opening friend profile:', error);
+    showAlert('Error loading friend profile', 'danger');
+  }
+}
+
+// Challenge friend to a quiz
+function challengeFriend(friendId, friendName) {
+  // For now, just show a notification
+  showAlert(`Challenge sent to ${friendName || 'your friend'}!`, 'success');
+  
+  // In a real implementation, this would:
+  // 1. Create a multiplayer quiz session
+  // 2. Generate a unique code
+  // 3. Send an invitation to the friend
+  // 4. Redirect to the waiting room
+}
+
+// Send friend request
+async function sendFriendRequest(email) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch('/api/user/friends', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ friendEmail: email })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to send friend request');
+    }
+    
+    showAlert('Friend request sent successfully!', 'success');
+    
+    // Close modal if open
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addFriendModal'));
+    if (modal) {
+      modal.hide();
+    }
+  } catch (error) {
+    console.error('Error sending friend request:', error);
+    showAlert(error.message || 'Error sending friend request', 'danger');
+  }
+}
+
+// Remove friend
+async function removeFriend(friendId) {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`/api/user/friends/${friendId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to remove friend');
+    }
+    
+    showAlert('Friend removed successfully', 'success');
+    
+    // Close the modal
+    const modal = bootstrap.Modal.getInstance(friendProfileModal);
+    if (modal) {
+      modal.hide();
+    }
+    
+    // Reload friends list
+    await loadFriends();
+  } catch (error) {
+    console.error('Error removing friend:', error);
+    showAlert('Error removing friend. Please try again.', 'danger');
+  }
+}
