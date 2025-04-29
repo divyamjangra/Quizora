@@ -972,4 +972,54 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize the app
   initTheme();
 
+  // Update player score and provide feedback after answering
+  function updatePlayerScoreAndFeedback(isCorrect) {
+    // Mark as answered
+    playerState.answeredCurrentQuestion = true;
+    
+    // Record the result
+    if (isCorrect) {
+      playerState.correctCount++;
+      
+      // Calculate points based on speed (faster = more points)
+      const responseTime = (Date.now() - playerState.responseStartTime) / 1000;
+      const timeBonus = Math.max(0, 1 - (responseTime / quizState.timePerQuestion));
+      
+      // Get question points
+      const question = quizState.questions[playerState.currentQuestion];
+      const basePoints = question.points || 1;
+      
+      // Calculate total points (base + speed bonus)
+      const points = Math.round(basePoints * (1 + timeBonus));
+      
+      // Add to score
+      playerState.score += points;
+      
+      // Show feedback
+      feedbackMessage.className = 'feedback-message alert alert-success';
+      feedbackMessage.innerHTML = `
+        <strong>Correct!</strong> +${points} points
+        <div class="small mt-1">Answered in ${responseTime.toFixed(1)} seconds</div>
+      `;
+    } else {
+      playerState.wrongCount++;
+      
+      // Show feedback
+      feedbackMessage.className = 'feedback-message alert alert-danger';
+      feedbackMessage.innerHTML = `
+        <strong>Incorrect!</strong> +0 points
+      `;
+    }
+    
+    feedbackMessage.classList.remove('d-none');
+    
+    // Update leaderboard
+    const playerInLeaderboard = quizState.participants.find(p => p.id === playerState.id);
+    if (playerInLeaderboard) {
+      playerInLeaderboard.score = playerState.score;
+    }
+    
+    updateLeaderboard();
+  }
+}); 
                         
