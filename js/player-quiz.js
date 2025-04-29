@@ -282,3 +282,371 @@ document.addEventListener('DOMContentLoaded', function() {
     // For mock purposes, simulate quiz starting after a delay
     setTimeout(simulateQuizStart, 5000);
   }
+ // Show waiting screen
+  function showWaitingScreen() {
+    joinScreen.classList.remove('active');
+    waitingScreen.classList.add('active');
+    quizActiveScreen.classList.remove('active');
+    chatScreen.classList.remove('active');
+    resultsScreen.classList.remove('active');
+    
+    // Update waiting screen UI
+    waitingQuizTitle.textContent = quizState.title;
+    participantCount.textContent = quizState.participants.length;
+    
+    // Update participants list
+    updateWaitingParticipantsList();
+  }
+  
+  // Update waiting participants list
+  function updateWaitingParticipantsList() {
+    waitingParticipantsList.innerHTML = '';
+    
+    quizState.participants.forEach((participant, index) => {
+      const item = document.createElement('div');
+      item.className = 'd-flex align-items-center mb-2';
+      
+      // Get initials for avatar
+      const initials = participant.name.split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .substring(0, 2)
+        .toUpperCase();
+      
+      // Highlight current player
+      const isCurrentPlayer = participant.id === playerState.id;
+      
+      item.innerHTML = `
+        <div class="me-2" style="width: 32px; height: 32px; background-color: ${isCurrentPlayer ? '#e7f0ff' : '#f0f0f0'}; 
+          border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+          ${initials}
+        </div>
+        <div>${participant.name} ${isCurrentPlayer ? '(You)' : ''}</div>
+      `;
+      
+      waitingParticipantsList.appendChild(item);
+    });
+  }
+  
+  // Simulate quiz starting (for mock implementation)
+  function simulateQuizStart() {
+    quizState.status = 'active';
+    headerQuizInfo.innerHTML = `
+      <div>
+        <strong>${quizState.title}</strong>
+        <span class="badge bg-success ms-2">Active</span>
+      </div>
+    `;
+    
+    showQuizActiveScreen();
+    loadQuestion(0);
+  }
+  
+  // Show quiz active screen
+  function showQuizActiveScreen() {
+    joinScreen.classList.remove('active');
+    waitingScreen.classList.remove('active');
+    quizActiveScreen.classList.add('active');
+    chatScreen.classList.remove('active');
+    resultsScreen.classList.remove('active');
+  }
+  
+  // Load question
+  function loadQuestion(questionIndex) {
+    if (questionIndex >= quizState.totalQuestions) {
+      // Quiz is finished
+      showResultsScreen();
+      return;
+    }
+    
+    // Update player state
+    playerState.currentQuestion = questionIndex;
+    playerState.answeredCurrentQuestion = false;
+    playerState.selectedOption = null;
+    
+    // Update UI
+    currentQuestionNumber.textContent = questionIndex + 1;
+    totalQuestions.textContent = quizState.totalQuestions;
+    
+    // Reset the question container
+    feedbackMessage.classList.add('d-none');
+    answerExplanation.classList.add('d-none');
+    
+    // Get the actual question from the quiz
+    const question = quizState.questions[questionIndex];
+    
+    if (!question) {
+      console.error("Question not found at index:", questionIndex);
+      return;
+    }
+    
+    console.log("Loading question:", question);
+    
+    // Populate question
+    questionText.textContent = question.text;
+    
+    // Generate options based on question type
+    generateOptions(question);
+    
+    // Start question timer
+    startQuestionTimer(quizState.timePerQuestion);
+    
+    // Record response start time
+    playerState.responseStartTime = Date.now();
+  }
+  
+  // Generate options for current question based on the question type
+  function generateOptions(question) {
+    optionsContainer.innerHTML = '';
+    
+    if (question.type === 'multiple-choice') {
+      // Multiple choice questions
+      question.options.forEach((option, index) => {
+        const optionItem = document.createElement('div');
+        optionItem.className = 'option-item';
+        optionItem.dataset.option = String.fromCharCode(65 + index); // A, B, C, D
+        optionItem.dataset.index = index;
+        
+        optionItem.innerHTML = `
+          <div class="option-content">
+            <div class="option-marker">${String.fromCharCode(65 + index)}</div>
+            <div class="option-text">${option}</div>
+          </div>
+        `;
+        
+        // Add click handler
+        optionItem.addEventListener('click', function() {
+          if (playerState.answeredCurrentQuestion) return;
+          
+          selectOption(this, index, question.correctOption);
+        });
+        
+        optionsContainer.appendChild(optionItem);
+      });
+    } else if (question.type === 'true-false') {
+      // True/False questions
+      const options = ['True', 'False'];
+      options.forEach((option, index) => {
+        const optionItem = document.createElement('div');
+        optionItem.className = 'option-item';
+        optionItem.dataset.option = option;
+        optionItem.dataset.index = index;
+        
+        optionItem.innerHTML = `
+          <div class="option-content">
+            <div class="option-marker">${index === 0 ? 'T' : 'F'}</div>
+            <div class="option-text">${option}</div>
+          </div>
+        `;
+        
+        // Add click handler
+        optionItem.addEventListener('click', function() {
+          if (playerState.answeredCurrentQuestion) return;
+          
+          const correctAnswer = question.correctAnswer === 'true' ? 0 : 1;
+          selectOption(this, index, correctAnswer);
+        });
+        
+        optionsContainer.appendChild(optionItem);
+      });
+    } else if (question.type === 'short-answer') {
+      // Short answer questions
+      const answerInput = document.createElement('div');
+      answerInput.className = 'short-answer-input mt-3 mb-4';
+      answerInput.innerHTML = `
+        <input type="text" class="form-control" id="shortAnswerInput" placeholder="Type your answer here">
+        <button class="btn btn-primary mt-2" id="submitShortAnswer">Submit Answer</button>
+      `;
+      
+      optionsContainer.appendChild(answerInput);
+      
+      // Add submit handler
+      document.getElementById('submitShortAnswer').addEventListener('click', function() {
+        if (playerState.answeredCurrentQuestion) return;
+        
+        const input = document.getElementById('shortAnswerInput');
+        const answer = input.value.trim();
+        
+        if (!answer) {
+          alert('Please enter an answer');
+          return;
+        }
+        
+        // Check if the answer is correct
+        const isCorrect = checkShortAnswer(answer, question);
+        
+        // Create a feedback display
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = `alert ${isCorrect ? 'alert-success' : 'alert-danger'} mt-3`;
+        feedbackDiv.innerHTML = `
+          <strong>${isCorrect ? 'Correct!' : 'Incorrect!'}</strong>
+          <p>Your answer: ${answer}</p>
+          <p>Accepted answers: ${question.correctAnswers.join(', ')}</p>
+        `;
+        
+        // Add to DOM after the input
+        answerInput.appendChild(feedbackDiv);
+        
+        // Update player state
+        updatePlayerScoreAndFeedback(isCorrect);
+        
+        // Show explanation if there is one
+        if (question.explanation) {
+          showExplanation(-1); // No specific correct option to highlight for short answer
+        }
+      });
+    }
+  }
+  
+  // Check if a short answer is correct
+  function checkShortAnswer(answer, question) {
+    const userAnswer = question.caseSensitive ? answer : answer.toLowerCase();
+    
+    for (let correctAnswer of question.correctAnswers) {
+      const correctOption = question.caseSensitive ? correctAnswer : correctAnswer.toLowerCase();
+      
+      if (question.exactMatch) {
+        if (userAnswer === correctOption) return true;
+      } else {
+        if (userAnswer.includes(correctOption) || correctOption.includes(userAnswer)) return true;
+      }
+    }
+    
+    return false;
+  }
+  
+  // Select an option
+  function selectOption(optionElement, selectedIndex, correctIndex) {
+    // Mark option as selected
+    optionElement.classList.add('selected');
+    
+    // Check if answer is correct
+    const isCorrect = selectedIndex === correctIndex;
+    
+    // Update player score and feedback
+    updatePlayerScoreAndFeedback(isCorrect);
+    
+    // Show correct/incorrect indicators
+    setTimeout(() => {
+      // Mark selected option as correct or incorrect
+      if (isCorrect) {
+        optionElement.classList.add('correct');
+      } else {
+        optionElement.classList.add('incorrect');
+        
+        // Find and highlight the correct option
+        const options = optionsContainer.querySelectorAll('.option-item');
+        options.forEach(option => {
+          if (parseInt(option.dataset.index) === correctIndex) {
+            option.classList.add('correct');
+          }
+        });
+      }
+      
+      // Show explanation if available
+      const currentQuestion = quizState.questions[playerState.currentQuestion];
+      if (currentQuestion && currentQuestion.explanation) {
+        showExplanation(correctIndex);
+      }
+      
+      // Move to next question or chat after delay
+      setTimeout(() => {
+        // In a real implementation, would wait for all players or a timeout
+        // For this simulation, just move to the next step
+        
+        if (quizState.chatDuration > 0) {
+          // Show chat screen if enabled
+          showChatScreen();
+          startChatTimer(quizState.chatDuration);
+        } else {
+          // Move directly to next question
+          loadQuestion(playerState.currentQuestion + 1);
+        }
+      }, 4000); // Show result for 4 seconds before moving on
+    }, 500); // Short delay before showing the result
+  }
+  
+  // Start question timer
+  function startQuestionTimer(seconds) {
+    const timerEl = questionTimer;
+    timerEl.textContent = seconds;
+    
+    // Reset timer progress bar
+    timerProgress.style.width = '100%';
+    
+    // Calculate time step for progress bar
+    const progressStep = 100 / seconds;
+    
+    const timerId = setInterval(() => {
+      seconds--;
+      timerEl.textContent = seconds;
+      
+      // Update progress bar
+      timerProgress.style.width = `${progressStep * seconds}%`;
+      
+      if (seconds <= 5) {
+        timerProgress.style.backgroundColor = '#dc3545'; // Red for last 5 seconds
+      }
+      
+      if (seconds <= 0) {
+        clearInterval(timerId);
+        
+        // If player hasn't answered, record as timeout
+        if (!playerState.answeredCurrentQuestion) {
+          // Get mock question to determine correct answer
+          const mockQuestion = generateMockQuestion(playerState.currentQuestion);
+          
+          playerState.answers.push({
+            questionIndex: playerState.currentQuestion,
+            selectedOption: null,
+            correctOption: mockQuestion.correctOption,
+            isCorrect: false,
+            responseTime: quizState.timePerQuestion
+          });
+          
+          playerState.wrongCount++;
+          
+          // Show timeout message
+          feedbackMessage.innerHTML = `
+            <div class="alert alert-warning">
+              <i class="bi bi-clock me-2"></i>Time's up! The correct answer is ${String.fromCharCode(65 + mockQuestion.correctOption)}.
+            </div>
+          `;
+          feedbackMessage.classList.remove('d-none');
+          
+          // Highlight correct answer
+          const correctOption = optionsContainer.querySelector(`[data-index="${mockQuestion.correctOption}"]`);
+          if (correctOption) {
+            correctOption.classList.add('correct');
+          }
+          
+          // Show explanation
+          showExplanation(mockQuestion.correctOption);
+        }
+        
+        // In a real implementation, would wait for all players or server signal
+        // For mock purposes, show chat or next question after a delay
+        setTimeout(() => {
+          if (quizState.chatDuration > 0) {
+            showChatScreen();
+          } else {
+            loadQuestion(playerState.currentQuestion + 1);
+          }
+        }, 3000);
+      }
+    }, 1000);
+    
+    // Store timer ID to clear if needed
+    playerState.currentTimerId = timerId;
+  }
+  
+  // Show explanation for correct answer
+  function showExplanation(correctIndex) {
+    const mockQuestion = generateMockQuestion(playerState.currentQuestion);
+    
+    answerExplanation.innerHTML = `
+      <h6>Explanation</h6>
+      <p>${mockQuestion.explanation}</p>
+    `;
+    answerExplanation.classList.remove('d-none');
+  }
