@@ -343,3 +343,196 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+  
+  // Create a participant element for the UI
+  function createParticipantElement(participant) {
+    const item = document.createElement('div');
+    item.className = 'participant-item';
+    item.dataset.participantId = participant.id;
+    
+    // Get initials for avatar
+    const initials = participant.name.split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .substring(0, 2)
+      .toUpperCase();
+    
+    item.innerHTML = `
+      <div class="participant-name">
+        <div class="participant-avatar">${initials}</div>
+        <span>${participant.name}</span>
+      </div>
+      <div class="participant-actions">
+        <button class="btn btn-sm btn-outline-warning warn-player-btn" title="Warn Player" data-participant-id="${participant.id}">
+          <i class="bi bi-exclamation-triangle"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger remove-player-btn" title="Remove Player" data-participant-id="${participant.id}">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    `;
+    
+    // Add event listeners to action buttons
+    item.querySelector('.warn-player-btn').addEventListener('click', function() {
+      showWarnPlayerModal(participant);
+    });
+    
+    item.querySelector('.remove-player-btn').addEventListener('click', function() {
+      showRemovePlayerModal(participant);
+    });
+    
+    return item;
+  }
+  
+  // Add a system message to the announcements area
+  function addSystemMessage(message) {
+    const systemMessages = document.getElementById('systemMessages');
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    const messageEl = document.createElement('div');
+    messageEl.className = 'chat-message system';
+    messageEl.innerHTML = `
+      <span class="message-time">${timeStr}</span>
+      <div class="message-content">
+        ${message}
+      </div>
+    `;
+    
+    systemMessages.appendChild(messageEl);
+    systemMessages.scrollTop = systemMessages.scrollHeight;
+  }
+  
+  // Show warning player modal
+  function showWarnPlayerModal(participant) {
+    const modal = new bootstrap.Modal(document.getElementById('warnPlayerModal'));
+    document.getElementById('warnPlayerName').textContent = participant.name;
+    
+    // Store participant ID in the modal for reference
+    document.getElementById('warnPlayerModal').dataset.participantId = participant.id;
+    
+    modal.show();
+  }
+  
+  // Show remove player modal
+  function showRemovePlayerModal(participant) {
+    const modal = new bootstrap.Modal(document.getElementById('removePlayerModal'));
+    document.getElementById('removePlayerName').textContent = participant.name;
+    
+    // Store participant ID in the modal for reference
+    document.getElementById('removePlayerModal').dataset.participantId = participant.id;
+    
+    modal.show();
+  }
+  
+  // Handle warn player confirmation
+  document.getElementById('sendWarnBtn').addEventListener('click', function() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('warnPlayerModal'));
+    const participantId = document.getElementById('warnPlayerModal').dataset.participantId;
+    const warnReason = document.getElementById('warnReasonSelect').value;
+    
+    let warningMessage = '';
+    
+    if (warnReason === 'custom') {
+      warningMessage = document.getElementById('customWarnMessage').value;
+    } else {
+      // Preset messages
+      const messages = {
+        'behavior': 'Please maintain appropriate behavior during the quiz.',
+        'cheating': 'Suspected cheating detected. This activity is being monitored.',
+        'disruption': 'Please avoid disrupting the quiz for other participants.'
+      };
+      warningMessage = messages[warnReason];
+    }
+    
+    // Find participant
+    const participant = quizState.participants.find(p => p.id === participantId);
+    
+    if (participant) {
+      // In a real app, would send the warning to the specific participant
+      console.log(`Warning sent to ${participant.name}: ${warningMessage}`);
+      
+      // Add system message
+      addSystemMessage(`Warning sent to ${participant.name}`);
+    }
+    
+    modal.hide();
+  });
+  
+  // Handle remove player confirmation
+  document.getElementById('confirmRemoveBtn').addEventListener('click', function() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('removePlayerModal'));
+    const participantId = document.getElementById('removePlayerModal').dataset.participantId;
+    const shouldBan = document.getElementById('banPlayerCheck').checked;
+    
+    // Find participant
+    const participant = quizState.participants.find(p => p.id === participantId);
+    
+    if (participant) {
+      // Remove participant
+      participant.status = 'removed';
+      
+      // If ban is checked, add to banned list
+      if (shouldBan) {
+        quizState.bannedUsers.push(participant.id);
+        participant.status = 'banned';
+      }
+      
+      // Update UI
+      updateParticipantsList();
+      
+      // Add system message
+      addSystemMessage(`${participant.name} has been removed from the quiz`);
+    }
+    
+    modal.hide();
+  });
+  
+  // Handle remove all participants
+  removeAllBtn.addEventListener('click', function() {
+    if (quizState.participants.length === 0) return;
+    
+    if (confirm('Are you sure you want to remove all participants?')) {
+      // Mark all participants as removed
+      quizState.participants.forEach(participant => {
+        participant.status = 'removed';
+      });
+      
+      // Update UI
+      updateParticipantsList();
+      
+      // Add system message
+      addSystemMessage('All participants have been removed');
+    }
+  });
+  
+  // Toggle mute all players
+  toggleMuteAllBtn.addEventListener('click', function() {
+    quizState.isMuted = !quizState.isMuted;
+    
+    if (quizState.isMuted) {
+      toggleMuteAllBtn.innerHTML = '<i class="bi bi-mic me-2"></i>Unmute All Players';
+      toggleMuteAllBtn.classList.replace('btn-outline-primary', 'btn-primary');
+      addSystemMessage('All participants have been muted');
+    } else {
+      toggleMuteAllBtn.innerHTML = '<i class="bi bi-mic-mute me-2"></i>Mute All Players';
+      toggleMuteAllBtn.classList.replace('btn-primary', 'btn-outline-primary');
+      addSystemMessage('All participants have been unmuted');
+    }
+  });
+  
+  // Toggle lock room
+  toggleLockRoomBtn.addEventListener('click', function() {
+    quizState.isRoomLocked = !quizState.isRoomLocked;
+    
+    if (quizState.isRoomLocked) {
+      toggleLockRoomBtn.innerHTML = '<i class="bi bi-unlock me-2"></i>Unlock Room';
+      toggleLockRoomBtn.classList.replace('btn-outline-primary', 'btn-primary');
+      addSystemMessage('Room is now locked. No new participants can join.');
+    } else {
+      toggleLockRoomBtn.innerHTML = '<i class="bi bi-lock me-2"></i>Lock Room';
+      toggleLockRoomBtn.classList.replace('btn-primary', 'btn-outline-primary');
+      addSystemMessage('Room is now unlocked. New participants can join.');
+    }
+  });
+  
