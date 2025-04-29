@@ -650,3 +650,326 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     answerExplanation.classList.remove('d-none');
   }
+    
+  // Update leaderboard
+  function updateLeaderboard() {
+    // Generate mock leaderboard data - in a real implementation, this would come from the server
+    const mockLeaderboard = [
+      { id: 'p1', name: 'John Doe', score: Math.floor(Math.random() * 3000) + 2000 },
+      { id: 'p2', name: 'Jane Smith', score: Math.floor(Math.random() * 3000) + 1000 },
+      { id: 'p3', name: 'Michael Johnson', score: Math.floor(Math.random() * 2000) + 1000 },
+      { id: playerState.id, name: playerState.name, score: playerState.score }
+    ];
+    
+    // Sort by score (highest first)
+    mockLeaderboard.sort((a, b) => b.score - a.score);
+    
+    // Find player's rank
+    const playerRankIndex = mockLeaderboard.findIndex(p => p.id === playerState.id);
+    playerState.rank = playerRankIndex + 1;
+    
+    // Update UI
+    playerRank.textContent = playerState.rank;
+    playerNameDisplay.textContent = `${playerState.name} (You)`;
+    playerScore.textContent = playerState.score;
+    leaderboardPlayerCount.textContent = mockLeaderboard.length;
+    
+    // Create leaderboard list
+    leaderboardList.innerHTML = '';
+    mockLeaderboard.forEach((player, index) => {
+      // Only show top 5
+      if (index < 5) {
+        const item = document.createElement('div');
+        item.className = `leaderboard-item ${player.id === playerState.id ? 'current-player' : ''}`;
+        
+        let positionClass = '';
+        if (index === 0) positionClass = 'position-1';
+        else if (index === 1) positionClass = 'position-2';
+        else if (index === 2) positionClass = 'position-3';
+        
+        // Get initials for avatar
+        const initials = player.name.split(' ')
+          .map(word => word.charAt(0))
+          .join('')
+          .substring(0, 2)
+          .toUpperCase();
+        
+        item.innerHTML = `
+          <div class="player-info">
+            <div class="player-position ${positionClass}">${index + 1}</div>
+            <div>${player.name} ${player.id === playerState.id ? '(You)' : ''}</div>
+          </div>
+          <div class="player-score">${player.score}</div>
+        `;
+        
+        leaderboardList.appendChild(item);
+      }
+    });
+    
+    // Store for chat screen
+    quizState.leaderboard = mockLeaderboard;
+  }
+  
+  // Show chat screen
+  function showChatScreen() {
+    joinScreen.classList.remove('active');
+    waitingScreen.classList.remove('active');
+    quizActiveScreen.classList.remove('active');
+    chatScreen.classList.add('active');
+    resultsScreen.classList.remove('active');
+    
+    // Update chat screen leaderboard
+    updateChatLeaderboard();
+    
+    // Start chat timer
+    startChatTimer(quizState.chatDuration);
+  }
+  
+  // Update chat screen leaderboard
+  function updateChatLeaderboard() {
+    chatLeaderboardList.innerHTML = '';
+    
+    quizState.leaderboard.forEach((player, index) => {
+      const item = document.createElement('div');
+      item.className = `leaderboard-item ${player.id === playerState.id ? 'current-player' : ''}`;
+      
+      let positionClass = '';
+      if (index === 0) positionClass = 'position-1';
+      else if (index === 1) positionClass = 'position-2';
+      else if (index === 2) positionClass = 'position-3';
+      
+      item.innerHTML = `
+        <div class="player-info">
+          <div class="player-position ${positionClass}">${index + 1}</div>
+          <div>${player.name} ${player.id === playerState.id ? '(You)' : ''}</div>
+        </div>
+        <div class="player-score">${player.score}</div>
+      `;
+      
+      chatLeaderboardList.appendChild(item);
+    });
+  }
+  
+  // Start chat timer
+  function startChatTimer(seconds) {
+    const timerEl = chatTimer;
+    timerEl.textContent = seconds;
+    
+    const timerId = setInterval(() => {
+      seconds--;
+      timerEl.textContent = seconds;
+      
+      if (seconds <= 0) {
+        clearInterval(timerId);
+        
+        // Move to next question
+        loadQuestion(playerState.currentQuestion + 1);
+      }
+    }, 1000);
+    
+    // Store chat timer ID
+    playerState.chatTimerId = timerId;
+  }
+  
+  // Send chat message
+  sendChatBtn.addEventListener('click', function() {
+    sendChatMessage();
+  });
+  
+  chatInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      sendChatMessage();
+    }
+  });
+  
+  function sendChatMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+    
+    // Add message to chat
+    addChatMessage(playerState.name, message, true);
+    
+    // Clear input
+    chatInput.value = '';
+    
+    // In a real implementation, would send message to server
+    // For mock purposes, simulate receiving messages from other players
+    setTimeout(() => {
+      const mockResponses = [
+        'Good job everyone!',
+        'That was a tough question!',
+        'I think the next one will be harder',
+        'I\'m doing well so far!',
+        'Good luck on the next question!'
+      ];
+      
+      const randomPlayer = quizState.participants.find(p => p.id !== playerState.id);
+      if (randomPlayer) {
+        const randomMessage = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+        addChatMessage(randomPlayer.name, randomMessage, false);
+      }
+    }, Math.random() * 2000 + 500);
+  }
+  
+  // Add chat message to UI
+  function addChatMessage(sender, content, isSelf) {
+    const message = document.createElement('div');
+    message.className = `chat-message ${isSelf ? 'self' : 'other'}`;
+    
+    if (!isSelf) {
+      message.innerHTML = `
+        <div class="sender-name">${sender}</div>
+        <div class="message-content">${content}</div>
+      `;
+    } else {
+      message.innerHTML = `
+        <div class="message-content">${content}</div>
+      `;
+    }
+    
+    chatMessages.appendChild(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  
+  // Show results screen
+  function showResultsScreen() {
+    joinScreen.classList.remove('active');
+    waitingScreen.classList.remove('active');
+    quizActiveScreen.classList.remove('active');
+    chatScreen.classList.remove('active');
+    resultsScreen.classList.add('active');
+    
+    // Update header status
+    headerQuizInfo.innerHTML = `
+      <div>
+        <strong>${quizState.title}</strong>
+        <span class="badge bg-info ms-2">Completed</span>
+      </div>
+    `;
+    
+    // Update results
+    finalScore.textContent = playerState.score;
+    correctAnswers.textContent = playerState.correctCount;
+    wrongAnswers.textContent = playerState.wrongCount;
+    averageTime.textContent = playerState.averageResponseTime.toFixed(1) + 's';
+    
+    // Populate final leaderboard
+    finalLeaderboardList.innerHTML = '';
+    
+    quizState.leaderboard.forEach((player, index) => {
+      const item = document.createElement('div');
+      item.className = `leaderboard-item ${player.id === playerState.id ? 'current-player' : ''}`;
+      
+      let positionClass = '';
+      if (index === 0) positionClass = 'position-1';
+      else if (index === 1) positionClass = 'position-2';
+      else if (index === 2) positionClass = 'position-3';
+      
+      // Get initials for avatar
+      const initials = player.name.split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .substring(0, 2)
+        .toUpperCase();
+      
+      item.innerHTML = `
+        <div class="player-info">
+          <div class="player-position ${positionClass}">${index + 1}</div>
+          <div>${player.name} ${player.id === playerState.id ? '(You)' : ''}</div>
+        </div>
+        <div class="player-score">${player.score}</div>
+      `;
+      
+      finalLeaderboardList.appendChild(item);
+    });
+  }
+  
+  // Leave quiz button
+  leaveQuizBtn.addEventListener('click', function() {
+    const modal = new bootstrap.Modal(document.getElementById('leaveConfirmModal'));
+    modal.show();
+  });
+  
+  // Confirm leave quiz
+  document.getElementById('confirmLeaveBtn').addEventListener('click', function() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('leaveConfirmModal'));
+    modal.hide();
+    
+    // Reset player state
+    playerState.isJoined = false;
+    playerState.score = 0;
+    playerState.rank = 0;
+    playerState.answers = [];
+    playerState.correctCount = 0;
+    playerState.wrongCount = 0;
+    playerState.averageResponseTime = 0;
+    playerState.currentQuestion = 0;
+    
+    // Hide leave button
+    leaveQuizBtn.classList.add('d-none');
+    
+    // Show join screen
+    joinScreen.classList.add('active');
+    waitingScreen.classList.remove('active');
+    quizActiveScreen.classList.remove('active');
+    chatScreen.classList.remove('active');
+    resultsScreen.classList.remove('active');
+    
+    // Clear header quiz info
+    headerQuizInfo.innerHTML = '';
+  });
+  
+  // Share results button
+  shareResultsBtn.addEventListener('click', function() {
+    // In a real implementation, would generate and share a results URL
+    alert('Your results have been copied to clipboard!');
+  });
+  
+  // Join another quiz button
+  joinAnotherBtn.addEventListener('click', function() {
+    // Reset player state
+    playerState.isJoined = false;
+    playerState.score = 0;
+    playerState.rank = 0;
+    playerState.answers = [];
+    playerState.correctCount = 0;
+    playerState.wrongCount = 0;
+    playerState.averageResponseTime = 0;
+    playerState.currentQuestion = 0;
+    
+    // Show join screen
+    joinScreen.classList.add('active');
+    waitingScreen.classList.remove('active');
+    quizActiveScreen.classList.remove('active');
+    chatScreen.classList.remove('active');
+    resultsScreen.classList.remove('active');
+    
+    // Clear inputs
+    playerNameInput.value = playerState.name; // Keep the name
+    codeInputs.forEach(input => input.value = '');
+    codeInputs[0].focus();
+    
+    // Clear header quiz info
+    headerQuizInfo.innerHTML = '';
+  });
+  
+  // Theme toggle (dark/light mode)
+  document.getElementById('themeToggle').addEventListener('click', function() {
+    document.body.dataset.theme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+    
+    // Store preference
+    localStorage.setItem('theme', document.body.dataset.theme);
+  });
+  
+  // Initialize theme
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.body.dataset.theme = savedTheme;
+    }
+  }
+  
+  // Initialize the app
+  initTheme();
+
+                        
