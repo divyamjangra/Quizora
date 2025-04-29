@@ -392,4 +392,229 @@ function shareQuiz(quizTitle) {
   `;
   
   document.body.appendChild(modal);
+
+   // Add event listeners
+  modal.querySelector('.share-modal-close').addEventListener('click', () => {
+    modal.classList.add('closing');
+    setTimeout(() => {
+      modal.remove();
+    }, 300);
+  });
   
+  modal.querySelector('.copy-link-btn').addEventListener('click', () => {
+    const linkInput = modal.querySelector('.share-link-input');
+    linkInput.select();
+    document.execCommand('copy');
+    
+    const copyBtn = modal.querySelector('.copy-link-btn');
+    copyBtn.textContent = 'Copied!';
+    copyBtn.classList.add('copied');
+    
+    setTimeout(() => {
+      copyBtn.textContent = 'Copy';
+      copyBtn.classList.remove('copied');
+    }, 2000);
+    
+    showNotification('Link copied to clipboard!', 'success');
+  });
+  
+  // Handle share options
+  modal.querySelectorAll('.share-option').forEach(option => {
+    option.addEventListener('click', () => {
+      const platform = option.getAttribute('data-platform');
+      shareToSocialMedia(platform, quizTitle);
+    });
+  });
+  
+  // Show modal with animation
+  setTimeout(() => {
+    modal.classList.add('visible');
+  }, 10);
+}
+
+/**
+ * Share to social media platform
+ */
+function shareToSocialMedia(platform, quizTitle) {
+  const shareUrl = `https://quizora.com/q/ABC123`;
+  const shareText = `Check out my quiz "${quizTitle}" on Quizora!`;
+  
+  let url;
+  
+  switch(platform) {
+    case 'facebook':
+      url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+      break;
+    case 'twitter':
+      url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+      break;
+    case 'whatsapp':
+      url = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+      break;
+    case 'email':
+      url = `mailto:?subject=${encodeURIComponent('Check out my Quizora quiz!')}&body=${encodeURIComponent(shareText + '\n\n' + shareUrl)}`;
+      break;
+  }
+  
+  if (url) {
+    window.open(url, '_blank');
+  }
+}
+
+/**
+ * Subscribe to notifications for upcoming features
+ */
+function subscribeToNotifications(email) {
+  // Here you would typically send the email to your server
+  // For now, we'll just show a success message
+  
+  const notifyInput = document.querySelector('.notify-input');
+  const successMessage = document.createElement('div');
+  successMessage.className = 'notify-success';
+  successMessage.innerHTML = `
+    <i class="bi bi-check-circle-fill"></i>
+    <span>Thanks! We'll notify you when we launch.</span>
+  `;
+  
+  notifyInput.innerHTML = '';
+  notifyInput.appendChild(successMessage);
+  
+  showNotification('You\'ve been added to our notification list!', 'success');
+}
+
+/**
+ * Show error message for input
+ */
+function showError(inputElement, message) {
+  // Remove any existing error
+  const existingError = inputElement.parentElement.querySelector('.input-error');
+  if (existingError) {
+    existingError.remove();
+  }
+  
+  // Create error message
+  const errorElement = document.createElement('div');
+  errorElement.className = 'input-error';
+  errorElement.textContent = message;
+  
+  // Add error styling to input
+  inputElement.classList.add('input-error-highlight');
+  
+  // Insert error after input
+  inputElement.parentElement.appendChild(errorElement);
+  
+  // Remove error after 3 seconds
+  setTimeout(() => {
+    if (errorElement.parentElement) {
+      errorElement.remove();
+      inputElement.classList.remove('input-error-highlight');
+    }
+  }, 3000);
+}
+
+/**
+ * Update friend count in the footer
+ */
+function updateFriendCount() {
+  const friendCountElement = document.querySelector('.section-footer .text-muted');
+  if (friendCountElement) {
+    const currentText = friendCountElement.textContent;
+    const match = currentText.match(/(\d+)\/(\d+)/);
+    
+    if (match) {
+      const online = parseInt(match[1]);
+      const total = parseInt(match[2]) - 1; // Decrease total by 1
+      friendCountElement.textContent = `${online}/${total} friends online`;
+    }
+  }
+}
+
+/**
+ * Show notification toast
+ */
+function showNotification(message, type = 'info') {
+  // Create notification container if it doesn't exist
+  let notificationContainer = document.querySelector('.notification-container');
+  if (!notificationContainer) {
+    notificationContainer = document.createElement('div');
+    notificationContainer.className = 'notification-container';
+    document.body.appendChild(notificationContainer);
+  }
+  
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  
+  // Set icon based on type
+  let icon;
+  switch(type) {
+    case 'success':
+      icon = 'bi-check-circle-fill';
+      break;
+    case 'error':
+      icon = 'bi-exclamation-circle-fill';
+      break;
+    case 'warning':
+      icon = 'bi-exclamation-triangle-fill';
+      break;
+    default:
+      icon = 'bi-info-circle-fill';
+  }
+  
+  notification.innerHTML = `
+    <div class="notification-icon">
+      <i class="bi ${icon}"></i>
+    </div>
+    <div class="notification-content">
+      ${message}
+    </div>
+    <button class="notification-close">
+      <i class="bi bi-x"></i>
+    </button>
+  `;
+  
+  // Add to container
+  notificationContainer.appendChild(notification);
+  
+  // Show notification with animation
+  setTimeout(() => {
+    notification.classList.add('show');
+  }, 10);
+  
+  // Add close button handler
+  notification.querySelector('.notification-close').addEventListener('click', () => {
+    closeNotification(notification);
+  });
+  
+  // Auto close after 5 seconds
+  setTimeout(() => {
+    closeNotification(notification);
+  }, 5000);
+}
+
+/**
+ * Close notification with animation
+ */
+function closeNotification(notification) {
+  notification.classList.add('closing');
+  
+  setTimeout(() => {
+    if (notification.parentElement) {
+      notification.parentElement.removeChild(notification);
+      
+      // Remove container if empty
+      const container = document.querySelector('.notification-container');
+      if (container && container.children.length === 0) {
+        container.remove();
+      }
+    }
+  }, 300);
+}
+
+/**
+ * Validate email format
+ */
+function validateEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+} 
