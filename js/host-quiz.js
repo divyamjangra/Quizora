@@ -806,4 +806,257 @@ document.addEventListener('DOMContentLoaded', function() {
     populateFinalLeaderboard();
     populateQuestionAnalysis();
   }
+  // Populate final leaderboard
+  function populateFinalLeaderboard() {
+    const leaderboardList = document.getElementById('finalLeaderboardList');
+    leaderboardList.innerHTML = '';
+    
+    // In a real implementation, would use actual participant scores
+    // For this demo, generate some random results
+    const leaderboardData = quizState.participants
+      .filter(p => p.status === 'active')
+      .map(p => {
+        // Generate random score and correct answers
+        const score = Math.floor(Math.random() * 2000) + 500;
+        const correctAnswers = Math.floor(Math.random() * quizState.totalQuestions);
+        
+        return {
+          id: p.id,
+          name: p.name,
+          score: score,
+          correctAnswers: correctAnswers
+        };
+      })
+      .sort((a, b) => b.score - a.score);
+    
+    // Store sorted leaderboard in quiz state
+    quizState.leaderboard = leaderboardData;
+    
+    // Populate UI
+    leaderboardData.forEach((player, index) => {
+      const item = document.createElement('div');
+      item.className = 'leaderboard-item';
+      
+      // Get initials for avatar
+      const initials = player.name.split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .substring(0, 2)
+        .toUpperCase();
+      
+      // Add ranking class for top 3
+      let rankClass = '';
+      if (index === 0) rankClass = 'top-1';
+      else if (index === 1) rankClass = 'top-2';
+      else if (index === 2) rankClass = 'top-3';
+      
+      item.innerHTML = `
+        <div class="leaderboard-rank">
+          <div class="rank-number ${rankClass}">${index + 1}</div>
+          <div class="player-info">
+            <div class="participant-avatar">${initials}</div>
+            <span>${player.name}</span>
+          </div>
+        </div>
+        <div class="player-score">
+          ${player.score}
+        </div>
+      `;
+      
+      leaderboardList.appendChild(item);
+    });
+    
+    // Update top performer data if there are participants
+    if (leaderboardData.length > 0) {
+      const topPlayer = leaderboardData[0];
+      document.getElementById('topPlayerInitials').textContent = topPlayer.name.split(' ')
+        .map(word => word.charAt(0))
+        .join('')
+        .substring(0, 2)
+        .toUpperCase();
+      document.getElementById('topPlayerName').textContent = topPlayer.name;
+      document.getElementById('topPlayerCorrect').textContent = `${topPlayer.correctAnswers}/${quizState.totalQuestions}`;
+      document.getElementById('topPlayerScore').textContent = topPlayer.score;
+    }
+  }
   
+  // Populate question analysis
+  function populateQuestionAnalysis() {
+    const analysisContainer = document.getElementById('questionAnalysisList');
+    analysisContainer.innerHTML = '';
+    
+    // In a real implementation, would use actual question and response data
+    // For this demo, generate some random analysis data
+    for (let i = 0; i < quizState.totalQuestions; i++) {
+      const correctRate = Math.floor(Math.random() * 100);
+      const avgTime = Math.floor(Math.random() * 15) + 5;
+      
+      const item = document.createElement('div');
+      item.className = 'question-analysis-item p-3 border-bottom';
+      
+      item.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h6 class="mb-0">Question ${i + 1}</h6>
+          <span class="badge ${correctRate > 70 ? 'bg-success' : correctRate > 40 ? 'bg-warning' : 'bg-danger'}">
+            ${correctRate}% correct
+          </span>
+        </div>
+        <p class="question-text-preview mb-2">Sample Question ${i + 1}</p>
+        <div class="d-flex justify-content-between small text-muted">
+          <span>Avg. answer time: ${avgTime} seconds</span>
+          <a href="#" class="text-decoration-none">View details</a>
+        </div>
+      `;
+      
+      analysisContainer.appendChild(item);
+    }
+  }
+  
+  // Quiz navigation and control buttons
+  document.getElementById('pauseQuizBtn').addEventListener('click', function() {
+    if (quizState.status === 'active') {
+      quizState.status = 'paused';
+      this.innerHTML = '<i class="bi bi-play-fill me-2"></i>Resume Quiz';
+      this.classList.replace('btn-warning', 'btn-success');
+      
+      // Pause any active timers
+      if (quizState.currentTimerId) {
+        clearInterval(quizState.currentTimerId);
+      }
+      if (quizState.chatTimerId) {
+        clearInterval(quizState.chatTimerId);
+      }
+      
+      quizStatusIndicator.textContent = 'Paused';
+      quizStatusIndicator.classList.replace('bg-success', 'bg-warning');
+      
+      addSystemMessage('Quiz has been paused by the host');
+    } else if (quizState.status === 'paused') {
+      quizState.status = 'active';
+      this.innerHTML = '<i class="bi bi-pause-fill me-2"></i>Pause Quiz';
+      this.classList.replace('btn-success', 'btn-warning');
+      
+      // Resume timers (would need to implement proper timer resuming)
+      
+      quizStatusIndicator.textContent = 'In Progress';
+      quizStatusIndicator.classList.replace('bg-warning', 'bg-success');
+      
+      addSystemMessage('Quiz has been resumed');
+    }
+  });
+  
+  document.getElementById('endQuizBtn').addEventListener('click', function() {
+    const modal = new bootstrap.Modal(document.getElementById('endQuizConfirmModal'));
+    modal.show();
+  });
+  
+  document.getElementById('confirmEndQuizBtn').addEventListener('click', function() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('endQuizConfirmModal'));
+    modal.hide();
+    endQuiz();
+  });
+  
+  // Host again button
+  document.getElementById('hostAgainBtn').addEventListener('click', function() {
+    // Reset quiz state
+    quizState.status = 'waiting';
+    quizState.currentQuestion = 0;
+    quizState.leaderboard = [];
+    
+    // Show waiting screen
+    waitingScreen.classList.add('active');
+    quizScreen.classList.remove('active');
+    resultsScreen.classList.remove('active');
+    
+    quizStatusIndicator.textContent = 'Waiting for players';
+    quizStatusIndicator.classList.replace('bg-info', 'bg-warning');
+    
+    // Generate new quiz code
+    quizState.quizCode = generateQuizCode();
+    quizCodeDisplay.textContent = quizState.quizCode;
+    
+    // Reset participants (keeping existing ones marked as active)
+    updateParticipantsList();
+    
+    addSystemMessage('New quiz session started. Waiting for players to join.');
+  });
+  
+  document.getElementById('editAndHostBtn').addEventListener('click', function() {
+    // Redirect to quiz editor with current quiz ID
+    window.location.href = `quiz-editor.html?id=${quizState.quizId}`;
+  });
+  
+  // Utility function to connect host-quiz.html to player-quiz.html (for demo)
+  // Add mock participants for testing
+  function addMockParticipants() {
+    const mockNames = [
+      'John Smith', 'Emma Wilson', 'Michael Brown', 'Sophia Davis',
+      'Robert Johnson', 'Olivia Jones', 'William Miller', 'Ava Martinez'
+    ];
+    
+    // Add 3 random participants initially
+    for (let i = 0; i < 3; i++) {
+      const randomIndex = Math.floor(Math.random() * mockNames.length);
+      const name = mockNames.splice(randomIndex, 1)[0];
+      addParticipant(name);
+    }
+    
+    // Add more participants over time
+    setTimeout(() => {
+      if (mockNames.length > 0 && !quizState.isRoomLocked && quizState.status === 'waiting') {
+        const randomIndex = Math.floor(Math.random() * mockNames.length);
+        const name = mockNames.splice(randomIndex, 1)[0];
+        addParticipant(name);
+      }
+    }, 5000);
+  }
+  
+  // For demo purposes, add mock participants
+  setTimeout(addMockParticipants, 1000);
+  
+  // Handle custom warning message toggle
+  document.getElementById('warnReasonSelect').addEventListener('change', function() {
+    const customMessageContainer = document.getElementById('customWarnMessageContainer');
+    if (this.value === 'custom') {
+      customMessageContainer.style.display = 'block';
+    } else {
+      customMessageContainer.style.display = 'none';
+    }
+  });
+  
+  // Share results button
+  document.getElementById('shareResultsBtn').addEventListener('click', function() {
+    // In a real implementation, would generate a shareable link
+    alert('Quiz results link copied to clipboard!');
+  });
+  
+  // Download results as CSV
+  document.getElementById('downloadResultsBtn').addEventListener('click', function() {
+    // In a real implementation, would generate and download CSV file
+    alert('Quiz results would be downloaded as CSV');
+  });
+  
+  // New quiz button
+  document.getElementById('newQuizBtn').addEventListener('click', function() {
+    window.location.href = 'quiz-editor.html';
+  });
+  
+  // Add mock participant button
+  const addMockParticipantBtn = document.getElementById('addMockParticipantBtn');
+  if (addMockParticipantBtn) {
+    addMockParticipantBtn.addEventListener('click', function() {
+      // Generate a random name
+      const firstNames = ['John', 'Jane', 'Michael', 'Emma', 'David', 'Sarah', 'Robert', 'Emily'];
+      const lastNames = ['Smith', 'Johnson', 'Williams', 'Jones', 'Brown', 'Davis', 'Miller', 'Wilson'];
+      
+      const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+      const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+      const fullName = `${randomFirstName} ${randomLastName}`;
+      
+      // Add the participant
+      addParticipant(fullName);
+      
+      console.log(`Added mock participant: ${fullName}`);
+    });
+  }
+}); 
