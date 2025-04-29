@@ -1,0 +1,345 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // DOM Elements
+  const quizTitleHeader = document.getElementById('quizTitleHeader');
+  const quizStatusIndicator = document.getElementById('quizStatusIndicator');
+  const quizCodeDisplay = document.getElementById('quizCodeDisplay');
+  const copyQuizCodeBtn = document.getElementById('copyQuizCodeBtn');
+  const startQuizBtn = document.getElementById('startQuizBtn');
+  const participantCount = document.getElementById('participantCount');
+  const participantsList = document.getElementById('participantsList');
+  const noParticipantsMessage = document.getElementById('noParticipantsMessage');
+  const removeAllBtn = document.getElementById('removeAllBtn');
+  
+  // Quiz screens
+  const waitingScreen = document.getElementById('waitingScreen');
+  const quizScreen = document.getElementById('quizScreen');
+  const resultsScreen = document.getElementById('resultsScreen');
+  
+  // Quiz info elements
+  const questionCountInfo = document.getElementById('questionCountInfo');
+  const timePerQuestionInfo = document.getElementById('timePerQuestionInfo');
+  const chatDurationInfo = document.getElementById('chatDurationInfo');
+  const maxParticipantsInfo = document.getElementById('maxParticipantsInfo');
+  const accessTypeInfo = document.getElementById('accessTypeInfo');
+  
+  // Host control buttons
+  const toggleMuteAllBtn = document.getElementById('toggleMuteAllBtn');
+  const toggleLockRoomBtn = document.getElementById('toggleLockRoomBtn');
+  
+  // Quiz session state
+  const quizState = {
+    quizId: generateQuizId(),
+    quizCode: generateQuizCode(),
+    status: 'waiting', // waiting, active, completed, paused
+    participants: [],
+    currentQuestion: 0,
+    totalQuestions: 10,
+    timePerQuestion: 20,
+    chatDuration: 15,
+    maxParticipants: 10,
+    isRoomLocked: false,
+    isMuted: false,
+    bannedUsers: [],
+    questions: [],
+    leaderboard: [],
+    results: {}
+  };
+  
+  // Initialize quiz when page loads
+  initializeQuiz();
+  
+  // Initialize quiz data from URL parameters or local storage
+  function initializeQuiz() {
+    // Get quiz ID and code from URL if available
+    const urlParams = new URLSearchParams(window.location.search);
+    const quizId = urlParams.get('id');
+    const quizCode = urlParams.get('code');
+    
+    console.log("Initializing quiz...");
+    console.log("Quiz ID from URL:", quizId);
+    console.log("Quiz Code from URL:", quizCode);
+    
+    // Always generate a new quiz code if not provided in URL
+    if (!quizCode) {
+      quizState.quizCode = generateQuizCode();
+      console.log("Generated new quiz code:", quizState.quizCode);
+    } else {
+      quizState.quizCode = quizCode;
+    }
+    
+    // Immediately update the quiz code display
+    quizCodeDisplay.textContent = quizState.quizCode;
+    
+    if (quizId) {
+      // Load quiz data from server or local storage
+      console.log("Loading quiz data from ID:", quizId);
+      loadQuizData(quizId);
+    } else {
+      console.log("No quiz ID found in URL parameters");
+      
+      // Try to load from localStorage as a fallback
+      const savedQuizzes = JSON.parse(localStorage.getItem('savedQuizzes')) || {};
+      const quizKeys = Object.keys(savedQuizzes);
+      
+      if (quizKeys.length > 0) {
+        console.log("Loading most recent quiz from localStorage");
+        const mostRecentQuizId = quizKeys[quizKeys.length - 1];
+        console.log("Most recent quiz ID:", mostRecentQuizId);
+        loadQuizData(mostRecentQuizId);
+      } else {
+        console.log("No saved quizzes found, showing warning");
+        
+        // Instead of immediately redirecting, show a warning message
+        addSystemMessage("No quiz ID provided and no saved quizzes found. Create a quiz first or use a valid quiz ID.");
+        
+        // Disable the start button
+        startQuizBtn.disabled = true;
+        
+        // Add a button to redirect to quiz creation
+        const warningDiv = document.createElement('div');
+        warningDiv.className = 'alert alert-warning mt-3';
+        warningDiv.innerHTML = `
+          <p>No quiz found to host. You need to create a quiz first.</p>
+          <button class="btn btn-primary mt-2" id="createQuizRedirectBtn">Create a Quiz</button>
+        `;
+        
+        // Add to DOM - find a good place to add this
+        const waitingRoom = document.querySelector('.waiting-room');
+        if (waitingRoom) {
+          waitingRoom.prepend(warningDiv);
+        }
+        
+        // Add click event to the button
+        document.getElementById('createQuizRedirectBtn').addEventListener('click', function() {
+          window.location.href = 'quiz-editor.html';
+        });
+      }
+    }
+  }
+  
+  // Load quiz data from server (or localStorage)
+  function loadQuizData(quizId) {
+    console.log("Loading quiz data for ID:", quizId);
+    
+    // Try to load from localStorage first
+    const savedQuizzes = JSON.parse(localStorage.getItem('savedQuizzes')) || {};
+    const quizData = savedQuizzes[quizId];
+    
+    if (quizData) {
+      console.log("Quiz found in localStorage:", quizData);
+      
+      // Update quiz state with loaded data
+      quizState.quizId = quizId;
+      quizState.quizCode = quizData.quizCode || quizState.quizCode;
+      quizState.quizTitle = quizData.title || "Untitled Quiz";
+      quizState.totalQuestions = quizData.questions ? quizData.questions.length : 0;
+      quizState.timePerQuestion = quizData.timePerQuestion || 20;
+      quizState.chatDuration = quizData.chatDuration || 15;
+      quizState.maxParticipants = quizData.maxParticipants || 10;
+      quizState.accessType = quizData.isPublic ? "Public" : "Private (Password Required)";
+      quizState.questions = quizData.questions || [];
+      
+      // Update UI with quiz data
+      updateQuizInfo();
+    } else {
+      console.log("Quiz not found in localStorage, using default data");
+      
+      // Fallback to mock data if not found
+      quizState.quizId = quizId;
+      quizState.quizTitle = "Untitled Quiz";
+      quizState.totalQuestions = 0;
+      quizState.timePerQuestion = 20;
+      quizState.chatDuration = 15;
+      quizState.maxParticipants = 10;
+      quizState.accessType = "Public";
+      quizState.questions = [];
+      
+      // Update UI with quiz data
+      updateQuizInfo();
+      
+      // Show a warning that the quiz couldn't be found
+      addSystemMessage("Warning: Quiz data could not be found. Please check the quiz ID or create a new quiz.");
+    }
+  }
+  
+  // Update quiz information in the UI
+  function updateQuizInfo() {
+    quizTitleHeader.textContent = `Hosting: ${quizState.quizTitle}`;
+    quizCodeDisplay.textContent = quizState.quizCode;
+    questionCountInfo.textContent = quizState.totalQuestions;
+    timePerQuestionInfo.textContent = `${quizState.timePerQuestion} seconds`;
+    chatDurationInfo.textContent = quizState.chatDuration > 0 ? `${quizState.chatDuration} seconds` : 'No chat';
+    maxParticipantsInfo.textContent = quizState.maxParticipants > 0 ? quizState.maxParticipants : 'Unlimited';
+    accessTypeInfo.textContent = quizState.accessType;
+    
+    // Update start button based on question availability
+    startQuizBtn.disabled = quizState.questions.length === 0;
+  }
+  
+  // Generate a random quiz code (4 letters + 2 numbers)
+  function generateQuizCode() {
+    const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+    const numbers = '23456789';
+    let code = '';
+    
+    // Generate 4 random letters
+    for (let i = 0; i < 4; i++) {
+      code += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    
+    // Generate 2 random numbers
+    for (let i = 0; i < 2; i++) {
+      code += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    }
+    
+    return code;
+  }
+  
+  // Generate a unique quiz ID
+  function generateQuizId() {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2);
+  }
+  
+  // Copy quiz code to clipboard
+  copyQuizCodeBtn.addEventListener('click', function() {
+    const quizCode = quizState.quizCode;
+    const joinUrl = `${window.location.origin}/player-quiz.html`;
+    const clipboardText = `Join my Quizora quiz with code: ${quizCode}\n\nVisit ${joinUrl} and enter the code to join!`;
+    
+    console.log("Copying to clipboard:", clipboardText);
+    
+    // Try the newer Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(clipboardText)
+        .then(() => {
+          console.log("Copied successfully using Clipboard API");
+          showCopySuccess();
+        })
+        .catch(err => {
+          console.error('Failed to copy using Clipboard API:', err);
+          fallbackCopyMethod(clipboardText);
+        });
+    } else {
+      // Fall back to older methods
+      fallbackCopyMethod(clipboardText);
+    }
+    
+    function fallbackCopyMethod(text) {
+      console.log("Using fallback copy method");
+      
+      try {
+        // Create a temporary textarea
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        
+        // Make it non-editable to avoid focus and style issues
+        textArea.setAttribute('readonly', '');
+        textArea.style.position = 'absolute';
+        textArea.style.left = '-9999px';
+        
+        document.body.appendChild(textArea);
+        
+        // Select and copy
+        textArea.select();
+        const success = document.execCommand('copy');
+        
+        // Remove the textarea
+        document.body.removeChild(textArea);
+        
+        if (success) {
+          console.log("Copied successfully using fallback method");
+          showCopySuccess();
+        } else {
+          console.error("Failed to copy using fallback method");
+          showCopyError();
+        }
+      } catch (err) {
+        console.error("Error using fallback copy method:", err);
+        showCopyError();
+      }
+    }
+    
+    function showCopySuccess() {
+      copyQuizCodeBtn.innerHTML = '<i class="bi bi-check"></i>';
+      setTimeout(() => {
+        copyQuizCodeBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+      }, 2000);
+      
+      // Show toast or notification
+      addSystemMessage(`Quiz code copied to clipboard!`);
+    }
+    
+    function showCopyError() {
+      // Show error state
+      copyQuizCodeBtn.innerHTML = '<i class="bi bi-exclamation-triangle"></i>';
+      setTimeout(() => {
+        copyQuizCodeBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+      }, 2000);
+      
+      // Manually display the code to the user
+      alert(`Could not copy automatically. Please copy this code manually: ${quizCode}`);
+    }
+  });
+  
+  // Add participant to the quiz (mock function to simulate players joining)
+  function addParticipant(name) {
+    // Check if room is locked
+    if (quizState.isRoomLocked) {
+      console.log('Room is locked, cannot join');
+      return;
+    }
+    
+    // Check if max participants reached
+    if (quizState.maxParticipants > 0 && quizState.participants.length >= quizState.maxParticipants) {
+      console.log('Maximum participants reached');
+      return;
+    }
+    
+    // Create participant object
+    const participant = {
+      id: generateParticipantId(),
+      name: name,
+      score: 0,
+      correctAnswers: 0,
+      joinTime: new Date(),
+      status: 'active' // active, inactive, removed, banned
+    };
+    
+    // Add to quiz state
+    quizState.participants.push(participant);
+    
+    // Update UI
+    updateParticipantsList();
+    
+    // Add system message
+    addSystemMessage(`${name} has joined the quiz`);
+  }
+  
+  // Generate a unique participant ID
+  function generateParticipantId() {
+    return 'p_' + Math.random().toString(36).substring(2, 10);
+  }
+  
+  // Update the participants list in the UI
+  function updateParticipantsList() {
+    // Update count
+    participantCount.textContent = quizState.participants.length;
+    
+    // Show/hide no participants message
+    if (quizState.participants.length === 0) {
+      noParticipantsMessage.style.display = 'block';
+      startQuizBtn.disabled = true;
+    } else {
+      noParticipantsMessage.style.display = 'none';
+      startQuizBtn.disabled = false;
+    }
+    
+    // Clear and rebuild list
+    participantsList.innerHTML = '';
+    quizState.participants.forEach(participant => {
+      if (participant.status === 'active') {
+        const participantEl = createParticipantElement(participant);
+        participantsList.appendChild(participantEl);
+      }
+    });
+  }
