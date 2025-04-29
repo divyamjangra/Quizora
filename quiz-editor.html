@@ -353,3 +353,251 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Image Choice Container -->
+                <div id="imageChoiceContainer" style="display: none;">
+                  <div class="form-group mb-4">
+                    <label class="form-label">Image Options</label>
+                    <div class="alert alert-info">
+                      <i class="bi bi-info-circle me-2"></i>
+                      Image choice questions are a premium feature. Upgrade to unlock this question type.
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-group mb-4">
+                  <label for="explanationText" class="form-label">Explanation (Optional)</label>
+                  <textarea class="form-control" id="explanationText" rows="2" placeholder="Explain why the correct answer is right"></textarea>
+                </div>
+                
+                <div class="form-group mb-4">
+                  <label for="pointsValue" class="form-label">Points</label>
+                  <select class="form-select" id="pointsValue">
+                    <option value="1">1 point (Easy)</option>
+                    <option value="2" selected>2 points (Medium)</option>
+                    <option value="3">3 points (Hard)</option>
+                    <option value="5">5 points (Expert)</option>
+                  </select>
+                </div>
+                
+                <div class="form-actions">
+                  <button type="button" class="btn btn-outline-secondary me-2" id="cancelQuestionBtn">
+                    Cancel
+                  </button>
+                  <button type="button" class="btn btn-primary" id="saveQuestionBtn">
+                    <i class="bi bi-save me-2"></i>Save Question
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Quiz Settings Modal -->
+  <div class="modal fade" id="quizSettingsModal" tabindex="-1" aria-labelledby="quizSettingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="quizSettingsModalLabel">Quiz Settings</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="quizSettingsForm">
+            <div class="mb-3">
+              <label for="settingsQuizTitle" class="form-label">Quiz Title</label>
+              <input type="text" class="form-control" id="settingsQuizTitle" placeholder="Enter quiz title">
+            </div>
+            
+            <div class="mb-3">
+              <label for="settingsQuizDescription" class="form-label">Description</label>
+              <textarea class="form-control" id="settingsQuizDescription" rows="2" placeholder="Brief description of your quiz"></textarea>
+            </div>
+            
+            <div class="mb-3">
+              <label for="settingsTimePerQuestion" class="form-label">Time Per Question</label>
+              <select class="form-select" id="settingsTimePerQuestion">
+                <option value="10">10 seconds</option>
+                <option value="15">15 seconds</option>
+                <option value="20" selected>20 seconds</option>
+                <option value="30">30 seconds</option>
+                <option value="45">45 seconds</option>
+                <option value="60">60 seconds</option>
+                <option value="0">Unlimited</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="settingsMaxParticipants" class="form-label">Maximum Participants</label>
+              <select class="form-select" id="settingsMaxParticipants">
+                <option value="5">5 participants</option>
+                <option value="10" selected>10 participants</option>
+                <option value="25">25 participants</option>
+                <option value="50">50 participants</option>
+                <option value="100">100 participants</option>
+                <option value="0">Unlimited</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="settingsChatDuration" class="form-label">Chat Duration Between Questions</label>
+              <select class="form-select" id="settingsChatDuration">
+                <option value="0">No chat</option>
+                <option value="15" selected>15 seconds</option>
+                <option value="30">30 seconds</option>
+                <option value="60">60 seconds</option>
+                <option value="120">2 minutes</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Access Control</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="settingsAccessType" id="settingsAccessPublic" checked>
+                <label class="form-check-label" for="settingsAccessPublic">
+                  Public (Anyone with the code can join)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="settingsAccessType" id="settingsAccessPrivate">
+                <label class="form-check-label" for="settingsAccessPrivate">
+                  Private (Requires password)
+                </label>
+              </div>
+              <div class="password-container mt-2 d-none" id="settingsPasswordContainer">
+                <input type="password" class="form-control" id="settingsQuizPassword" placeholder="Enter quiz password">
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="settingsRequireApproval">
+                <label class="form-check-label" for="settingsRequireApproval">
+                  Require approval to join
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveSettingsBtn">Save Settings</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Quiz Preview Modal -->
+  <div class="modal fade" id="previewQuizModal" tabindex="-1" aria-labelledby="previewQuizModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="previewQuizModalLabel">Quiz Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="preview-quiz-header">
+            <h3 id="previewQuizTitle">Quiz Title</h3>
+            <div class="preview-quiz-meta">
+              <span><i class="bi bi-question-circle"></i> <span id="previewQuestionCount">0</span> Questions</span>
+              <span><i class="bi bi-clock"></i> <span id="previewTimeEstimate">0</span> min</span>
+              <span><i class="bi bi-people"></i> Max <span id="previewMaxParticipants">10</span> players</span>
+            </div>
+          </div>
+          
+          <div class="preview-quiz-carousel">
+            <div class="preview-question" id="previewQuestionContainer">
+              <!-- Questions will be shown here -->
+              <div class="preview-empty-state" id="previewEmptyState">
+                <i class="bi bi-question-circle"></i>
+                <p>No questions to preview</p>
+                <p>Add at least one question to see a preview</p>
+              </div>
+            </div>
+            
+            <div class="preview-navigation" id="previewNavigation" style="display: none;">
+              <button class="btn btn-sm btn-outline-primary" id="prevPreviewBtn">
+                <i class="bi bi-chevron-left"></i> Previous
+              </button>
+              <span class="preview-pagination" id="previewPagination">Question 1 of 10</span>
+              <button class="btn btn-sm btn-outline-primary" id="nextPreviewBtn">
+                Next <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="hostFromPreviewBtn">Host Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Host Quiz Modal -->
+  <div class="modal fade" id="hostQuizModal" tabindex="-1" aria-labelledby="hostQuizModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="hostQuizModalLabel">Ready to Host Quiz</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="host-quiz-content">
+            <div class="alert alert-info">
+              <i class="bi bi-info-circle me-2"></i>
+              Your quiz is ready to host. Share the code below with your participants.
+            </div>
+            
+            <div class="quiz-code-display">
+              <div class="quiz-code-label">Quiz Code</div>
+              <div class="quiz-code" id="quizCodeDisplay">ABCD12</div>
+              <button class="btn btn-sm btn-outline-primary" id="copyQuizCodeBtn">
+                <i class="bi bi-clipboard me-2"></i>Copy
+              </button>
+            </div>
+            
+            <div class="privacy-reminder mt-4">
+              <h6>Access Control</h6>
+              <div class="privacy-setting" id="privacySettingPublic">
+                <i class="bi bi-unlock"></i>
+                <span>Public: Anyone with the code can join</span>
+              </div>
+              <div class="privacy-setting d-none" id="privacySettingPrivate">
+                <i class="bi bi-lock"></i>
+                <span>Private: Password required to join</span>
+                <div class="password-display mt-2">
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="passwordDisplay" value="password123" readonly>
+                    <button class="btn btn-outline-secondary" type="button" id="showPasswordBtn">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-outline-secondary" type="button" id="copyPasswordBtn">
+                      <i class="bi bi-clipboard"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="participant-join-approval mt-4 d-none" id="approvalSection">
+              <h6>Approval Required</h6>
+              <p>You will need to approve each participant before they can join.</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="startHostingBtn">Start Hosting</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/quiz-editor.js"></script>
+</body>
+</html> 
