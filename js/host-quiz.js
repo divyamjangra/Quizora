@@ -536,3 +536,274 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
+  // Start quiz button click event
+  startQuizBtn.addEventListener('click', function() {
+    // Check if there are questions loaded
+    if (!quizState.questions || quizState.questions.length === 0) {
+      console.log("No questions found");
+      alert('This quiz has no questions. Please add questions before starting.');
+      return;
+    }
+    
+    // Enable live test mode without participants for debugging
+    const enableTestMode = true;
+    
+    if (quizState.participants.length === 0 && !enableTestMode) {
+      console.log("No participants found");
+      alert('You need at least one participant to start the quiz.');
+      return;
+    }
+    
+    console.log("Starting quiz...");
+    
+    // Lock the room when starting
+    quizState.isRoomLocked = true;
+    toggleLockRoomBtn.innerHTML = '<i class="bi bi-unlock me-2"></i>Unlock Room';
+    toggleLockRoomBtn.classList.replace('btn-outline-primary', 'btn-primary');
+    
+    // Update quiz state
+    quizState.status = 'active';
+    quizState.currentQuestion = 0;
+    
+    console.log("Showing quiz screen...");
+    
+    // Update UI to show first question
+    showQuizScreen();
+    
+    console.log("Loading first question...");
+    loadQuestion(0);
+    
+    // Add system message
+    addSystemMessage('Quiz has started!');
+  });
+  
+  // Show quiz screen
+  function showQuizScreen() {
+    waitingScreen.classList.remove('active');
+    quizScreen.classList.add('active');
+    resultsScreen.classList.remove('active');
+    
+    quizStatusIndicator.textContent = 'In Progress';
+    quizStatusIndicator.classList.replace('bg-warning', 'bg-success');
+  }
+  
+  // Load question by index
+  function loadQuestion(index) {
+    if (index >= quizState.totalQuestions) {
+      // End of quiz
+      endQuiz();
+      return;
+    }
+    
+    console.log(`Loading question ${index + 1} of ${quizState.totalQuestions}`);
+    
+    // Update current question indicator
+    document.getElementById('currentQuestionNumber').textContent = index + 1;
+    document.getElementById('totalQuestions').textContent = quizState.totalQuestions;
+    
+    // Get the current question from the quiz data
+    const question = quizState.questions[index];
+    
+    if (!question) {
+      console.error("Question not found at index:", index);
+      addSystemMessage(`Error: Could not load question ${index + 1}`);
+      return;
+    }
+    
+    console.log("Question data:", question);
+    
+    // Display the question
+    document.getElementById('questionText').textContent = question.text;
+    
+    // Show question type
+    let questionTypeLabel = "Multiple Choice";
+    if (question.type === 'true-false') {
+      questionTypeLabel = "True/False";
+    } else if (question.type === 'short-answer') {
+      questionTypeLabel = "Short Answer";
+    }
+    
+    // Update question type info if the element exists
+    const questionTypeInfo = document.getElementById('questionTypeInfo');
+    if (questionTypeInfo) {
+      questionTypeInfo.textContent = questionTypeLabel;
+    }
+    
+    // Show question options if the element exists
+    const questionOptions = document.getElementById('questionOptions');
+    if (questionOptions) {
+      questionOptions.innerHTML = ''; // Clear previous options
+      
+      if (question.type === 'multiple-choice') {
+        // Show multiple choice options
+        question.options.forEach((option, optionIndex) => {
+          const isCorrect = optionIndex === question.correctOption;
+          const optionItem = document.createElement('div');
+          optionItem.className = 'option-item';
+          optionItem.innerHTML = `
+            <div class="d-flex align-items-center">
+              <div class="option-marker">${String.fromCharCode(65 + optionIndex)}</div>
+              <div class="option-text">${option}</div>
+              ${isCorrect ? '<span class="badge bg-success ms-2">Correct</span>' : ''}
+            </div>
+          `;
+          questionOptions.appendChild(optionItem);
+        });
+      } else if (question.type === 'true-false') {
+        // Show true/false options
+        const correctAnswer = question.correctAnswer === 'true';
+        const options = [
+          { text: 'True', isCorrect: correctAnswer },
+          { text: 'False', isCorrect: !correctAnswer }
+        ];
+        
+        options.forEach((option, optionIndex) => {
+          const optionItem = document.createElement('div');
+          optionItem.className = 'option-item';
+          optionItem.innerHTML = `
+            <div class="d-flex align-items-center">
+              <div class="option-marker">${option.text[0]}</div>
+              <div class="option-text">${option.text}</div>
+              ${option.isCorrect ? '<span class="badge bg-success ms-2">Correct</span>' : ''}
+            </div>
+          `;
+          questionOptions.appendChild(optionItem);
+        });
+      } else if (question.type === 'short-answer') {
+        // Show short answer
+        const answersList = document.createElement('div');
+        answersList.className = 'short-answer-list';
+        answersList.innerHTML = '<div class="mb-2">Correct Answers:</div>';
+        
+        const answerItems = document.createElement('ul');
+        answerItems.className = 'list-group';
+        
+        question.correctAnswers.forEach(answer => {
+          const item = document.createElement('li');
+          item.className = 'list-group-item';
+          item.textContent = answer;
+          answerItems.appendChild(item);
+        });
+        
+        answersList.appendChild(answerItems);
+        questionOptions.appendChild(answersList);
+      }
+    }
+    
+    // Show explanation if available
+    const explanationEl = document.getElementById('questionExplanation');
+    if (explanationEl) {
+      if (question.explanation) {
+        explanationEl.textContent = question.explanation;
+        explanationEl.parentElement.style.display = 'block';
+      } else {
+        explanationEl.parentElement.style.display = 'none';
+      }
+    }
+    
+    // Start timer
+    startQuestionTimer(quizState.timePerQuestion);
+    
+    // Reset players answering progress
+    document.getElementById('playersAnsweredCount').textContent = `0/${quizState.participants.filter(p => p.status === 'active').length}`;
+    document.getElementById('playersAnsweredProgress').style.width = '0%';
+    document.getElementById('playersAnsweredProgress').textContent = '0%';
+    document.getElementById('playersAnsweringList').innerHTML = '';
+    
+    // In a real implementation, would notify all connected players about the new question
+  }
+  
+  // Start the timer for current question
+  function startQuestionTimer(seconds) {
+    const timerEl = document.getElementById('questionTimer');
+    timerEl.textContent = seconds;
+    
+    const timerId = setInterval(() => {
+      seconds--;
+      timerEl.textContent = seconds;
+      
+      if (seconds <= 0) {
+        clearInterval(timerId);
+        // Move to next question or chat break
+        setTimeout(() => {
+          if (quizState.chatDuration > 0) {
+            // Show chat break if enabled
+            showChatBreak();
+          } else {
+            // Move to next question directly
+            loadQuestion(quizState.currentQuestion + 1);
+          }
+        }, 1000);
+      }
+    }, 1000);
+    
+    // Store timer ID in quiz state to be able to clear it if needed
+    quizState.currentTimerId = timerId;
+  }
+  
+  // Show chat break between questions
+  function showChatBreak() {
+    // In a real implementation, would show chat interface
+    addSystemMessage(`Chat break started. ${quizState.chatDuration} seconds until next question.`);
+    
+    // Start chat timer
+    let remainingSeconds = quizState.chatDuration;
+    const chatTimerId = setInterval(() => {
+      remainingSeconds--;
+      
+      if (remainingSeconds <= 0) {
+        clearInterval(chatTimerId);
+        
+        // Move to next question
+        quizState.currentQuestion++;
+        loadQuestion(quizState.currentQuestion);
+      }
+    }, 1000);
+    
+    // Store chat timer ID in quiz state
+    quizState.chatTimerId = chatTimerId;
+  }
+  
+  // End the quiz
+  function endQuiz() {
+    // Clear any active timers
+    if (quizState.currentTimerId) {
+      clearInterval(quizState.currentTimerId);
+    }
+    if (quizState.chatTimerId) {
+      clearInterval(quizState.chatTimerId);
+    }
+    
+    // Update quiz state
+    quizState.status = 'completed';
+    
+    // Show results screen
+    showResultsScreen();
+    
+    // Add system message
+    addSystemMessage('The quiz has ended. View the results screen for details.');
+  }
+  
+  // Show results screen
+  function showResultsScreen() {
+    waitingScreen.classList.remove('active');
+    quizScreen.classList.remove('active');
+    resultsScreen.classList.add('active');
+    
+    quizStatusIndicator.textContent = 'Completed';
+    quizStatusIndicator.classList.replace('bg-success', 'bg-info');
+    
+    // Update summary data
+    document.getElementById('finalQuizTitle').textContent = quizState.quizTitle;
+    document.getElementById('totalParticipantsValue').textContent = quizState.participants.filter(p => p.status === 'active').length;
+    document.getElementById('totalQuestionsValue').textContent = quizState.totalQuestions;
+    
+    // In a real implementation, would calculate these values from actual data
+    document.getElementById('avgScoreValue').textContent = '1520';
+    document.getElementById('correctAnswersRateValue').textContent = '75%';
+    
+    // Would populate leaderboard and question analysis from actual results
+    populateFinalLeaderboard();
+    populateQuestionAnalysis();
+  }
+  
