@@ -212,3 +212,403 @@
       </div>
     </div>
   </div>
+
+  <!-- New Configuration Wizard -->
+  <div class="config-wizard-container" id="configWizardContainer">
+    <div class="config-wizard" id="configWizard">
+      <div class="wizard-header">
+        <h2 class="wizard-title">
+          <i class="bi bi-gear-fill"></i>
+          Configure Your Quiz
+        </h2>
+        <button class="wizard-close" id="closeWizardBtn">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      
+      <ul class="wizard-steps">
+        <li class="wizard-step active" data-step="1">
+          <div class="step-content">
+            <div class="step-number">1</div>
+            <div class="step-title">Basic Info</div>
+          </div>
+        </li>
+        <li class="wizard-step" data-step="2">
+          <div class="step-content">
+            <div class="step-number">2</div>
+            <div class="step-title">Quiz Type</div>
+          </div>
+        </li>
+        <li class="wizard-step" data-step="3">
+          <div class="step-content">
+            <div class="step-number">3</div>
+            <div class="step-title">Timing</div>
+          </div>
+        </li>
+        <li class="wizard-step" data-step="4">
+          <div class="step-content">
+            <div class="step-number">4</div>
+            <div class="step-title">Participants</div>
+          </div>
+        </li>
+        <li class="wizard-step" data-step="5">
+          <div class="step-content">
+            <div class="step-number">5</div>
+            <div class="step-title">Summary</div>
+          </div>
+        </li>
+      </ul>
+      
+      <div class="wizard-body">
+        <!-- Step 1: Basic Information -->
+        <div class="step-pane active" data-step="1">
+          <h3 class="step-pane-title">Basic Information</h3>
+          
+          <div class="config-form-group">
+            <label for="quizTitleInput" class="config-label">Quiz Title</label>
+            <input type="text" id="quizTitleInput" class="config-control" placeholder="Enter a memorable title for your quiz">
+            <div class="form-text">Choose a descriptive name that will help participants understand what your quiz is about.</div>
+          </div>
+          
+          <div class="config-form-group">
+            <label for="quizDescriptionInput" class="config-label">Quiz Description (Optional)</label>
+            <textarea id="quizDescriptionInput" class="config-control" rows="3" placeholder="Enter a brief description of your quiz"></textarea>
+            <div class="form-text">Provide additional context or instructions for your participants.</div>
+          </div>
+          
+          <div class="config-form-group">
+            <label for="numQuestionsInput" class="config-label">Number of Questions</label>
+            <select id="numQuestionsInput" class="config-control">
+              <option value="5">5 Questions</option>
+              <option value="10" selected>10 Questions</option>
+              <option value="15">15 Questions</option>
+              <option value="20">20 Questions</option>
+              <option value="25">25 Questions</option>
+              <option value="30">30 Questions</option>
+            </select>
+            <div class="form-text">Select how many questions you plan to create for this quiz.</div>
+          </div>
+        </div>
+        
+        <!-- Step 2: Quiz Type -->
+        <div class="step-pane" data-step="2">
+          <h3 class="step-pane-title">Quiz Type</h3>
+          <p>Select the primary question type for your quiz. You can mix question types later as needed.</p>
+          
+          <div class="quiz-types-grid">
+            <div class="quiz-type-card selected" data-type="multiple-choice">
+              <div class="quiz-type-icon">
+                <i class="bi bi-list-check"></i>
+              </div>
+              <h5 class="quiz-type-title">Multiple Choice</h5>
+              <p class="quiz-type-desc">Questions with options and one correct answer</p>
+            </div>
+            
+            <div class="quiz-type-card" data-type="true-false">
+              <div class="quiz-type-icon">
+                <i class="bi bi-check2-circle"></i>
+              </div>
+              <h5 class="quiz-type-title">True/False</h5>
+              <p class="quiz-type-desc">Simple true or false statements</p>
+            </div>
+            
+            <div class="quiz-type-card" data-type="short-answer">
+              <div class="quiz-type-icon">
+                <i class="bi bi-input-cursor-text"></i>
+              </div>
+              <h5 class="quiz-type-title">Short Answer</h5>
+              <p class="quiz-type-desc">Requires brief text responses</p>
+            </div>
+            
+            <div class="quiz-type-card" data-type="image-choice">
+              <div class="quiz-type-icon">
+                <i class="bi bi-image"></i>
+              </div>
+              <h5 class="quiz-type-title">Image Choice</h5>
+              <p class="quiz-type-desc">Multiple choice with images</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Step 3: Timing Settings -->
+        <div class="step-pane" data-step="3">
+          <h3 class="step-pane-title">Timing Settings</h3>
+          <p>Configure how much time participants have for each question and discussion.</p>
+          
+          <div class="config-form-group">
+            <label class="config-label">Time Per Question</label>
+            <div class="settings-grid">
+              <div class="setting-option selected" data-value="15">
+                <div class="setting-value">15s</div>
+                <div class="setting-label">Quick</div>
+              </div>
+              <div class="setting-option" data-value="30">
+                <div class="setting-value">30s</div>
+                <div class="setting-label">Standard</div>
+              </div>
+              <div class="setting-option" data-value="45">
+                <div class="setting-value">45s</div>
+                <div class="setting-label">Extended</div>
+              </div>
+              <div class="setting-option" data-value="60">
+                <div class="setting-value">60s</div>
+                <div class="setting-label">Relaxed</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="config-form-group">
+            <label class="config-label">Discussion Time After Each Question</label>
+            <div class="settings-grid">
+              <div class="setting-option" data-value="0">
+                <div class="setting-value">0s</div>
+                <div class="setting-label">None</div>
+              </div>
+              <div class="setting-option selected" data-value="10">
+                <div class="setting-value">10s</div>
+                <div class="setting-label">Brief</div>
+              </div>
+              <div class="setting-option" data-value="20">
+                <div class="setting-value">20s</div>
+                <div class="setting-label">Standard</div>
+              </div>
+              <div class="setting-option" data-value="30">
+                <div class="setting-value">30s</div>
+                <div class="setting-label">Extended</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Step 4: Participant Settings -->
+        <div class="step-pane" data-step="4">
+          <h3 class="step-pane-title">Participant Settings</h3>
+          <p>Configure participation options for your quiz.</p>
+          
+          <div class="config-form-group">
+            <label class="config-label">Maximum Number of Participants</label>
+            <div class="settings-grid">
+              <div class="setting-option" data-value="10">
+                <div class="setting-value">10</div>
+                <div class="setting-label">Small</div>
+              </div>
+              <div class="setting-option selected" data-value="20">
+                <div class="setting-value">20</div>
+                <div class="setting-label">Medium</div>
+              </div>
+              <div class="setting-option" data-value="50">
+                <div class="setting-value">50</div>
+                <div class="setting-label">Large</div>
+              </div>
+              <div class="setting-option" data-value="100">
+                <div class="setting-value">100</div>
+                <div class="setting-label">XL</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="config-form-group">
+            <label class="config-label">Join Options</label>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" id="allowLateJoin" checked>
+              <label class="form-check-label" for="allowLateJoin">Allow participants to join after quiz has started</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input" type="checkbox" id="showLeaderboard" checked>
+              <label class="form-check-label" for="showLeaderboard">Show live leaderboard during quiz</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="requireNames" checked>
+              <label class="form-check-label" for="requireNames">Require participants to enter their names</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Summary -->
+        <div class="step-pane" data-step="5">
+          <h3 class="step-pane-title">Quiz Summary</h3>
+          <p>Review your quiz configuration before proceeding to creating questions.</p>
+          
+          <div class="quiz-summary">
+            <div class="summary-item">
+              <div class="summary-icon">
+                <i class="bi bi-pencil-square"></i>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Quiz Title</div>
+                <div class="summary-value" id="summaryTitle">My Awesome Quiz</div>
+              </div>
+            </div>
+            
+            <div class="summary-item">
+              <div class="summary-icon">
+                <i class="bi bi-list-check"></i>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Quiz Type</div>
+                <div class="summary-value" id="summaryType">Multiple Choice</div>
+              </div>
+            </div>
+            
+            <div class="summary-item">
+              <div class="summary-icon">
+                <i class="bi bi-123"></i>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Number of Questions</div>
+                <div class="summary-value" id="summaryQuestions">10 Questions</div>
+              </div>
+            </div>
+            
+            <div class="summary-item">
+              <div class="summary-icon">
+                <i class="bi bi-clock"></i>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Timing</div>
+                <div class="summary-value" id="summaryTiming">15s per question + 10s discussion</div>
+              </div>
+            </div>
+            
+            <div class="summary-item">
+              <div class="summary-icon">
+                <i class="bi bi-people-fill"></i>
+              </div>
+              <div class="summary-content">
+                <div class="summary-label">Participants</div>
+                <div class="summary-value" id="summaryParticipants">Up to 20 participants</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="quiz-code-summary">
+            <div class="quiz-code-label">Your Unique Quiz Code</div>
+            <div class="quiz-code-value" id="summaryQuizCode">ABC123</div>
+            <p class="small text-muted mb-0">Share this code with participants to join your quiz</p>
+          </div>
+          
+          <div class="alert alert-info mt-4">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            After finishing setup, you'll be taken to the question editor where you can create your quiz questions.
+          </div>
+        </div>
+      </div>
+      
+      <div class="config-footer">
+        <button class="wizard-btn wizard-btn-prev" id="prevStepBtn">
+          <i class="bi bi-arrow-left"></i>
+          Previous
+        </button>
+        
+        <button class="wizard-btn wizard-btn-next" id="nextStepBtn">
+          Next
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Quiz Complete Modal -->
+  <div class="modal fade" id="quizCompleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="bi bi-trophy-fill me-2"></i>
+            Quiz Created Successfully!
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="success-container p-4">
+            <div class="success-icon">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+            
+            <h4>Congratulations!</h4>
+            <p class="mb-4">Your quiz is ready to be hosted. Share the code with others to start playing!</p>
+            
+            <div class="quiz-code-display p-4 mb-4 rounded text-center">
+              <p class="mb-1 small text-muted">Your Unique Quiz Code</p>
+              <h2 id="quizCodeDisplay">------</h2>
+              <div class="d-flex justify-content-center">
+                <button class="btn btn-sm btn-outline-primary mt-2" id="copyCodeBtn">
+                  <i class="bi bi-clipboard me-1"></i>Copy Code
+                </button>
+              </div>
+            </div>
+            
+            <div class="host-quiz-section">
+              <div class="d-grid">
+                <button class="btn btn-success btn-lg" id="hostQuizBtn">
+                  <i class="bi bi-play-circle me-2"></i>Host Quiz Now
+                </button>
+              </div>
+              <p class="text-center small text-muted mt-2">
+                <i class="bi bi-info-circle me-1"></i>
+                Clicking "Host Quiz Now" will take you to the multiplayer interface
+              </p>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="share-section text-center">
+              <h6 class="mb-3">Share Your Quiz</h6>
+              <div class="share-buttons">
+                <button class="btn btn-primary" aria-label="Share on Facebook">
+                  <i class="bi bi-facebook"></i>
+                </button>
+                <button class="btn btn-info" aria-label="Share on Twitter">
+                  <i class="bi bi-twitter"></i>
+                </button>
+                <button class="btn btn-success" aria-label="Share on WhatsApp">
+                  <i class="bi bi-whatsapp"></i>
+                </button>
+                <button class="btn btn-danger" aria-label="Share via Email">
+                  <i class="bi bi-envelope"></i>
+                </button>
+                <button class="btn btn-secondary" aria-label="Copy Link">
+                  <i class="bi bi-link-45deg"></i>
+                </button>
+              </div>
+              
+              <div class="stats-preview mt-4 p-3 rounded bg-light">
+                <div class="row g-2 text-center">
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <div class="stat-value" id="questionCountStat">0</div>
+                      <div class="stat-label small">Questions</div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <div class="stat-value" id="estimatedTimeStat">0</div>
+                      <div class="stat-label small">Minutes</div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="stat-item">
+                      <div class="stat-value">
+                        <i class="bi bi-people-fill"></i>
+                      </div>
+                      <div class="stat-label small">Multiplayer</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Audio for success sound -->
+  <audio id="successSound" src="sounds/success.mp3" preload="auto"></audio>
+  
+  <!-- Bootstrap 5 JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/create-questions.js"></script>
+</body>
+</html> 
