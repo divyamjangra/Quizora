@@ -282,7 +282,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // For mock purposes, simulate quiz starting after a delay
     setTimeout(simulateQuizStart, 5000);
   }
- // Show waiting screen
+  
+  // Show waiting screen
   function showWaitingScreen() {
     joinScreen.classList.remove('active');
     waitingScreen.classList.add('active');
@@ -650,7 +651,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     answerExplanation.classList.remove('d-none');
   }
-    
+  
   // Update leaderboard
   function updateLeaderboard() {
     // Generate mock leaderboard data - in a real implementation, this would come from the server
@@ -971,7 +972,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Initialize the app
   initTheme();
-
+  
   // Update player score and provide feedback after answering
   function updatePlayerScoreAndFeedback(isCorrect) {
     // Mark as answered
@@ -1022,4 +1023,3 @@ document.addEventListener('DOMContentLoaded', function() {
     updateLeaderboard();
   }
 }); 
-                        
