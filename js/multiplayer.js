@@ -515,3 +515,732 @@ function joinQuiz(quizCode, username) {
     }, 8000);
   }
 }
+
+/**
+ * Generate a random 6-character quiz code
+ */
+function generateQuizCode() {
+  const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Removed similar-looking characters
+  let result = '';
+  for (let i = 0; i < 6; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+/**
+ * Copy quiz code to clipboard
+ */
+function copyQuizCode() {
+  const quizCode = document.getElementById('quizCode').textContent;
+  
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(quizCode)
+      .then(() => {
+        showAlert('Quiz code copied to clipboard!', 'success');
+        
+        // Show visual feedback
+        const copyBtn = document.getElementById('copyCodeBtn');
+        const originalIcon = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="bi bi-check"></i>';
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = originalIcon;
+        }, 2000);
+      })
+      .catch(err => {
+        console.error('Failed to copy quiz code: ', err);
+        showAlert('Failed to copy quiz code', 'danger');
+      });
+  } else {
+    // Fallback for browsers that don't support clipboard API
+    const tempInput = document.createElement('input');
+    tempInput.value = quizCode;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    
+    showAlert('Quiz code copied to clipboard!', 'success');
+  }
+}
+
+/**
+ * Start the quiz (host only in a real app)
+ */
+function startQuiz() {
+  // In a real app, this would send a request to start the quiz on the server
+  
+  // Hide waiting room and show quiz content
+  document.getElementById('waitingRoom').classList.add('d-none');
+  document.getElementById('quizContent').classList.remove('d-none');
+  
+  // Reset quiz state
+  currentQuestionIndex = 0;
+  userProfile.score = 0;
+  userProfile.answers = [];
+  
+  // Load first question
+  loadQuestion(currentQuestionIndex);
+  
+  // Add system message
+  addSystemMessage('Quiz has started! Good luck!');
+}
+
+/**
+ * Load a question by index
+ */
+function loadQuestion(index) {
+  // In a real app, this would get the current question from the server
+  // For demo, we'll use the local quizData
+  
+  const question = quizData.questions[index] || {
+    id: index + 1,
+    text: 'Sample question ' + (index + 1) + '?',
+    options: [
+      { id: 'A', text: 'Option A' },
+      { id: 'B', text: 'Option B' },
+      { id: 'C', text: 'Option C' },
+      { id: 'D', text: 'Option D' }
+    ],
+    correctAnswer: 'A',
+    timer: 30
+  };
+  
+  // Update UI with question data
+  document.getElementById('questionNumber').textContent = `Question ${index + 1}`;
+  document.getElementById('questionText').textContent = question.text;
+  document.getElementById('currentQuestionIndex').textContent = index + 1;
+  document.getElementById('totalQuestions').textContent = quizData.questions.length || 3;
+  
+  // Clear previous options and add new ones
+  const optionsContainer = document.getElementById('optionsContainer');
+  optionsContainer.innerHTML = '';
+  
+  question.options.forEach(option => {
+    const optionElement = document.createElement('div');
+    optionElement.className = 'option-item';
+    optionElement.setAttribute('data-option', option.id);
+    
+    optionElement.innerHTML = `
+      <div class="option-prefix">${option.id}</div>
+      <div class="option-text">${option.text}</div>
+    `;
+    
+    optionsContainer.appendChild(optionElement);
+  });
+  
+  // Reset selected answer
+  selectedAnswer = null;
+  
+  // Start timer
+  timerDuration = question.timer || 30;
+  startTimer();
+  
+  // Update players answered count
+  document.getElementById('answersCount').textContent = '0';
+}
+
+/**
+ * Start the question timer
+ */
+function startTimer() {
+  // Clear any existing interval
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  
+  const timerElement = document.getElementById('timer');
+  let timeLeft = timerDuration;
+  
+  // Set initial value
+  timerElement.textContent = timeLeft;
+  
+  // Remove any existing timer classes
+  const timerContainer = document.getElementById('quizTimer');
+  timerContainer.classList.remove('timer-warning', 'timer-danger');
+  
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerElement.textContent = timeLeft;
+    
+    // Add warning class when less than 10 seconds
+    if (timeLeft <= 10 && timeLeft > 5) {
+      timerContainer.classList.add('timer-warning');
+    }
+    
+    // Add danger class when less than 5 seconds
+    if (timeLeft <= 5) {
+      timerContainer.classList.remove('timer-warning');
+      timerContainer.classList.add('timer-danger');
+    }
+    
+    // Time's up
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimesUp();
+    }
+  }, 1000);
+}
+
+/**
+ * Handle when time is up for a question
+ */
+function handleTimesUp() {
+  // Disable all options
+  const options = document.querySelectorAll('.option-item');
+  options.forEach(option => {
+    option.classList.add('disabled');
+  });
+  
+  // If no answer selected, mark correct answer
+  if (!selectedAnswer) {
+    // Record no answer
+    userProfile.answers.push({
+      questionId: quizData.questions[currentQuestionIndex].id,
+      selectedOption: null,
+      isCorrect: false,
+      timeLeft: 0
+    });
+    
+    // Show correct answer
+    showCorrectAnswer();
+  }
+  
+  // Add system message
+  addSystemMessage(`Time's up for question ${currentQuestionIndex + 1}!`);
+  
+  // Move to next question after delay
+  setTimeout(() => {
+    moveToNextQuestion();
+  }, 2000);
+}
+
+/**
+ * Select an answer
+ */
+function selectAnswer(optionElement) {
+  // Prevent multiple selections
+  if (selectedAnswer) return;
+  
+  // Get the selected option
+  const selectedOption = optionElement.getAttribute('data-option');
+  selectedAnswer = selectedOption;
+  
+  // Mark selected option
+  const options = document.querySelectorAll('.option-item');
+  options.forEach(option => {
+    option.classList.remove('selected');
+    option.classList.add('disabled');
+  });
+  
+  optionElement.classList.add('selected');
+  
+  // Create ripple effect
+  createRippleEffect(optionElement);
+  
+  // Get the correct answer (in a real app, this would come from the server)
+  const correctAnswer = quizData.questions[currentQuestionIndex].correctAnswer || 'A';
+  
+  // Check if answer is correct
+  const isCorrect = selectedOption === correctAnswer;
+  
+  // Record answer
+  userProfile.answers.push({
+    questionId: quizData.questions[currentQuestionIndex].id,
+    selectedOption: selectedOption,
+    isCorrect: isCorrect,
+    timeLeft: parseInt(document.getElementById('timer').textContent)
+  });
+  
+  // Update score if correct
+  if (isCorrect) {
+    // Score based on time left (faster answers get more points)
+    const timeLeft = parseInt(document.getElementById('timer').textContent);
+    const points = 100 + (timeLeft * 10); // Base 100 points + 10 per second left
+    userProfile.score += points;
+  }
+  
+  // Show if answer is correct or incorrect
+  setTimeout(() => {
+    showAnswerResult(optionElement, isCorrect, correctAnswer);
+  }, 500);
+  
+  // Move to next question after delay
+  setTimeout(() => {
+    moveToNextQuestion();
+  }, 3000);
+  
+  // Update player progress in the list
+  updatePlayerProgress(
+    userProfile.username, 
+    quizData.questions[currentQuestionIndex].id,
+    selectedOption,
+    (currentQuestionIndex + 1) / quizData.questions.length
+  );
+  
+  // Update answers count (in a real app, this would come from the server)
+  const currentCount = parseInt(document.getElementById('answersCount').textContent);
+  document.getElementById('answersCount').textContent = currentCount + 1;
+}
+
+/**
+ * Create ripple effect on option selection
+ */
+function createRippleEffect(element) {
+  const ripple = document.createElement('span');
+  ripple.classList.add('ripple');
+  
+  // Get click position relative to the element
+  const rect = element.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+  
+  element.appendChild(ripple);
+  
+  // Remove after animation completes
+  setTimeout(() => {
+    ripple.remove();
+  }, 600);
+}
+
+/**
+ * Show the result of the answer selection
+ */
+function showAnswerResult(selectedElement, isCorrect, correctAnswer) {
+  // Stop the timer
+  clearInterval(timerInterval);
+  
+  if (isCorrect) {
+    // Correct answer
+    selectedElement.classList.add('correct', 'animate-correct');
+    showAlert('Correct! +' + (100 + parseInt(document.getElementById('timer').textContent) * 10) + ' points', 'success');
+  } else {
+    // Incorrect answer
+    selectedElement.classList.add('incorrect', 'animate-incorrect');
+    
+    // Show the correct answer
+    const correctElement = document.querySelector(`.option-item[data-option="${correctAnswer}"]`);
+    if (correctElement) {
+      correctElement.classList.add('correct');
+    }
+    
+    showAlert('Incorrect! The correct answer is ' + correctAnswer, 'danger');
+  }
+}
+
+/**
+ * Show correct answer when no answer is selected
+ */
+function showCorrectAnswer() {
+  const correctAnswer = quizData.questions[currentQuestionIndex].correctAnswer || 'A';
+  const correctElement = document.querySelector(`.option-item[data-option="${correctAnswer}"]`);
+  if (correctElement) {
+    correctElement.classList.add('correct');
+  }
+  
+  showAlert('Time\'s up! The correct answer is ' + correctAnswer, 'warning');
+}
+
+/**
+ * Move to the next question or end the quiz
+ */
+function moveToNextQuestion() {
+  currentQuestionIndex++;
+  
+  // Check if there are more questions
+  if (currentQuestionIndex < (quizData.questions.length || 3)) {
+    // Load next question
+    loadQuestion(currentQuestionIndex);
+  } else {
+    // End of quiz
+    endQuiz();
+  }
+}
+
+/**
+ * End the quiz and show results
+ */
+function endQuiz() {
+  // In a real app, this would send a request to end the quiz on the server
+  
+  // Hide quiz content and show results
+  document.getElementById('quizContent').classList.add('d-none');
+  document.getElementById('quizResults').classList.remove('d-none');
+  
+  // Update results UI
+  document.getElementById('totalQuestionsResult').textContent = quizData.questions.length || 3;
+  
+  const correctAnswers = userProfile.answers.filter(answer => answer.isCorrect).length;
+  document.getElementById('correctAnswersResult').textContent = correctAnswers;
+  
+  document.getElementById('totalPlayersResult').textContent = document.querySelectorAll('.player-item').length;
+  
+  // Determine rank (in a real app, this would come from the server)
+  // For demo, we'll assume the user is 3rd
+  document.getElementById('yourRankResult').textContent = '2nd';
+  
+  // Update winner display (in a real app, this would come from the server)
+  // For demo, we'll use a mock winner
+  document.getElementById('winnerName').textContent = 'Sophia Lee';
+  document.getElementById('winnerScore').textContent = '920';
+  
+  // Update share modal
+  document.getElementById('sharedQuizTitle').textContent = quizData.title || 'Web Development Quiz';
+  document.getElementById('sharedCorrectAnswers').textContent = `${correctAnswers}/${quizData.questions.length || 3}`;
+  document.getElementById('sharedRank').textContent = '2nd';
+  document.getElementById('sharedTotalPlayers').textContent = document.querySelectorAll('.player-item').length;
+  
+  // Add system message
+  addSystemMessage('Quiz completed! Check out the results.');
+  
+  // Update player list to final results
+  updateFinalResults();
+}
+
+/**
+ * Update player list to show final results
+ */
+function updateFinalResults() {
+  // In a real app, this would get the final results from the server
+  // For demo, we'll use mock data
+  
+  const playersList = document.getElementById('playersList');
+  playersList.innerHTML = '';
+  
+  const mockResults = [
+    { id: 'player2', username: 'Sophia Lee', avatar: 'https://via.placeholder.com/40', score: 920, rank: 1 },
+    { id: 'host', username: userProfile.username, avatar: userProfile.avatar, score: userProfile.score || 750, rank: 2 },
+    { id: 'player1', username: 'Alex Johnson', avatar: 'https://via.placeholder.com/40', score: 680, rank: 3 },
+    { id: 'player3', username: 'Miguel Santos', avatar: 'https://via.placeholder.com/40', score: 520, rank: 4 }
+  ];
+  
+  mockResults.forEach(player => {
+    const playerItem = document.createElement('li');
+    playerItem.className = 'player-item';
+    playerItem.setAttribute('data-player-id', player.id);
+    
+    const isCurrentUser = player.username === userProfile.username;
+    
+    playerItem.innerHTML = `
+      <div class="player-rank">#${player.rank}</div>
+      <img src="${player.avatar}" alt="${player.username}" class="player-avatar">
+      <div class="player-info">
+        <h6>${player.username} ${isCurrentUser ? '<span class="badge bg-primary">You</span>' : ''}</h6>
+      </div>
+      <div class="player-score">${player.score}</div>
+    `;
+    
+    playersList.appendChild(playerItem);
+  });
+}
+
+/**
+ * Share results to social media or email
+ */
+function shareResults(platform) {
+  const quizTitle = quizData.title || 'Web Development Quiz';
+  const score = document.getElementById('correctAnswersResult').textContent;
+  const total = document.getElementById('totalQuestionsResult').textContent;
+  const shareUrl = `https://quizora.com/q/${quizCode}`;
+  
+  const shareText = `I scored ${score}/${total} on the "${quizTitle}" quiz with Quizora!`;
+  
+  let url = '';
+  
+  switch(platform) {
+    case 'facebook':
+      url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+      break;
+    case 'twitter':
+      url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+      break;
+    case 'whatsapp':
+      url = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+      break;
+    case 'email':
+      url = `mailto:?subject=${encodeURIComponent('My Quizora Quiz Results')}&body=${encodeURIComponent(shareText + '\n\n' + shareUrl)}`;
+      break;
+    default:
+      console.error('Unknown platform:', platform);
+      return;
+  }
+  
+  // Open the share URL in a new window
+  window.open(url, '_blank');
+  
+  // Show confirmation
+  showAlert(`Shared to ${platform}!`, 'success');
+}
+
+/**
+ * Show quiz content (questions)
+ */
+function showQuizContent() {
+  document.getElementById('waitingRoom').classList.add('d-none');
+  document.getElementById('quizContent').classList.remove('d-none');
+  document.getElementById('quizResults').classList.add('d-none');
+}
+
+/**
+ * Show waiting room
+ */
+function showWaitingRoom() {
+  document.getElementById('waitingRoom').classList.remove('d-none');
+  document.getElementById('quizContent').classList.add('d-none');
+  document.getElementById('quizResults').classList.add('d-none');
+}
+
+/**
+ * Add a player to the players list
+ */
+function addPlayerToList(player) {
+  const playersList = document.getElementById('playersList');
+  
+  // Check if player already exists
+  const existingPlayer = document.querySelector(`[data-player-id="${player.id}"]`);
+  if (existingPlayer) return;
+  
+  const playerItem = document.createElement('li');
+  playerItem.className = 'player-item';
+  playerItem.setAttribute('data-player-id', player.id);
+  
+  playerItem.innerHTML = `
+    <div class="player-rank">#${playersList.children.length + 1}</div>
+    <img src="${player.avatar}" alt="${player.username}" class="player-avatar">
+    <div class="player-info">
+      <h6>${player.username} ${player.isHost ? '<span class="badge bg-warning text-dark">Host</span>' : ''}</h6>
+      <div class="progress" style="height: 5px; width: 100%;">
+        <div class="progress-bar bg-success" style="width: 0%;" data-progress="0"></div>
+      </div>
+    </div>
+    <div class="player-score">${player.score || 0}</div>
+  `;
+  
+  playersList.appendChild(playerItem);
+  playerData.push(player);
+}
+
+/**
+ * Update a player's progress in the quiz
+ */
+function updatePlayerProgress(username, questionId, answer, progress) {
+  const playerItem = Array.from(document.querySelectorAll('.player-item')).find(
+    item => item.querySelector('h6').textContent.includes(username)
+  );
+  
+  if (playerItem) {
+    const progressBar = playerItem.querySelector('.progress-bar');
+    progressBar.style.width = `${progress * 100}%`;
+    progressBar.setAttribute('data-progress', progress);
+    
+    // In a real app, this would be sent to the server
+    // to update other users about this player's progress
+  }
+}
+
+/**
+ * Update the player count display
+ */
+function updatePlayerCount() {
+  const count = document.querySelectorAll('.player-item').length;
+  document.getElementById('playerCount').textContent = count;
+  document.getElementById('playersListCount').textContent = count;
+}
+
+/**
+ * Add a system message to the chat
+ */
+function addSystemMessage(message) {
+  const chatMessages = document.getElementById('chatMessages');
+  
+  const messageElement = document.createElement('div');
+  messageElement.className = 'chat-message system-message';
+  
+  messageElement.innerHTML = `
+    <div class="message-content">
+      <p>${message}</p>
+    </div>
+    <div class="message-time">${formatMessageTime(new Date())}</div>
+  `;
+  
+  chatMessages.appendChild(messageElement);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+/**
+ * Add a chat message
+ */
+function addChatMessage(sender, message, time) {
+  const chatMessages = document.getElementById('chatMessages');
+  
+  const messageElement = document.createElement('div');
+  messageElement.className = 'chat-message';
+  
+  const isCurrentUser = sender === userProfile.username;
+  if (isCurrentUser) {
+    messageElement.classList.add('current-user');
+  }
+  
+  messageElement.innerHTML = `
+    <div class="message-sender">${sender}</div>
+    <div class="message-content">
+      <p>${message}</p>
+    </div>
+    <div class="message-time">${formatMessageTime(time)}</div>
+  `;
+  
+  chatMessages.appendChild(messageElement);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+/**
+ * Send a chat message
+ */
+function sendChatMessage() {
+  const chatInput = document.getElementById('chatInput');
+  const message = chatInput.value.trim();
+  
+  if (message === '') return;
+  
+  // Clear input
+  chatInput.value = '';
+  
+  // Add message to chat
+  addChatMessage(userProfile.username, message, new Date());
+  
+  // In a real app, this would send the message to the server
+}
+
+/**
+ * Format message time
+ */
+function formatMessageTime(timestamp) {
+  const now = new Date();
+  const messageTime = new Date(timestamp);
+  
+  // If same day, show only time
+  if (now.toDateString() === messageTime.toDateString()) {
+    return messageTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  
+  // Otherwise show date and time
+  return messageTime.toLocaleString([], { 
+    month: 'short', 
+    day: 'numeric', 
+    hour: '2-digit', 
+    minute: '2-digit' 
+  });
+}
+
+/**
+ * Show join quiz modal
+ */
+function showJoinQuizModal(code = '') {
+  const joinModal = new bootstrap.Modal(document.getElementById('joinQuizModal'));
+  joinModal.show();
+  
+  if (code) {
+    document.getElementById('quizCodeInput').value = code;
+  }
+}
+
+/**
+ * Show an alert/toast notification
+ */
+function showAlert(message, type = 'info') {
+  const toastContainer = document.getElementById('toastContainer');
+  
+  const toast = document.createElement('div');
+  toast.className = `toast align-items-center text-white bg-${type} border-0`;
+  toast.setAttribute('role', 'alert');
+  toast.setAttribute('aria-live', 'assertive');
+  toast.setAttribute('aria-atomic', 'true');
+  
+  toast.innerHTML = `
+    <div class="d-flex">
+      <div class="toast-body">
+        ${message}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  `;
+  
+  toastContainer.appendChild(toast);
+  
+  const bsToast = new bootstrap.Toast(toast, {
+    autohide: true,
+    delay: 3000
+  });
+  
+  bsToast.show();
+  
+  // Remove from DOM after hidden
+  toast.addEventListener('hidden.bs.toast', function() {
+    toast.remove();
+  });
+}
+
+/**
+ * Toggles the AI Quiz Generator card visibility
+ */
+function toggleAiQuizGenerator() {
+  const waitingRoom = document.getElementById('waitingRoom');
+  const aiQuizGenerator = document.getElementById('aiQuizGenerator');
+  const quizContent = document.getElementById('quizContent');
+  const quizResults = document.getElementById('quizResults');
+  
+  if (waitingRoom) waitingRoom.classList.add('d-none');
+  if (quizContent) quizContent.classList.add('d-none');
+  if (quizResults) quizResults.classList.add('d-none');
+  
+  // Show AI Quiz Generator
+  if (aiQuizGenerator) {
+    aiQuizGenerator.classList.remove('d-none');
+    
+    // Add click event for the AI button if not already added
+    const aiButton = aiQuizGenerator.querySelector('.ai-btn');
+    if (aiButton && !aiButton.hasAttribute('data-listener-added')) {
+      aiButton.setAttribute('data-listener-added', 'true');
+      
+      // Use the Coming Soon popup from ai-quiz-manager.js
+      aiButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Call the show popup function from ai-quiz-manager.js
+        if (typeof showAIComingSoonPopup === 'function') {
+          showAIComingSoonPopup();
+        } else {
+          // Load ai-quiz-manager.js if not loaded
+          const script = document.createElement('script');
+          script.src = 'js/ai-quiz-manager.js';
+          script.onload = function() {
+            showAIComingSoonPopup();
+          };
+          document.body.appendChild(script);
+        }
+      });
+    }
+  }
+}
+
+/**
+ * Generate an AI quiz - now shows the Coming Soon popup
+ */
+function generateAiQuiz() {
+  // Call the showAIComingSoonPopup function instead of generating a quiz
+  if (typeof showAIComingSoonPopup === 'function') {
+    showAIComingSoonPopup();
+  } else {
+    // Load ai-quiz-manager.js if not loaded
+    const script = document.createElement('script');
+    script.src = 'js/ai-quiz-manager.js';
+    script.onload = function() {
+      showAIComingSoonPopup();
+    };
+    document.body.appendChild(script);
+  }
+} 
