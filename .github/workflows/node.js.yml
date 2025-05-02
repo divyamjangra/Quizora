@@ -14,16 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js (latest version)
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 'node'  # Latest version of Node.js automatically
+          node-version: 'node'  # This will automatically use the latest version of Node.js
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps  # Avoids peer dependency errors
 
-      - name: Build project
-        run: npm run build
+      - name: Run development server (dev script)
+        run: npm run dev  # This will run `nodemon server.js` for development
 
-      - name: Run tests (optional)
-        run: npm test
+      # Optional step: If you want to test, add test step here (if you have test scripts)
+      # - name: Run tests
+      #   run: npm test
