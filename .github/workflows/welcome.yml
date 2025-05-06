@@ -1,0 +1,21 @@
+name: Welcome New Contributors
+
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  welcome:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write  # ← This line is important!
+    steps:
+      - name: Add welcome comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            👋 Hey there! Thanks for opening your first pull request!  
+            We appreciate your contribution 💙  
+            Stay awesome!
